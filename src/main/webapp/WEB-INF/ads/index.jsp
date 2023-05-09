@@ -9,16 +9,24 @@
 <body>
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
-<div class="container">
+<section class="container">
     <h1>Here Are all the ads!</h1>
-
-    <c:forEach var="ad" items="${ads}">
-        <div class="col-md-6">
-            <h2>${ad.title}</h2>
-            <p>${ad.description}</p>
-        </div>
-    </c:forEach>
-</div>
-
+    <div class="row gap-3 d-flex justify-content-between">
+        <c:forEach var="ad" items="${ads}">
+            <article class="card col-5 border border-1 p-0">
+                <div class="card-header">
+                    <img src="../../../resources/images/image_missing.webp">
+                </div>
+                <div class="card-body">
+                    <p class="card-title">${ad.title}</p>
+                    <p>${ad.description}</p>
+                </div>
+                <div class="card-footer">
+                    <p>${ad.price}</p>
+                </div>
+            </article>
+        </c:forEach>
+    </div>
+</section>
 </body>
 </html>

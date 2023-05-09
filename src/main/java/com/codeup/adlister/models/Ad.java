@@ -2,52 +2,74 @@ package com.codeup.adlister.models;
 
 public class Ad {
     private long id;
-    private long userId;
     private String title;
     private String description;
+    private String shortDescription;
+    private int price;
+    private int dogId;
 
-    public Ad(long id, long userId, String title, String description) {
-        this.id = id;
-        this.userId = userId;
+    public Ad (String title, String description, String shortDescription, int price, int dogId){
         this.title = title;
         this.description = description;
+        this.shortDescription = shortDescription;
+        this.price = price;
+        this.dogId = dogId;
     }
 
-    public Ad(long userId, String title, String description) {
-        this.userId = userId;
+    public Ad(long id, String title, String description, String shortDescription, int price, int dogId) {
+        this.id = id;
         this.title = title;
         this.description = description;
+        this.shortDescription = shortDescription;
+        this.price = price;
+        this.dogId = dogId;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getDogId() {
+        return dogId;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setDogId(int dogId) {
+        this.dogId = dogId;
     }
 }
