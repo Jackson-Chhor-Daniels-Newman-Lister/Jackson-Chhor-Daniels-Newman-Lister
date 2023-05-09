@@ -4,12 +4,14 @@ INSERT INTO breeds (name)
 VALUES  ('Airedale Terrier'),
         ('Akita'),
         ('Alaskan Malamute'),
+        ('American Bulldog'),
         ('American Eskimo Dog'),
         ('American Pit Bull Terrier'),
         ('Australian Cattle Dog'),
         ('Australian Shepherd'),
         ('Basset Hound'),
         ('Beagle'),
+        ('Belgian Malinois'),
         ('Bernese Mountain Dog'),
         ('Bichon Frise'),
         ('Border Collie'),
@@ -17,6 +19,7 @@ VALUES  ('Airedale Terrier'),
         ('Boxer'),
         ('Brittany'),
         ('Bulldog'),
+        ('Cane Corso'),
         ('Cavalier King Charles Spaniel'),
         ('Chihuahua'),
         ('Chinese Crested'),
@@ -29,11 +32,14 @@ VALUES  ('Airedale Terrier'),
         ('French Bulldog'),
         ('German Shepherd Dog'),
         ('German Shorthaired Pointer'),
+        ('Golden Doodle'),
         ('Golden Retriever'),
         ('Great Dane'),
+        ('Great Pyreness'),
         ('Greyhound'),
         ('Irish Setter'),
         ('Jack Russell Terrier'),
+        ('Komondor'),
         ('Labrador Retriever'),
         ('Lhasa Apso'),
         ('Maltese'),
@@ -85,20 +91,77 @@ VALUES ('Affectionate'),
 
 INSERT INTO dogs(name, age, playfulness, socialization, affection, training)
 values ('Chupa', '6', '4', '1', '3', '2'),
-       ('Snoflake', '2', '3', '3', '3', '4'),
+       ('Snowflake', '2', '3', '3', '3', '4'),
        ('Speed', '1', '4', '4', '3', '4'),
-       ('Sniffles', '2', '4', '4', '4', '4');
+       ('Frenchie', '3', '4', '5', '5', '2'),
+       ('Sniffles', '2', '4', '4', '4', '4'),
+       ('Bella', '9', '3', '3', '3', '5'),
+       ('Hot Dog', '1', '4', '4', '4', '1'),
+       ('Alpha', '4', '4', '3', '4', '5'),
+       ('Remington', '2', '4', '4', '5', '4'),
+       ('Old Yeller', '5', '2', '4', '4', '2'),
+       ('Banks', '2', '4', '4', '4', '4'),
+       ('Bully', '1', '4', '3', '4', '4'),
+       ('Shaggy', '4', '3', '4', '4', '5'),
+       ('Naomi', '2', '4', '3', '5', '5'),
+       ('Maverick', '2', '3', '2', '5', '5'),
+       ('Princess', '1', '4', '3', '5', '4'),
+       ('Sasha', '2', '5', '5', '5', '3'),
+       ('Pouty', '3', '3', '3', '3', '2'),
+       ('Jaguar', '6', '4', '4', '4', '4'),
+       ('Sprinkle', '1', '4', '4', '5', '3');
+
+
+
+
 
 INSERT INTO ads(title, short_description, description, price, dog_id)
 values ('Adorable French Bulldog for sale!', '', '', 2500, 1),
        ('Here comes Snowflake!!', 'The Akita is a popular breed with many unique traits. Learn all about this loyal, intelligent dog', 'Looking for a furry friend who''s loyal, loving, and a little bit quirky? Look no further than the Akita! This pup is sure to steal your heart with their fluffy coat, perky ears, and playful personality. Adopt an Akita today and add some whimsy to your life!', 1500, 2),
        ('You''ve got a need for speed!', 'Often mistaken for the Italian Greyhound, the Whippet is a family-friendly dog.', 'Looking for a furry friend who''s equal parts elegance and goofiness? Meet the Whippet! This sleek and speedy pup loves nothing more than chasing after tennis balls and snuggling up on the couch. Adopt a Whippet today and add some quirkiness to your life!', 1100, 3),
-       ('Our sweet sniffles', 'The Plott Hound is North Carolina''s State Dog.', 'Looking for a furry friend who''s as adventurous as you are? Meet the Plot Hound! This brave and loyal pup is always up for exploring the great outdoors and is sure to be your sidekick on any adventure. Adopt a Plot Hound today and add some wildness to your life!', 900, 4);
+       ('Personality as unique as their wrinkles!', 'Introducing the lovable and charming French Bulldog', 'With their unique bat-like ears, squishy snout, and compact body, Frenchies have quickly become a beloved breed among dog lovers. But it''s not just their looks that make them so special - Frenchies are also known for their playful and affectionate personalities', 2500, 4),
+       ('Our sweet sniffles', 'The Plott Hound is North Carolina''s State Dog.', 'Looking for a furry friend who''s as adventurous as you are? Meet the Plot Hound! This brave and loyal pup is always up for exploring the great outdoors and is sure to be your sidekick on any adventure. Adopt a Plot Hound today and add some wildness to your life!', 900, 5),
+       ('Attention all adventure seekers!', 'Introducing the dynamic and intelligent German Shepherd! Meet your new partner-in-crime - a German Shepherd with a heart as big as their bark.', 'This iconic breed is known for their impressive strength, loyalty, and courage. They make wonderful companions for those who lead an active lifestyle and enjoy outdoor adventures. This particular German Shepherd is no exception - with their boundless energy and adventurous spirit, they are always up for a challenge', 2750, 6),
+       ('Compact, curious, and oh-so-lovable', 'Meet the hot dog of the dog world - the Dachshund!', 'The Dachshund is a unique and quirky breed that is easily recognized by its elongated body, short legs, and playful personality. This lovable pooch is bred in different sizes, including standard, miniature, and even toy sizes.', 1000, 7),
+       ('Loyalty until death', 'Meet the dynamic and versatile Belgian Malinois!', 'Originally bred as a herding dog, the Malinois has become a popular breed for various tasks, including police and military work, search and rescue, and even as therapy dogs. With their intelligence, athleticism, and strong work ethic, they are always up for a challenge.', 2000, 8),
+       ('Ready to chase some cows!', 'If you''re looking for the perfect dog to help you herd some cows, then look no further.', 'Introducing the charming and energetic Australian Shepherd! This breed is known for their intelligence, agility, and playful nature. With their striking coat patterns and bright eyes, they are a true standout among the canine crowd. This particular Australian Shepherd is a real delight - with their high energy and love for adventure, they are always up for a good time.', 2250, 9),
+       ('Perfect story-book dog', 'Meet the pup with ears so long, they double as a scarf!', 'This lovable and low-key Basset Hound is the ultimate couch potato, with a heart as big as their droopy eyes. Introducing the charming and laid-back Basset Hound! With their iconic long ears, droopy eyes, and compact bodies, Bassets are a beloved breed among dog lovers. They are known for their easygoing and affectionate personalities, making them wonderful companions for those seeking a furry friend to snuggle up with', 1000, 10),
+       ('The perfect fluff of curls', 'Step up your dog game with the original fancy furball - the Poodle! From its perfectly coiffed hair to its regal demeanor, this four-legged fashionista is sure to turn heads wherever you go.', 'The Poodle is a popular breed that is instantly recognizable for its curly, fluffy coat and elegant appearance. This breed comes in a variety of sizes, including standard, miniature, and toy, making it a great choice for many different households.', 3000, 11),
+       ('The nicest bully you''ll ever meet', 'Get ready to unleash the ultimate bulldozer - the American Bulldog! With a jaw as strong as a vice and a heart as big as Texas, this powerhouse pooch is ready to bulldoze its way into your heart.', 'The American Bulldog is a muscular and powerful breed that is known for its strength, courage, and loyalty. Originally bred for farm work, American Bulldogs are now a popular choice for families who want a loyal and protective companion.', 1500, 12),
+       ('The friendliest mop', 'With a coat that rivals a floor duster and a personality as quirky as its appearance, this four-legged ball of fluff is sure to turn heads wherever you go.', 'The Komondor is a unique and quirky breed that is instantly recognizable for its distinctive corded coat, which resembles a mop or a dreadlock. Originally bred to guard flocks of sheep, this breed is known for its intelligence, loyalty, and courage.', 3000, 13),
+       ('Unleash the beast!', 'With a heart as big as their muscles and a tongue as sloppy as their kisses, this loyal teddy bear will protect you and love you like no other.', 'The Rottweiler is a large and powerful breed that is known for its strength, courage, and loyalty. They have a distinctive appearance, with a muscular build, short black coat, and tan markings on their face, chest, and legs.', 2050, 14),
+       ('The gentle giant', 'With muscles as big as their heart and a bark as deep as his loyalty, this Italian masterpiece will guard your family and steal your heart.', 'The Cane Corso is a large and majestic breed that originated in Italy. They have a muscular build, with a powerful chest and a broad head that exudes confidence and strength. Despite their imposing appearance, Cane Corsos are gentle giants that are fiercely loyal to their families.', 4000, 15),
+       ('Truly a princess', 'Say hello to Princess - the pocket-sized pup with a big personality! With a spunky attitude that will keep you on your toes.', 'The Chihuahua is a small breed that originated in Mexico. They are known for their tiny size and big personality. Despite their small stature, they are often described as being bold, confident, and even a bit sassy.', 1600, 16),
+       ('Might cuddle you to death!', 'Sasha is an energetic affectionate and loving pup who loves cuddles and fun outside activities.', 'Golden doodles are good house dogs because they''re eager to please and potty train fast. In addition to having a temperament that makes them want to be close to their people, golden doodles make wonderful house dogs for other reasons, too.', 3000, 17),
+       ('The cutest scrunch ever!', 'Looking for a furry friend who''s equal parts cute and goofy? Meet, Pouty!', 'They are often described as "clowns" due to their playful and mischievous nature.', 500, 18),
+       ('Fast like a jaguar!', 'Jaguar is a fun loving pup who loves to run around outdoors! He is very friendly and love kisses and social time!', 'Labradors make perfect family pets, given the right socialization, as with all breeds. They bond well with the whole family and are affectionate and loving. Their patient nature makes them ideal for children.', 950, 19),
+       ('Almost as small as a sprinkle!', 'If you''ve ever wanted a dog that you can basically carry around in your pocket, then look no further!', 'The Pomeranian is a small, fluffy breed of dog that is often referred to as the "Pom." They are known for their luxurious double coat, which comes in a variety of colors, including cream, orange, and black. Despite their small size, Pomeranians are energetic and lively dogs that love to play and go for walks. They are intelligent and trainable dogs that enjoy learning new tricks and command', 2500, 20);
 
 INSERT INTO dog_breeds(dog_id, breed_id)
-VALUES (1,25),
+VALUES (1,29),
        (2,2),
-       (3,51),
-       (4,40)
+       (3,58),
+       (4,29),
+       (5, 47),
+       (6, 30),
+       (7, 25),
+       (8, 11),
+       (9, 8),
+       (10, 9),
+       (11, 49),
+       (12, 4),
+       (13, 39),
+       (14, 51),
+       (15, 19),
+       (16, 21),
+       (17, 32),
+       (18, 50),
+       (19, 40),
+       (20, 48);
+
+
+
+
+
 
 

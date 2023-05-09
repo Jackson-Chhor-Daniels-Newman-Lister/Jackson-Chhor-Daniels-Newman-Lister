@@ -1,4 +1,15 @@
 USE dog_lister_db;
+# DROP TABLE IF EXISTS user_ads;
+# DROP TABLE IF EXISTS dog_breeds;
+# DROP TABLE IF EXISTS dog_traits;
+# DROP TABLE IF EXISTS users;
+# DROP TABLE IF EXISTS ads;
+# DROP TABLE IF EXISTS dogs;
+# DROP TABLE IF EXISTS breeds;
+# DROP TABLE IF EXISTS traits;
+
+
+
 CREATE TABLE users
 (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
