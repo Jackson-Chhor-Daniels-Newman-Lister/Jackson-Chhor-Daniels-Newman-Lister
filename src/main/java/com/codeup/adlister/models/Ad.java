@@ -10,7 +10,7 @@ public class Ad {
     private int dogId;
 
 
-    public Ad (String title, String description, String shortDescription, int price, String image, int dogId){
+    public Ad(String title, String shortDescription, String description, int price, String image, int dogId) {
         this.title = title;
         this.description = description;
         this.shortDescription = shortDescription;
@@ -19,8 +19,8 @@ public class Ad {
         this.dogId = dogId;
     }
 
-  
-    public Ad(long id, String title, String description, String shortDescription, int price, String image, int dogId) {
+
+    public Ad(long id, String title, String shortDescription, String description, int price, String image, int dogId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -85,4 +85,5 @@ public class Ad {
     public void setImage(String image) {
         this.image = image;
     }
+}
 

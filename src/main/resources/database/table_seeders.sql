@@ -177,7 +177,16 @@ VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
        ('Kennedy', 'kenk@gmail.com' , 'Kennypuppies', 'Kenklovespups');
 
 INSERT INTO user_ads (user_id, ad_id)
-VALUES  (1,1);
+VALUES  (1,1),
+        (11,2),
+        (11,3),
+        (11,4),
+        (11,5),
+        (11,6),
+        (11,7),
+        (11,8),
+        (11,9),
+        (11,10);
 
 
 
