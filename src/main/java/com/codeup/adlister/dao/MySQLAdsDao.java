@@ -39,6 +39,19 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+
+    @Override
+    public Ad individual(long adNumber) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ${Int.parseInt(adNumber)}");
+            ResultSet rs = stmt.executeQuery();
+            return createOneAdFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving more info on ads.", e);
+        }
+    }
+
     @Override
     public Long insert(Ad ad) {
         try {
@@ -60,6 +73,8 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+
+
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
             rs.getLong("id"),
@@ -77,5 +92,14 @@ public class MySQLAdsDao implements Ads {
             ads.add(extractAd(rs));
         }
         return ads;
+    }
+
+    private Ad createOneAdFromResults(ResultSet rs) throws SQLException {
+//        List<Ad> ads = new ArrayList<>();
+        while (rs.next()) {
+//            ads.add(extractAd(rs));
+            return extractAd(rs);
+        }
+        return extractAd(rs);
     }
 }

@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     <p>${ad.price}</p>
-                    <button class="btn btn-primary">More info</button>
+                    <a href="more-info?adId=${ad.id}" class="btn btn-primary">More info</a>
                 </div>
             </article>
         </c:forEach>
