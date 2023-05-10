@@ -9,24 +9,24 @@
 <body>
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
-<section class="container">
+<section class="container text-center bg-info-subtle font-monospace">
     <h1>Here Are all the ads!</h1>
-    <div class="row  gap-3">
+    <div class="row gap-3 d-flex justify-content-between bg-dark-subtle">
         <div class="col">
             <div class="row gap-3 d-flex justify-content-between">
                 <c:forEach var="ad" items="${ads}">
                     <article class="card col-3 border border-1 p-0">
                         <div class="card-header p-0 d-flex justify-content-center">
-                            <img src="${pageContext.request.contextPath}/data/images/0_image_missing.png" alt="alt" class="img-fluid rounded-top">
+                             <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="img-fluid rounded-top">
                                 <%--                    <img src="../../../data/images/image_missing.webp" alt="alt">--%>
                         </div>
                         <div class="card-body">
                             <p class="card-title">${ad.title}</p>
-                            <p>${ad.description}</p>
+                            <p>${ad.shortDescription}</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between">
                             <p>${ad.price}</p>
-                            <button class="btn btn-primary">More info</button>
+                            <a href="more-info?adId=${ad.id}" class="btn btn-primary">More info</a>
                         </div>
                     </article>
                 </c:forEach>

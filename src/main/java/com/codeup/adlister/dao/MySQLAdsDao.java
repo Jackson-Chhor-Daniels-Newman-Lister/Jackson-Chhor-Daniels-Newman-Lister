@@ -39,18 +39,35 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+
+    @Override
+    public Ad individual(long adNumber) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ?");
+            stmt.setLong(1, adNumber);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractAd(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving more info on ads.", e);
+        }
+    }
+
     @Override
     public Long insert(Ad ad) {
         try {
             //(String title, String description, String shortDescription, int price, int dogId)
-            String insertQuery = "INSERT INTO ads(title, description, short_description, price, dog_id) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO ads(title, description, short_description, price, image, dog_id) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+          
             PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, ad.getTitle());
-            stmt.setString(2, ad.getDescription());
-            stmt.setString(3, ad.getShortDescription());
+            stmt.setString(2, ad.getShortDescription());
+            stmt.setString(3, ad.getDescription());
             stmt.setLong(4, ad.getPrice());
-            stmt.setLong(5, ad.getDogId());
+            stmt.setString(5, ad.getImage());
+            stmt.setLong(6, ad.getDogId());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
@@ -60,6 +77,8 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+
+
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
             rs.getLong("id"),
@@ -67,6 +86,7 @@ public class MySQLAdsDao implements Ads {
             rs.getString("short_description"),
             rs.getString("description"),
             rs.getInt("price"),
+           rs.getString("image"),
             rs.getInt("dog_id")
         );
     }
@@ -77,5 +97,14 @@ public class MySQLAdsDao implements Ads {
             ads.add(extractAd(rs));
         }
         return ads;
+    }
+
+    private Ad createOneAdFromResults(ResultSet rs) throws SQLException {
+//        List<Ad> ads = new ArrayList<>();
+        while (rs.next()) {
+//            ads.add(extractAd(rs));
+            return extractAd(rs);
+        }
+        return extractAd(rs);
     }
 }
