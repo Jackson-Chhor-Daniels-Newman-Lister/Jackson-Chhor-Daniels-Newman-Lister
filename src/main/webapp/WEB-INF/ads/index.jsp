@@ -9,9 +9,9 @@
 <body>
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
-<section class="container">
-    <h1>Here Are all the ads!</h1>
-    <div class="row gap-3 d-flex justify-content-between">
+<section class="container text-center bg-info-subtle font-monospace">
+    <h1>Check Out Our Ads Below !</h1>
+    <div class="row gap-3 d-flex justify-content-between bg-dark-subtle">
         <c:forEach var="ad" items="${ads}">
             <article class="card col-3 border border-1 p-0">
                 <div class="card-header p-0 d-flex justify-content-center">
