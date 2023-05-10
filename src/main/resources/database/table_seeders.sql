@@ -133,6 +133,14 @@ values ('Adorable French Bulldog for sale!', '', '', 2500,'french bulldog.jpeg',
        ('Fast like a jaguar!', 'Jaguar is a fun loving pup who loves to run around outdoors! He is very friendly and love kisses and social time!', 'Labradors make perfect family pets, given the right socialization, as with all breeds. They bond well with the whole family and are affectionate and loving. Their patient nature makes them ideal for children.', 950,'labrador.jpeg', 19),
        ('Almost as small as a sprinkle!', 'If you''ve ever wanted a dog that you can basically carry around in your pocket, then look no further!', 'The Pomeranian is a small, fluffy breed of dog that is often referred to as the "Pom." They are known for their luxurious double coat, which comes in a variety of colors, including cream, orange, and black. Despite their small size, Pomeranians are energetic and lively dogs that love to play and go for walks. They are intelligent and trainable dogs that enjoy learning new tricks and command', 2500,'Pomeranian.jpeg', 20);
 
+INSERT INTO users (name, email, username, password)
+VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
+       ();
+
+INSERT INTO user_ads (user_id, ad_id)
+VALUES  (1,1),
+        ();
+
 INSERT INTO dog_breeds(dog_id, breed_id)
 VALUES (1,29),
        (2,2),
