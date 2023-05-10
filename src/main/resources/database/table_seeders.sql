@@ -159,18 +159,17 @@ VALUES (1,29),
 INSERT INTO users (name, email, username, password)
 VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
        ('Guy', 'Funguy@gmail.com', 'funguy', 'funguy123'),
-           ('Sam', 'Samking@gmail.com', 'Samdoglover', 'ilovedogs10'),
-           ('Tim', 'Timothy2@yahoo.com', 'Timmy2', 'timtim25'),
-           ('Zy', 'Zyzy@gmail.com', 'Zy103', 'dogsaremyfavorite'),
-           ('Mark', 'mark10@hotmail.com', 'MarkJ1', 'Doggieworld'),
-           ('Anthony' ,'Anthony7@gmail.com', 'Doguy22', 'Anthony2526'),
-           ('Samatha', 'Samatha1@yahoo.com', 'Samatha1', 'Shelovedog23'),
-           ('Adrian', 'Adrian10@gmail.com', 'Adrianlovespup', 'Puppies123'),
-           ('Kennedy', 'kenk@gmail.com' , 'Kennypuppies', 'Kenklovespups');
+       ('Sam', 'Samking@gmail.com', 'Samdoglover', 'ilovedogs10'),
+       ('Tim', 'Timothy2@yahoo.com', 'Timmy2', 'timtim25'),
+       ('Zy', 'Zyzy@gmail.com', 'Zy103', 'dogsaremyfavorite'),
+       ('Mark', 'mark10@hotmail.com', 'MarkJ1', 'Doggieworld'),
+       ('Anthony' ,'Anthony7@gmail.com', 'Doguy22', 'Anthony2526'),
+       ('Samatha', 'Samatha1@yahoo.com', 'Samatha1', 'Shelovedog23'),
+       ('Adrian', 'Adrian10@gmail.com', 'Adrianlovespup', 'Puppies123'),
+       ('Kennedy', 'kenk@gmail.com' , 'Kennypuppies', 'Kenklovespups');
 
 INSERT INTO user_ads (user_id, ad_id)
-VALUES  (1,1),
-        ();
+VALUES  (1,1);
 
 
 
