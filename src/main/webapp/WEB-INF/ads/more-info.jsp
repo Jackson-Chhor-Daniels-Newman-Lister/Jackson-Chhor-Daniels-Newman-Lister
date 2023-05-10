@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1>More Info</h1>
-<c:set var="ad" scope="session" value="${adId}"/>
+<c:set var="ad" scope="session" value="${ad}"/>
 <p>${ad.id}</p>
 <p>${ad.shortDescription}</p>
 <p>${ad.description}</p>

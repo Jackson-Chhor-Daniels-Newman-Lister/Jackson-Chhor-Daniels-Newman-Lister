@@ -20,7 +20,7 @@
                 </div>
                 <div class="card-body">
                     <p class="card-title">${ad.title}</p>
-                    <p>${ad.description}</p>
+                    <p>${ad.shortDescription}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
                     <p>${ad.price}</p>
