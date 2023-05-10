@@ -44,9 +44,10 @@ public class MySQLAdsDao implements Ads {
     public Ad individual(long adNumber) {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ${Int.parseInt(adNumber)}");
+            stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = 2");
             ResultSet rs = stmt.executeQuery();
-            return createOneAdFromResults(rs);
+            rs.next();
+            return extractAd(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving more info on ads.", e);
         }
@@ -56,12 +57,12 @@ public class MySQLAdsDao implements Ads {
     public Long insert(Ad ad) {
         try {
             //(String title, String description, String shortDescription, int price, int dogId)
-            String insertQuery = "INSERT INTO ads(title, description, short_description, price, dog_id) " +
+            String insertQuery = "INSERT INTO ads(title, short_description, description, price, dog_id) " +
                     "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, ad.getTitle());
-            stmt.setString(2, ad.getDescription());
-            stmt.setString(3, ad.getShortDescription());
+            stmt.setString(2, ad.getShortDescription());
+            stmt.setString(3, ad.getDescription());
             stmt.setLong(4, ad.getPrice());
             stmt.setLong(5, ad.getDogId());
             stmt.executeUpdate();

@@ -14,10 +14,12 @@
 </head>
 <body>
 <h1>More Info</h1>
-<c:forEach var="ad" items="${adId}">
-    <p>${ad.shortDescription}</p>
-
-</c:forEach>
+<c:set var="ad" scope="session" value="${adId}"/>
+<p>${ad.id}</p>
+<p>${ad.shortDescription}</p>
+<p>${ad.description}</p>
+<p>${ad.title}</p>
+<p>${ad.price}</p>
 
 </body>
 </html>
