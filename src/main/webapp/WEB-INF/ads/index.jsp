@@ -15,7 +15,7 @@
         <c:forEach var="ad" items="${ads}">
             <article class="card col-3 border border-1 p-0">
                 <div class="card-header p-0 d-flex justify-content-center">
-                    <img src="${pageContext.request.contextPath}/data/images/0_image_missing.png" alt="alt" class="img-fluid rounded-top">
+                    <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="img-fluid rounded-top">
 <%--                    <img src="../../../resources/images/image_missing.webp" alt="alt">--%>
                 </div>
                 <div class="card-body">
