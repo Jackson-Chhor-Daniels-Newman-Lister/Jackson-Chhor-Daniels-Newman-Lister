@@ -44,7 +44,8 @@ public class MySQLAdsDao implements Ads {
     public Ad individual(long adNumber) {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = 2");
+            stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ?");
+            stmt.setLong(1, adNumber);
             ResultSet rs = stmt.executeQuery();
             rs.next();
             return extractAd(rs);
