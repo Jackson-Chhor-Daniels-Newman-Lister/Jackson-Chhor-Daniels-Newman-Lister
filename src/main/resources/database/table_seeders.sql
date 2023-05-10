@@ -111,10 +111,6 @@ values ('Chupa', '6', '4', '1', '3', '2'),
        ('Jaguar', '6', '4', '4', '4', '4'),
        ('Sprinkle', '1', '4', '4', '5', '3');
 
-
-
-
-
 INSERT INTO ads(title, short_description, description, price, image, dog_id)
 values ('Adorable French Bulldog for sale!', '', '', 2500,'french bulldog.jpeg', 1),
        ('Here comes Snowflake!!', 'The Akita is a popular breed with many unique traits. Learn all about this loyal, intelligent dog', 'Looking for a furry friend who''s loyal, loving, and a little bit quirky? Look no further than the Akita! This pup is sure to steal your heart with their fluffy coat, perky ears, and playful personality. Adopt an Akita today and add some whimsy to your life!', 1500,'Akita.jpeg', 2),
@@ -159,6 +155,14 @@ VALUES (1,29),
        (19, 40),
        (20, 48);
 
+
+INSERT INTO users (name, email, username, password)
+VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
+       ();
+
+INSERT INTO user_ads (user_id, ad_id)
+VALUES  (1,1),
+        ();
 
 
 
