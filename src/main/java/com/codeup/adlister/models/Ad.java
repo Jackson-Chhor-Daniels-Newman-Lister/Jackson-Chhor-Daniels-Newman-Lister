@@ -9,6 +9,7 @@ public class Ad {
     private String image;
     private int dogId;
 
+
     public Ad (String title, String description, String shortDescription, int price, String image, int dogId){
         this.title = title;
         this.description = description;
@@ -18,6 +19,7 @@ public class Ad {
         this.dogId = dogId;
     }
 
+  
     public Ad(long id, String title, String description, String shortDescription, int price, String image, int dogId) {
         this.id = id;
         this.title = title;
