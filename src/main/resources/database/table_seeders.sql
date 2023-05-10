@@ -115,7 +115,7 @@ values ('Chupa', '6', '4', '1', '3', '2'),
 
 
 
-INSERT INTO ads(title, short_description, description, price, dog_id)
+INSERT INTO ads(title, short_description, description, price, image, dog_id)
 values ('Adorable French Bulldog for sale!', '', '', 2500, 1),
        ('Here comes Snowflake!!', 'The Akita is a popular breed with many unique traits. Learn all about this loyal, intelligent dog', 'Looking for a furry friend who''s loyal, loving, and a little bit quirky? Look no further than the Akita! This pup is sure to steal your heart with their fluffy coat, perky ears, and playful personality. Adopt an Akita today and add some whimsy to your life!', 1500, 2),
        ('You''ve got a need for speed!', 'Often mistaken for the Italian Greyhound, the Whippet is a family-friendly dog.', 'Looking for a furry friend who''s equal parts elegance and goofiness? Meet the Whippet! This sleek and speedy pup loves nothing more than chasing after tennis balls and snuggling up on the couch. Adopt a Whippet today and add some quirkiness to your life!', 1100, 3),
@@ -136,6 +136,14 @@ values ('Adorable French Bulldog for sale!', '', '', 2500, 1),
        ('The cutest scrunch ever!', 'Looking for a furry friend who''s equal parts cute and goofy? Meet, Pouty!', 'They are often described as "clowns" due to their playful and mischievous nature.', 500, 18),
        ('Fast like a jaguar!', 'Jaguar is a fun loving pup who loves to run around outdoors! He is very friendly and love kisses and social time!', 'Labradors make perfect family pets, given the right socialization, as with all breeds. They bond well with the whole family and are affectionate and loving. Their patient nature makes them ideal for children.', 950, 19),
        ('Almost as small as a sprinkle!', 'If you''ve ever wanted a dog that you can basically carry around in your pocket, then look no further!', 'The Pomeranian is a small, fluffy breed of dog that is often referred to as the "Pom." They are known for their luxurious double coat, which comes in a variety of colors, including cream, orange, and black. Despite their small size, Pomeranians are energetic and lively dogs that love to play and go for walks. They are intelligent and trainable dogs that enjoy learning new tricks and command', 2500, 20);
+
+INSERT INTO users (name, email, username, password)
+VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
+       ();
+
+INSERT INTO user_ads (user_id, ad_id)
+VALUES  (1,1),
+        ();
 
 INSERT INTO dog_breeds(dog_id, breed_id)
 VALUES (1,29),

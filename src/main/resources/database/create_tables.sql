@@ -8,8 +8,6 @@ DROP TABLE IF EXISTS dogs;
 DROP TABLE IF EXISTS breeds;
 DROP TABLE IF EXISTS traits;
 
-
-
 CREATE TABLE users
 (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -39,6 +37,7 @@ CREATE TABLE ads
     short_description VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     price INT,
+    image VARCHAR(255),
     dog_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (dog_id) REFERENCES dogs(id),
     PRIMARY KEY (id)
