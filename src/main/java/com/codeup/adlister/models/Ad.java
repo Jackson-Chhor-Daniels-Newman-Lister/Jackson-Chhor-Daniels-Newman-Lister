@@ -72,4 +72,5 @@ public class Ad {
     public void setDogId(int dogId) {
         this.dogId = dogId;
     }
+
 }
