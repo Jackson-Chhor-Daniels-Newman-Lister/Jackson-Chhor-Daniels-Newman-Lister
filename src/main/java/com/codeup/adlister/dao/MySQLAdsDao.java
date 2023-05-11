@@ -85,7 +85,6 @@ public class MySQLAdsDao implements Ads {
             stmt = connection.prepareStatement("SELECT * FROM ads JOIN user_ads ON ads.id = user_ads.ad_id WHERE user_id = ?");
             stmt.setLong(1, userId);
             ResultSet rs = stmt.executeQuery();
-            rs.next();
             return createListFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving ad count for user ID: " + userId, e);
