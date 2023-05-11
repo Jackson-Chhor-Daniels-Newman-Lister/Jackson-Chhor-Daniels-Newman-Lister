@@ -44,7 +44,10 @@ public class MySQLAdsDao implements Ads {
         String searchTerm = "'%" + searchString + "%'";
         try {
             stmt = connection.prepareStatement(
-                    "SELECT DISTINCT * FROM ads " +
+                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
+                            "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
+                            "FROM ads " +
                             "JOIN dogs ON ads.dog_id = dogs.id " +
                             "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
                             "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
@@ -52,10 +55,10 @@ public class MySQLAdsDao implements Ads {
                             "JOIN traits ON dog_traits.trait_id = traits.id " +
                             "WHERE ads.title LIKE " + searchTerm +
                             " OR traits.name LIKE " + searchTerm +
-                            " OR breeds.name LIKE " + searchTerm
+                            " OR breeds.name LIKE " + searchTerm +
+                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training"
             );
 
-//            stmt = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE title LIKE '%French%'");
             System.out.println("some stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             return createListFromResults(rs);
@@ -125,12 +128,10 @@ public class MySQLAdsDao implements Ads {
                 case Types.INTEGER:
                     int intValue = rs.getInt(i);
                     myObject.put(rsmd.getColumnName(i),intValue);
-                    System.out.println("intValue = " + intValue);
                     break;
                 default:
                     String stringValue = rs.getString(i);
                     myObject.put(rsmd.getColumnName(i),stringValue);
-                    System.out.println("stringValue = " + stringValue);
                     break;
             }
         }

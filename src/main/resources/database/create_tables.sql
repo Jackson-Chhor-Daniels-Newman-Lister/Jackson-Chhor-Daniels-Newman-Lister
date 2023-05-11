@@ -86,3 +86,4 @@ CREATE TABLE dog_traits
     FOREIGN KEY (trait_id) REFERENCES traits(id),
     PRIMARY KEY (id)
 );
+
