@@ -3,14 +3,15 @@ package com.codeup.adlister.dao;
 import com.codeup.adlister.models.Ad;
 
 import java.util.List;
-
+ 
 public interface Ads {
-    // get a list of all the ads
-    List<Ad> all();
-    // insert a new ad and return the new ad's id
+    List<Object> all(String tableName);
+
+    List<Object> some(String tableName, String searchTerm);
+
     Long insert(Ad ad);
 
-    Ad individual(long adId);
+    Object individual(long adId);
 
-    Ad userAd(long userAd);
+    //testgit
 }
