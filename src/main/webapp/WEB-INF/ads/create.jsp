@@ -8,6 +8,7 @@
 <body>
     <div class="container">
         <h1>Create a new Ad</h1>
+        <img class="bg-img img-fluid" src='${pageContext.request.contextPath}/data/images/background1.jpg'>
         <form action="/ads/create" method="post">
             <div class="form-group">
                 <label for="title">Title</label>
