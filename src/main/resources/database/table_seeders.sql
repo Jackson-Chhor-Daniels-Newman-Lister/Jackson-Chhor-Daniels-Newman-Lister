@@ -134,12 +134,8 @@ values ('Adorable French Bulldog for sale!', '', '', 2500,'french bulldog.jpeg',
        ('Almost as small as a sprinkle!', 'If you''ve ever wanted a dog that you can basically carry around in your pocket, then look no further!', 'The Pomeranian is a small, fluffy breed of dog that is often referred to as the "Pom." They are known for their luxurious double coat, which comes in a variety of colors, including cream, orange, and black. Despite their small size, Pomeranians are energetic and lively dogs that love to play and go for walks. They are intelligent and trainable dogs that enjoy learning new tricks and command', 2500,'Pomeranian.jpeg', 20);
 
 INSERT INTO users (name, email, username, password)
-VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
-       ();
+VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22');
 
-INSERT INTO user_ads (user_id, ad_id)
-VALUES  (1,1),
-        ();
 
 INSERT INTO dog_breeds(dog_id, breed_id)
 VALUES (1,29),
@@ -178,15 +174,15 @@ VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
 
 INSERT INTO user_ads (user_id, ad_id)
 VALUES  (1,1),
-        (11,2),
-        (11,3),
-        (11,4),
-        (11,5),
-        (11,6),
-        (11,7),
-        (11,8),
-        (11,9),
-        (11,10);
+        (12,2),
+        (12,3),
+        (12,4),
+        (12,5),
+        (12,6),
+        (12,7),
+        (12,8),
+        (12,9),
+        (12,10);
 
 
 

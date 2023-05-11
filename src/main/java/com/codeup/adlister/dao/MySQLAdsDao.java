@@ -4,9 +4,6 @@ import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +48,19 @@ public class MySQLAdsDao implements Ads {
             return extractAd(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving more info on ads.", e);
+        }
+    }
+
+    public Ad userAd (long userAdId) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM user_ads WHERE user_id = ?");
+            stmt.setLong(1, userAdId);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractAd(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving user ads.", e);
         }
     }
 

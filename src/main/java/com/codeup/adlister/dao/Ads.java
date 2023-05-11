@@ -12,4 +12,5 @@ public interface Ads {
 
     Ad individual(long adId);
 
+    Ad userAd(long userAd);
 }
