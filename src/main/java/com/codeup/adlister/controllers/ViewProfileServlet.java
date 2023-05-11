@@ -18,6 +18,7 @@ public class ViewProfileServlet extends HttpServlet {
             return;
         }
         List<Object> userAd = DaoFactory.getAdsDao().all("ads");
+
         System.out.println(userAd);
         request.setAttribute("ads", userAd);
 
