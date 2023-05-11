@@ -32,24 +32,31 @@
                 </c:forEach>
             </div>
         </div>
-        <div class="col-3 bg-primary p-3">
+        <div class="col-3 bg-primary pt-5">
             <h2 class="text-light">Find Your Pup!</h2>
-            <div class="d-flex flex-column justify-content-start row-gap-3">
-                <div class="row p-3">
-                    <label for="search-input" class="col-12 text-light">Search</label>
-                    <input id="search-input" class="col-12 form-control">
-                    <button class="col-5 btn btn-danger mt-2">Submit</button>
+            <div class="d-flex flex-column justify-content-start align-items-start row-gap-3 p-3">
+                <div class="form-floating form-group">
+                    <input id="search-input" class="form-control" placeholder="search">
+                    <label for="search-input">Search</label>
+                    <button class="btn btn-danger mt-2">Submit</button>
                 </div>
 
                 <div class="form-group">
                     <label for="select-breed" class="text-light">Breed</label>
-                    <select id="select-breed" class="form-select"></select>
+                    <select id="select-breed" class="form-select">
+                        <option selected value="0">SELECT BREED</option>
+                        <c:forEach var="breed" items="${breeds}">
+                            <option>${breed.name}</option>
+                        </c:forEach>
+                    </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="select-traits" class="text-light">Traits</label>
-                    <select id="select-traits" class="form-select"></select>
-                </div>
+                    <c:forEach var="trait" items="${traits}">
+                    <div class="form-group">
+                        <label for="${trait}" class="text-light">${trait}</label>
+                        <input type="checkbox" id="${trait}" value="${trait}" name="${trait}">
+                    </div>
+                    </c:forEach>
 
                 <div class="form-group">
                     <label class="text-light">Playfulness</label>

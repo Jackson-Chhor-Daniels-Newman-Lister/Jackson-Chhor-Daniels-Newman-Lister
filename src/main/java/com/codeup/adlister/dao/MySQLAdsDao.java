@@ -1,6 +1,7 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.Breed;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
@@ -36,6 +37,31 @@ public class MySQLAdsDao implements Ads {
             return createAdsFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
+        }
+    }
+
+
+    @Override
+    public List<Breed> breedSelector() {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM breeds");
+            ResultSet rs = stmt.executeQuery();
+            return breedList(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving all breeds.", e);
+        }
+    }
+
+    @Override
+    public List<String>traits() {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM traits");
+            ResultSet rs = stmt.executeQuery();
+            return traitList(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving all traits.", e);
         }
     }
 
@@ -86,7 +112,7 @@ public class MySQLAdsDao implements Ads {
             rs.getString("short_description"),
             rs.getString("description"),
             rs.getInt("price"),
-           rs.getString("image"),
+            rs.getString("image"),
             rs.getInt("dog_id")
         );
     }
@@ -99,12 +125,30 @@ public class MySQLAdsDao implements Ads {
         return ads;
     }
 
-    private Ad createOneAdFromResults(ResultSet rs) throws SQLException {
-//        List<Ad> ads = new ArrayList<>();
+    private List<Breed> breedList(ResultSet rs) throws SQLException {
+        List<Breed> breeds = new ArrayList<>();
         while (rs.next()) {
-//            ads.add(extractAd(rs));
-            return extractAd(rs);
+            breeds.add(extractBreed(rs));
         }
-        return extractAd(rs);
+        return breeds;
+    }
+
+    private List<String> traitList(ResultSet rs) throws SQLException {
+        List<String> breeds = new ArrayList<>();
+        while (rs.next()) {
+            breeds.add(extractTraits(rs));
+        }
+        return breeds;
+    }
+
+    private Breed extractBreed(ResultSet rs) throws SQLException {
+        return new Breed(
+                rs.getLong("id"),
+                rs.getString("name")
+        );
+    }
+
+    private String extractTraits(ResultSet rs) throws SQLException {
+        return rs.getString("name");
     }
 }

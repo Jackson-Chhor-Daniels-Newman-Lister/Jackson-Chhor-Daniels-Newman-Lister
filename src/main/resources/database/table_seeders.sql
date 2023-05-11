@@ -64,15 +64,13 @@ VALUES  ('Airedale Terrier'),
 INSERT INTO traits (name)
 VALUES ('Affectionate'),
        ('Calm'),
-       ('Confident'),
-       ('Courageous'),
        ('Curious'),
-       ('Eager to please'),
        ('Friendly'),
        ('Gentle'),
+       ('Happy'),
+       ('Housebroken'),
        ('Good with children'),
        ('Independent'),
-       ('Intelligent'),
        ('Lively'),
        ('Loyal'),
        ('Mischievous'),
@@ -80,14 +78,12 @@ VALUES ('Affectionate'),
        ('Protective'),
        ('Reserved'),
        ('Sensitive'),
+       ('Smart'),
        ('Sociable'),
        ('Stubborn'),
        ('Submissive'),
-       ('Sweet-tempered'),
        ('Vocal'),
-       ('Watchful'),
-       ('Well-behaved'),
-       ('Willful');
+       ('Well-behaved');
 
 INSERT INTO dogs(name, age, playfulness, socialization, affection, training)
 values ('Chupa', '6', '4', '1', '3', '2'),
@@ -132,14 +128,6 @@ values ('Adorable French Bulldog for sale!', '', '', 2500,'french bulldog.jpeg',
        ('The cutest scrunch ever!', 'Looking for a furry friend who''s equal parts cute and goofy? Meet, Pouty!', 'They are often described as "clowns" due to their playful and mischievous nature.', 500,'Basset Hound.jpeg', 18),
        ('Fast like a jaguar!', 'Jaguar is a fun loving pup who loves to run around outdoors! He is very friendly and love kisses and social time!', 'Labradors make perfect family pets, given the right socialization, as with all breeds. They bond well with the whole family and are affectionate and loving. Their patient nature makes them ideal for children.', 950,'labrador.jpeg', 19),
        ('Almost as small as a sprinkle!', 'If you''ve ever wanted a dog that you can basically carry around in your pocket, then look no further!', 'The Pomeranian is a small, fluffy breed of dog that is often referred to as the "Pom." They are known for their luxurious double coat, which comes in a variety of colors, including cream, orange, and black. Despite their small size, Pomeranians are energetic and lively dogs that love to play and go for walks. They are intelligent and trainable dogs that enjoy learning new tricks and command', 2500,'Pomeranian.jpeg', 20);
-
-INSERT INTO users (name, email, username, password)
-VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
-       ();
-
-INSERT INTO user_ads (user_id, ad_id)
-VALUES  (1,1),
-        ();
 
 INSERT INTO dog_breeds(dog_id, breed_id)
 VALUES (1,29),
