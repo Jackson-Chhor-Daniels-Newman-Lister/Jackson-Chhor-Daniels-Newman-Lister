@@ -151,7 +151,6 @@ VALUES (1,29),
        (19, 40),
        (20, 48);
 
-
 INSERT INTO dog_traits (dog_id, trait_id)
 VALUES
     (1, 1), (1, 3), (1, 9), (1, 12), (1, 18),
@@ -174,7 +173,6 @@ VALUES
     (18, 2), (18, 6), (18, 11), (18, 14), (18, 15), (18, 22),
     (19, 1), (19, 4), (19, 10), (19, 16), (19,21),
     (20, 5), (20, 18), (20, 19), (20, 21);
-
 
 INSERT INTO users (name, email, username, password)
 VALUES ('Gage','gage@gmail.com','Gage','$2a$12$uebzoghT/K2LsilFE1Mc9OEfFCOZDbp.7FFVGYDjQhuErBMKMA0JO'),

@@ -10,7 +10,7 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
 <section class="container text-center bg-info-subtle font-monospace">
-    <h1 class="mt-5 mb-3">Here Are all the ads!</h1>
+    <h1 class="mt-5 mb-3 color:darkgoldenrod">Here Are all the ads!</h1>
     <div class="row gap-3 d-flex justify-content-between">
         <div class="col">
             <div class="row gap-4 d-flex justify-content-start">
