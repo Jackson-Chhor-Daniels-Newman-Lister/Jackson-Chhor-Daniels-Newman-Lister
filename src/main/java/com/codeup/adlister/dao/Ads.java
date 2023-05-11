@@ -14,5 +14,9 @@ public interface Ads {
 
     Object individual(long adId);
 
+    List<Object> adsByUserId(long userId);
+
+
+
     //testgit
 }
