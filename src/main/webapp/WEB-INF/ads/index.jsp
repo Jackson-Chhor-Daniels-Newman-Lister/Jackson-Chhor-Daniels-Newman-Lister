@@ -6,14 +6,14 @@
         <jsp:param name="title" value="Viewing All The Ads" />
     </jsp:include>
 </head>
-<body>
+<body class="bg-info-subtle">
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
 <section class="container text-center bg-info-subtle font-monospace">
-    <h1>Here Are all the ads!</h1>
-    <div class="row gap-3 d-flex justify-content-between bg-dark-subtle">
+    <h1 class="mt-5 mb-3">Here Are all the ads!</h1>
+    <div class="row gap-3 d-flex justify-content-between">
         <div class="col">
-            <div class="row gap-3 d-flex justify-content-between">
+            <div class="row gap-4 d-flex justify-content-start">
                 <c:forEach var="ad" items="${ads}">
                     <article class="card col-3 border border-1 p-0">
                         <div class="card-header p-0 d-flex justify-content-center">
@@ -24,22 +24,24 @@
                             <p class="card-title">${ad.title}</p>
                             <p>${ad.shortDescription}</p>
                         </div>
-                        <div class="card-footer d-flex justify-content-between">
-                            <p>${ad.price}</p>
-                            <a href="more-info?adId=${ad.id}" class="btn btn-primary">More info</a>
+                        <div class="card-footer d-flex justify-content-between align-items-center gap-2">
+                            <span>$${ad.price}</span>
+                            <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More info</a>
                         </div>
                     </article>
                 </c:forEach>
             </div>
         </div>
-        <div class="col-3 bg-primary pt-5">
+        <div class="col-3 bg-info pt-5">
             <h2 class="text-light">Find Your Pup!</h2>
             <div class="d-flex flex-column justify-content-start align-items-start row-gap-3 p-3">
-                <div class="form-floating form-group">
-                    <input id="search-input" class="form-control" placeholder="search">
-                    <label for="search-input">Search</label>
-                    <button class="btn btn-danger mt-2">Submit</button>
-                </div>
+                <form action="/ads?" method="post">
+                    <div class="form-floating form-group">
+                        <input id="search-input" class="form-control" name="search-input" placeholder="search">
+                        <label for="search-input">Search</label>
+                        <button class="btn btn-light mt-2">Submit</button>
+                    </div>
+                </form>
 
                 <div class="form-group">
                     <label for="select-breed" class="text-light">Breed</label>
@@ -53,8 +55,8 @@
 
                     <c:forEach var="trait" items="${traits}">
                     <div class="form-group">
-                        <label for="${trait}" class="text-light">${trait}</label>
-                        <input type="checkbox" id="${trait}" value="${trait}" name="${trait}">
+                        <label for="${trait.name}" class="text-light">${trait.name}</label>
+                        <input type="checkbox" id="${trait.name}" value="${trait.name}" name="${trait.name}">
                     </div>
                     </c:forEach>
 

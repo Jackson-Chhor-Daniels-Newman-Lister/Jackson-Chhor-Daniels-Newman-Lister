@@ -15,11 +15,19 @@ import java.util.List;
 public class AdsIndexServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Breed> breedList = DaoFactory.getAdsDao().breedSelector();
-        List<String> traitList = DaoFactory.getAdsDao().traits();
-        request.setAttribute("ads", DaoFactory.getAdsDao().all());
-        request.setAttribute("breeds", breedList);
-        request.setAttribute("traits", traitList);
+        request.setAttribute("ads", DaoFactory.getAdsDao().all("ads"));
+        request.setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
+        request.setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
+        request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String searchInput = request.getParameter("search-input");
+        //String redirectString = "/ads?search=" + searchInput;
+        request.getSession().setAttribute("ads", DaoFactory.getAdsDao().some("ads", searchInput));
+        request.getSession().setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
+        request.getSession().setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
+        //response.sendRedirect(redirectString);
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }
 }

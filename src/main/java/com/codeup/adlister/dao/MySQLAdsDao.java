@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MySQLAdsDao implements Ads {
@@ -29,52 +30,52 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public List<Ad> all() {
+    public List<Object> all(String tableName) {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads");
+            stmt = connection.prepareStatement("SELECT * FROM " + tableName);
             ResultSet rs = stmt.executeQuery();
-            return createAdsFromResults(rs);
+            return createListFromResults(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving all ads.", e);
-        }
-    }
-
-
-    @Override
-    public List<Breed> breedSelector() {
-        PreparedStatement stmt = null;
-        try {
-            stmt = connection.prepareStatement("SELECT * FROM breeds");
-            ResultSet rs = stmt.executeQuery();
-            return breedList(rs);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving all breeds.", e);
+            throw new RuntimeException("Error retrieving from table: " + tableName, e);
         }
     }
 
     @Override
-    public List<String>traits() {
+    public List<Object> some(String tableName, String searchString) {
         PreparedStatement stmt = null;
+        String searchTerm = "'%" + searchString + "%'";
         try {
-            stmt = connection.prepareStatement("SELECT * FROM traits");
+            stmt = connection.prepareStatement(
+                    "SELECT DISTINCT * FROM ads " +
+                            "JOIN dogs ON ads.dog_id = dogs.id " +
+                            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+                            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+                            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+                            "JOIN traits ON dog_traits.trait_id = traits.id " +
+                            "WHERE ads.title LIKE " + searchTerm +
+                            " OR traits.name LIKE " + searchTerm +
+                            " OR breeds.name LIKE " + searchTerm
+            );
+
+//            stmt = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE title LIKE '%French%'");
+            System.out.println("some stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
-            return traitList(rs);
+            return createListFromResults(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving all traits.", e);
+            throw new RuntimeException("Error retrieving from table: " + tableName, e);
         }
     }
 
-
     @Override
-    public Ad individual(long adNumber) {
+    public Object individual(long adNumber) {
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ?");
             stmt.setLong(1, adNumber);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return extractAd(rs);
+            return extractObject(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving more info on ads.", e);
         }
@@ -83,7 +84,6 @@ public class MySQLAdsDao implements Ads {
     @Override
     public Long insert(Ad ad) {
         try {
-            //(String title, String description, String shortDescription, int price, int dogId)
             String insertQuery = "INSERT INTO ads(title, description, short_description, price, image, dog_id) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
           
@@ -103,52 +103,35 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    private HashMap<String, Object> extractObject(ResultSet rs) throws SQLException {
+        HashMap<String, Object> myObject = new HashMap<>();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnCount = rsmd.getColumnCount();
 
+        for (int i = 1; i <= columnCount; i++){
+            int columnType = rsmd.getColumnType(i);
 
-    private Ad extractAd(ResultSet rs) throws SQLException {
-        return new Ad(
-            rs.getLong("id"),
-            rs.getString("title"),
-            rs.getString("short_description"),
-            rs.getString("description"),
-            rs.getInt("price"),
-            rs.getString("image"),
-            rs.getInt("dog_id")
-        );
-    }
-
-    private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
-        List<Ad> ads = new ArrayList<>();
-        while (rs.next()) {
-            ads.add(extractAd(rs));
+            switch (columnType) {
+                case Types.INTEGER:
+                    int intValue = rs.getInt(i);
+                    myObject.put(rsmd.getColumnName(i),intValue);
+                    System.out.println("intValue = " + intValue);
+                    break;
+                default:
+                    String stringValue = rs.getString(i);
+                    myObject.put(rsmd.getColumnName(i),stringValue);
+                    System.out.println("stringValue = " + stringValue);
+                    break;
+            }
         }
-        return ads;
+        return myObject;
     }
 
-    private List<Breed> breedList(ResultSet rs) throws SQLException {
-        List<Breed> breeds = new ArrayList<>();
-        while (rs.next()) {
-            breeds.add(extractBreed(rs));
+    private List<Object>createListFromResults(ResultSet rs) throws SQLException {
+        List<Object> list = new ArrayList<>();
+        while (rs.next()){
+            list.add(extractObject(rs));
         }
-        return breeds;
-    }
-
-    private List<String> traitList(ResultSet rs) throws SQLException {
-        List<String> breeds = new ArrayList<>();
-        while (rs.next()) {
-            breeds.add(extractTraits(rs));
-        }
-        return breeds;
-    }
-
-    private Breed extractBreed(ResultSet rs) throws SQLException {
-        return new Breed(
-                rs.getLong("id"),
-                rs.getString("name")
-        );
-    }
-
-    private String extractTraits(ResultSet rs) throws SQLException {
-        return rs.getString("name");
+        return list;
     }
 }
