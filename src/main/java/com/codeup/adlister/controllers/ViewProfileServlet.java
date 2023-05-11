@@ -21,7 +21,7 @@ public class ViewProfileServlet extends HttpServlet {
         System.out.println(userAd);
         request.setAttribute("ads", userAd);
 
-
+        //change
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
 }
