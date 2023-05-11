@@ -42,11 +42,23 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public List<Object> some(String tableName, String searchTerm) {
+    public List<Object> some(String tableName, String searchString) {
         PreparedStatement stmt = null;
+        String searchTerm = "'%" + searchString + "%'";
         try {
-            //stmt = connection.prepareStatement("SELECT * FROM " + tableName + "WHERE title LIKE '%" + searchTerm + "%'");
-            stmt = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE title LIKE '%French%'");
+            stmt = connection.prepareStatement(
+                    "SELECT DISTINCT * FROM ads " +
+                            "JOIN dogs ON ads.dog_id = dogs.id " +
+                            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+                            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+                            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+                            "JOIN traits ON dog_traits.trait_id = traits.id " +
+                            "WHERE ads.title LIKE " + searchTerm +
+                            " OR traits.name LIKE " + searchTerm +
+                            " OR breeds.name LIKE " + searchTerm
+            );
+
+//            stmt = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE title LIKE '%French%'");
             System.out.println("some stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             return createListFromResults(rs);
@@ -103,11 +115,12 @@ public class MySQLAdsDao implements Ads {
                 case Types.INTEGER:
                     int intValue = rs.getInt(i);
                     myObject.put(rsmd.getColumnName(i),intValue);
+                    System.out.println("intValue = " + intValue);
                     break;
-
                 default:
                     String stringValue = rs.getString(i);
                     myObject.put(rsmd.getColumnName(i),stringValue);
+                    System.out.println("stringValue = " + stringValue);
                     break;
             }
         }

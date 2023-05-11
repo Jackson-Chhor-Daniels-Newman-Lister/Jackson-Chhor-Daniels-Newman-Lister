@@ -22,7 +22,12 @@ public class AdsIndexServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String search = request.getParameter("search-input");
-        request.setAttribute("ads", DaoFactory.getAdsDao().some("ads", search));
+        String searchInput = request.getParameter("search-input");
+        //String redirectString = "/ads?search=" + searchInput;
+        request.getSession().setAttribute("ads", DaoFactory.getAdsDao().some("ads", searchInput));
+        request.getSession().setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
+        request.getSession().setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
+        //response.sendRedirect(redirectString);
+        request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }
 }

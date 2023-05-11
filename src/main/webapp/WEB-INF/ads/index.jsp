@@ -35,7 +35,7 @@
         <div class="col-3 bg-info pt-5">
             <h2 class="text-light">Find Your Pup!</h2>
             <div class="d-flex flex-column justify-content-start align-items-start row-gap-3 p-3">
-                <form action="/ads" method="post">
+                <form action="/ads?" method="post">
                     <div class="form-floating form-group">
                         <input id="search-input" class="form-control" name="search-input" placeholder="search">
                         <label for="search-input">Search</label>
