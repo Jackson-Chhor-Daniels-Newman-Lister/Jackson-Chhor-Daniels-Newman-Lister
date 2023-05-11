@@ -64,15 +64,13 @@ VALUES  ('Airedale Terrier'),
 INSERT INTO traits (name)
 VALUES ('Affectionate'),
        ('Calm'),
-       ('Confident'),
-       ('Courageous'),
        ('Curious'),
-       ('Eager to please'),
        ('Friendly'),
        ('Gentle'),
+       ('Happy'),
+       ('Housebroken'),
        ('Good with children'),
        ('Independent'),
-       ('Intelligent'),
        ('Lively'),
        ('Loyal'),
        ('Mischievous'),
@@ -80,14 +78,12 @@ VALUES ('Affectionate'),
        ('Protective'),
        ('Reserved'),
        ('Sensitive'),
+       ('Smart'),
        ('Sociable'),
        ('Stubborn'),
        ('Submissive'),
-       ('Sweet-tempered'),
        ('Vocal'),
-       ('Watchful'),
-       ('Well-behaved'),
-       ('Willful');
+       ('Well-behaved');
 
 INSERT INTO dogs(name, age, playfulness, socialization, affection, training)
 values ('Chupa', '6', '4', '1', '3', '2'),
@@ -159,18 +155,53 @@ VALUES (1,29),
 INSERT INTO users (name, email, username, password)
 VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
        ('Guy', 'Funguy@gmail.com', 'funguy', 'funguy123'),
-           ('Sam', 'Samking@gmail.com', 'Samdoglover', 'ilovedogs10'),
-           ('Tim', 'Timothy2@yahoo.com', 'Timmy2', 'timtim25'),
-           ('Zy', 'Zyzy@gmail.com', 'Zy103', 'dogsaremyfavorite'),
-           ('Mark', 'mark10@hotmail.com', 'MarkJ1', 'Doggieworld'),
-           ('Anthony' ,'Anthony7@gmail.com', 'Doguy22', 'Anthony2526'),
-           ('Samatha', 'Samatha1@yahoo.com', 'Samatha1', 'Shelovedog23'),
-           ('Adrian', 'Adrian10@gmail.com', 'Adrianlovespup', 'Puppies123'),
-           ('Kennedy', 'kenk@gmail.com' , 'Kennypuppies', 'Kenklovespups');
+       ('Sam', 'Samking@gmail.com', 'Samdoglover', 'ilovedogs10'),
+       ('Tim', 'Timothy2@yahoo.com', 'Timmy2', 'timtim25'),
+       ('Zy', 'Zyzy@gmail.com', 'Zy103', 'dogsaremyfavorite'),
+       ('Mark', 'mark10@hotmail.com', 'MarkJ1', 'Doggieworld'),
+       ('Anthony' ,'Anthony7@gmail.com', 'Doguy22', 'Anthony2526'),
+       ('Samatha', 'Samatha1@yahoo.com', 'Samatha1', 'Shelovedog23'),
+       ('Adrian', 'Adrian10@gmail.com', 'Adrianlovespup', 'Puppies123'),
+       ('Kennedy', 'kenk@gmail.com' , 'Kennypuppies', 'Kenklovespups');
 
 INSERT INTO user_ads (user_id, ad_id)
 VALUES  (1,1),
-        ();
+        (11,2),
+        (11,3),
+        (11,4),
+        (11,5),
+        (11,6),
+        (11,7),
+        (11,8),
+        (11,9),
+        (11,10);
+
+INSERT INTO dog_traits (dog_id, trait_id)
+VALUES
+    (1, 1), (1, 3), (1, 9), (1, 12), (1, 18),
+    (2, 2), (2, 5), (2, 8), (2, 14), (2, 18), (2, 20),
+    (3, 1), (3, 4), (3, 7), (3, 10), (3, 11), (3, 19),
+    (4, 2), (4, 5), (4, 6), (4, 8), (4, 16), (4, 21),
+    (5, 4), (5, 10), (5, 11), (5, 14), (5, 15), (5, 18),
+    (6, 1), (6, 3), (6, 5), (6, 9), (6, 10), (6, 12),
+    (7, 2), (7, 7), (7, 8), (7, 13), (7, 16), (7, 22),
+    (8, 1), (8, 6), (8, 11), (8, 14), (8, 17), (8, 19),
+    (9, 2), (9, 3), (9, 4), (9, 8), (9, 12), (9, 21),
+    (10, 4), (10, 7), (10, 9), (10, 10), (10, 13), (10, 18),
+    (11, 1), (11, 5), (11, 11), (11, 14), (11, 16), (11, 20),
+    (12, 2), (12, 3), (12, 6), (12, 12), (12, 15), (12, 22),
+    (13, 1), (13, 4), (13, 7), (13, 9), (13, 11), (13, 17),
+    (14, 2), (14, 5), (14, 8), (14, 13), (14, 14), (14, 21),
+    (15, 3), (15, 6), (15, 10), (15, 15), (15, 16), (15, 19),
+    (16, 1), (16, 2), (16, 4), (16, 7), (16, 12), (16, 18),
+    (17, 3), (17, 5), (17, 8), (17, 9), (17, 13), (17, 20),
+    (18, 2), (18, 6), (18, 11), (18, 14), (18, 15), (18, 22),
+    (19, 1), (19, 4), (19, 10), (19, 16), (19,21),
+    (20, 5), (20, 18), (20, 19), (20, 21);
+
+
+
+
 
 
 
