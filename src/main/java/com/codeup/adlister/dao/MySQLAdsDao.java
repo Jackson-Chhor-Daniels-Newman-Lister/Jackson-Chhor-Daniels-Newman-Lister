@@ -1,16 +1,11 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
-import com.codeup.adlister.models.Breed;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MySQLAdsDao implements Ads {
@@ -40,50 +35,39 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error retrieving from table: " + tableName, e);
         }
     }
+//not a change
 
     @Override
-    public List<Object> some(String tableName, String searchString) {
-        PreparedStatement stmt = null;
-        String searchTerm = "'%" + searchString + "%'";
-        try {
-            stmt = connection.prepareStatement(
-                    "SELECT DISTINCT * FROM ads " +
-                            "JOIN dogs ON ads.dog_id = dogs.id " +
-                            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
-                            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
-                            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
-                            "JOIN traits ON dog_traits.trait_id = traits.id " +
-                            "WHERE ads.title LIKE " + searchTerm +
-                            " OR traits.name LIKE " + searchTerm +
-                            " OR breeds.name LIKE " + searchTerm
-            );
-
-//            stmt = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE title LIKE '%French%'");
-            System.out.println("some stmt = " + stmt);
-            ResultSet rs = stmt.executeQuery();
-            return createListFromResults(rs);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving from table: " + tableName, e);
-        }
-    }
-
-    @Override
-    public Object individual(long adNumber) {
+    public Ad individual(long adNumber) {
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ?");
             stmt.setLong(1, adNumber);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return extractObject(rs);
+            return extractAd(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving more info on ads.", e);
+        }
+    }
+
+    public Ad userAd (long userAdId) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM user_ads WHERE user_id = ?");
+            stmt.setLong(1, userAdId);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractAd(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving user ads.", e);
         }
     }
 
     @Override
     public Long insert(Ad ad) {
         try {
+            //(String title, String description, String shortDescription, int price, int dogId)
             String insertQuery = "INSERT INTO ads(title, description, short_description, price, image, dog_id) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
           
@@ -103,35 +87,34 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-    private HashMap<String, Object> extractObject(ResultSet rs) throws SQLException {
-        HashMap<String, Object> myObject = new HashMap<>();
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int columnCount = rsmd.getColumnCount();
 
-        for (int i = 1; i <= columnCount; i++){
-            int columnType = rsmd.getColumnType(i);
 
-            switch (columnType) {
-                case Types.INTEGER:
-                    int intValue = rs.getInt(i);
-                    myObject.put(rsmd.getColumnName(i),intValue);
-                    System.out.println("intValue = " + intValue);
-                    break;
-                default:
-                    String stringValue = rs.getString(i);
-                    myObject.put(rsmd.getColumnName(i),stringValue);
-                    System.out.println("stringValue = " + stringValue);
-                    break;
-            }
-        }
-        return myObject;
+    private Ad extractAd(ResultSet rs) throws SQLException {
+        return new Ad(
+            rs.getLong("id"),
+            rs.getString("title"),
+            rs.getString("short_description"),
+            rs.getString("description"),
+            rs.getInt("price"),
+           rs.getString("image"),
+            rs.getInt("dog_id")
+        );
     }
 
-    private List<Object>createListFromResults(ResultSet rs) throws SQLException {
-        List<Object> list = new ArrayList<>();
-        while (rs.next()){
-            list.add(extractObject(rs));
+    private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
+        List<Ad> ads = new ArrayList<>();
+        while (rs.next()) {
+            ads.add(extractAd(rs));
         }
-        return list;
+        return ads;
+    }
+
+    private Ad createOneAdFromResults(ResultSet rs) throws SQLException {
+//        List<Ad> ads = new ArrayList<>();
+        while (rs.next()) {
+//            ads.add(extractAd(rs));
+            return extractAd(rs);
+        }
+        return extractAd(rs);
     }
 }

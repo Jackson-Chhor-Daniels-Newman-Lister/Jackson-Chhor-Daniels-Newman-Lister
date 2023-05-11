@@ -6,14 +6,14 @@
         <jsp:param name="title" value="Viewing All The Ads" />
     </jsp:include>
 </head>
-<body class="bg-info-subtle">
+<body>
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
 <section class="container text-center bg-info-subtle font-monospace">
-    <h1 class="mt-5 mb-3">Here Are all the ads!</h1>
-    <div class="row gap-3 d-flex justify-content-between">
+    <h1>Here Are all the ads!</h1>
+    <div class="row gap-3 d-flex justify-content-between bg-dark-subtle">
         <div class="col">
-            <div class="row gap-4 d-flex justify-content-start">
+            <div class="row gap-3 d-flex justify-content-between">
                 <c:forEach var="ad" items="${ads}">
                     <article class="card col-3 border border-1 p-0">
                         <div class="card-header p-0 d-flex justify-content-center">
@@ -24,41 +24,32 @@
                             <p class="card-title">${ad.title}</p>
                             <p>${ad.shortDescription}</p>
                         </div>
-                        <div class="card-footer d-flex justify-content-between align-items-center gap-2">
-                            <span>$${ad.price}</span>
-                            <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More info</a>
+                        <div class="card-footer d-flex justify-content-between">
+                            <p>${ad.price}</p>
+                            <a href="more-info?adId=${ad.id}" class="btn btn-primary">More info</a>
                         </div>
                     </article>
                 </c:forEach>
             </div>
         </div>
-        <div class="col-3 bg-info pt-5">
+        <div class="col-3 bg-primary p-3">
             <h2 class="text-light">Find Your Pup!</h2>
-            <div class="d-flex flex-column justify-content-start align-items-start row-gap-3 p-3">
-                <form action="/ads?" method="post">
-                    <div class="form-floating form-group">
-                        <input id="search-input" class="form-control" name="search-input" placeholder="search">
-                        <label for="search-input">Search</label>
-                        <button class="btn btn-light mt-2">Submit</button>
-                    </div>
-                </form>
+            <div class="d-flex flex-column justify-content-start row-gap-3">
+                <div class="row p-3">
+                    <label for="search-input" class="col-12 text-light">Search</label>
+                    <input id="search-input" class="col-12 form-control">
+                    <button class="col-5 btn btn-danger mt-2">Submit</button>
+                </div>
 
                 <div class="form-group">
                     <label for="select-breed" class="text-light">Breed</label>
-                    <select id="select-breed" class="form-select">
-                        <option selected value="0">SELECT BREED</option>
-                        <c:forEach var="breed" items="${breeds}">
-                            <option>${breed.name}</option>
-                        </c:forEach>
-                    </select>
+                    <select id="select-breed" class="form-select"></select>
                 </div>
 
-                    <c:forEach var="trait" items="${traits}">
-                    <div class="form-group">
-                        <label for="${trait.name}" class="text-light">${trait.name}</label>
-                        <input type="checkbox" id="${trait.name}" value="${trait.name}" name="${trait.name}">
-                    </div>
-                    </c:forEach>
+                <div class="form-group">
+                    <label for="select-traits" class="text-light">Traits</label>
+                    <select id="select-traits" class="form-select"></select>
+                </div>
 
                 <div class="form-group">
                     <label class="text-light">Playfulness</label>

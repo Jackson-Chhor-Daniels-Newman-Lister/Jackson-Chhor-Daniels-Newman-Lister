@@ -1,17 +1,16 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
-import com.codeup.adlister.models.Breed;
 
 import java.util.List;
 
 public interface Ads {
-    List<Object> all(String tableName);
-
-    List<Object> some(String tableName, String searchTerm);
-
+    // get a list of all the ads
+    List<Ad> all();
+    // insert a new ad and return the new ad's id
     Long insert(Ad ad);
 
-    Object individual(long adId);
+    Ad individual(long adId);
 
+    Ad userAd(long userAd);
 }
