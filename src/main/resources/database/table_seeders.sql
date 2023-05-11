@@ -152,25 +152,6 @@ VALUES (1,29),
        (20, 48);
 
 
-INSERT INTO users (name, email, username, password)
-VALUES ('Gage','gage@gmail.com','Gage','$2a$12$uebzoghT/K2LsilFE1Mc9OEfFCOZDbp.7FFVGYDjQhuErBMKMA0JO'),
-       ('Guy', 'Funguy@gmail.com', 'Guy', '$2a$12$6cfMjKZF7LJ53RsveBme/evE2v.5ZjN/zGSCRuRsK7JdOoXbKxNLy'),
-       ('Sam', 'Samking@gmail.com', 'Sam', '$2a$12$trqJ6nvZ31hPnkCivGk6gu9ExxLDvxP8FvaYNAUa08MVNPP.pPFAO'),
-       ('Tim', 'Timothy2@yahoo.com', 'Tim', '$2a$12$myJ8ts1W.0bpSMgnI89u.uKCho4uZlmeO4mi04Ozq3ucLimg2c49q'),
-       ('Zy', 'Zyzy@gmail.com', 'Zy', '$2a$12$JdOkO1pT.zvWd8/ynY.f5eVTkbyvc0sH2g2b5SqkJ3ceb8U9NBagq'),
-       ('Marc', 'mark10@hotmail.com', 'Marc', '$2a$12$CXPzdzLtDLX/aMelEQ1GqudFWplyR3B1cNvHuY.5jfcAjmS9nGE32'),
-       ('Anthony' ,'Anthony7@gmail.com', 'Anthony', '$2a$12$Wm4Xl2SYbfFHlPrtLWObwuwOyjRJBbVSoSA2nkv8kv.jzVGfiKARi');
-
-INSERT INTO user_ads (user_id, ad_id)
-VALUES  (1,1),
-        (2,2),(2,3),(2,4),
-        (3,5),(3,6),(3,7),
-        (4,8),(4,9),
-        (5,10),(5,11),(5,12),(5,13),
-        (6,14),(6,15),(6,16),
-        (7,17),(7,18),(7,19),(7,20)
-        ;
-
 INSERT INTO dog_traits (dog_id, trait_id)
 VALUES
     (1, 1), (1, 3), (1, 9), (1, 12), (1, 18),
@@ -195,5 +176,22 @@ VALUES
     (20, 5), (20, 18), (20, 19), (20, 21);
 
 
+INSERT INTO users (name, email, username, password)
+VALUES ('Gage','gage@gmail.com','Gage','$2a$12$uebzoghT/K2LsilFE1Mc9OEfFCOZDbp.7FFVGYDjQhuErBMKMA0JO'),
+       ('Guy', 'Funguy@gmail.com', 'Guy', '$2a$12$6cfMjKZF7LJ53RsveBme/evE2v.5ZjN/zGSCRuRsK7JdOoXbKxNLy'),
+       ('Sam', 'Samking@gmail.com', 'Sam', '$2a$12$trqJ6nvZ31hPnkCivGk6gu9ExxLDvxP8FvaYNAUa08MVNPP.pPFAO'),
+       ('Tim', 'Timothy2@yahoo.com', 'Tim', '$2a$12$myJ8ts1W.0bpSMgnI89u.uKCho4uZlmeO4mi04Ozq3ucLimg2c49q'),
+       ('Zy', 'Zyzy@gmail.com', 'Zy', '$2a$12$JdOkO1pT.zvWd8/ynY.f5eVTkbyvc0sH2g2b5SqkJ3ceb8U9NBagq'),
+       ('Marc', 'mark10@hotmail.com', 'Marc', '$2a$12$CXPzdzLtDLX/aMelEQ1GqudFWplyR3B1cNvHuY.5jfcAjmS9nGE32'),
+       ('Anthony' ,'Anthony7@gmail.com', 'Anthony', '$2a$12$Wm4Xl2SYbfFHlPrtLWObwuwOyjRJBbVSoSA2nkv8kv.jzVGfiKARi');
 
+INSERT INTO user_ads (user_id, ad_id)
+VALUES  (1,1),
+        (2,2),(2,3),(2,4),
+        (3,5),(3,6),(3,7),
+        (4,8),(4,9),
+        (5,10),(5,11),(5,12),(5,13),
+        (6,14),(6,15),(6,16),
+        (7,17),(7,18),(7,19),(7,20)
+;
 

@@ -16,22 +16,24 @@
 <div class="row gap-3 d-flex justify-content-between bg-dark-subtle">
     <div class="col">
         <div class="row gap-3 d-flex justify-content-between">
-            <c:forEach var="ad" items="${ads}">
+            <c:forEach var="userAd" items="${userAd}">
                 <article class="card col-3 border border-1 p-0">
                     <div class="card-header p-0 d-flex justify-content-center">
-                        <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="img-fluid rounded-top">
+                        <img src="${pageContext.request.contextPath}/data/images/${userAd.image}" alt="alt" class="img-fluid rounded-top">
                             <%--                    <img src="../../../data/images/image_missing.webp" alt="alt">--%>
                     </div>
                     <div class="card-body">
-                        <p class="card-title">${ad.title}</p>
-                        <p>${ad.shortDescription}</p>
+                        <p class="card-title">${userAd.title}</p>
+                        <p>${userAd.shortDescription}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
-                        <p>${ad.price}</p>
-                        <a href="more-info?adId=${ad.id}" class="btn btn-primary">More info</a>
+                        <p>${userAd.price}</p>
+                        <a href="more-info?adId=${userAd.id}" class="btn btn-primary">More info</a>
                     </div>
                 </article>
             </c:forEach>
+<%--            <p>The number of ads associated with user ID <%= request.getParameter("userAd") %> is <%= request.getAttribute("userId") %>.</p>--%>
+
         </div>
     </div>
 </div>

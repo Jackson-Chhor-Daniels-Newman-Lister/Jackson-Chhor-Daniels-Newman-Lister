@@ -1,15 +1,12 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
-import com.codeup.adlister.models.Breed;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -81,6 +78,19 @@ public class MySQLAdsDao implements Ads {
             return extractObject(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving more info on ads.", e);
+        }
+    }
+
+    @Override
+    public List<Object> adsByUserId(long userId) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM ads JOIN user_ads ON ads.id = user_ads.ad_id WHERE user_id = ?");
+            stmt.setLong(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            return createListFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ad count for user ID: " + userId, e);
         }
     }
 
