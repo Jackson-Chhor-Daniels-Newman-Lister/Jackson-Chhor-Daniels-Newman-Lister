@@ -153,28 +153,23 @@ VALUES (1,29),
 
 
 INSERT INTO users (name, email, username, password)
-VALUES ('Gage','gage@gmail.com','gagelikesdogs','Doglover22'),
-       ('Guy', 'Funguy@gmail.com', 'funguy', 'funguy123'),
-       ('Sam', 'Samking@gmail.com', 'Samdoglover', 'ilovedogs10'),
-       ('Tim', 'Timothy2@yahoo.com', 'Timmy2', 'timtim25'),
-       ('Zy', 'Zyzy@gmail.com', 'Zy103', 'dogsaremyfavorite'),
-       ('Mark', 'mark10@hotmail.com', 'MarkJ1', 'Doggieworld'),
-       ('Anthony' ,'Anthony7@gmail.com', 'Doguy22', 'Anthony2526'),
-       ('Samatha', 'Samatha1@yahoo.com', 'Samatha1', 'Shelovedog23'),
-       ('Adrian', 'Adrian10@gmail.com', 'Adrianlovespup', 'Puppies123'),
-       ('Kennedy', 'kenk@gmail.com' , 'Kennypuppies', 'Kenklovespups');
+VALUES ('Gage','gage@gmail.com','Gage','$2a$12$uebzoghT/K2LsilFE1Mc9OEfFCOZDbp.7FFVGYDjQhuErBMKMA0JO'),
+       ('Guy', 'Funguy@gmail.com', 'Guy', '$2a$12$6cfMjKZF7LJ53RsveBme/evE2v.5ZjN/zGSCRuRsK7JdOoXbKxNLy'),
+       ('Sam', 'Samking@gmail.com', 'Sam', '$2a$12$trqJ6nvZ31hPnkCivGk6gu9ExxLDvxP8FvaYNAUa08MVNPP.pPFAO'),
+       ('Tim', 'Timothy2@yahoo.com', 'Tim', '$2a$12$myJ8ts1W.0bpSMgnI89u.uKCho4uZlmeO4mi04Ozq3ucLimg2c49q'),
+       ('Zy', 'Zyzy@gmail.com', 'Zy', '$2a$12$JdOkO1pT.zvWd8/ynY.f5eVTkbyvc0sH2g2b5SqkJ3ceb8U9NBagq'),
+       ('Marc', 'mark10@hotmail.com', 'Marc', '$2a$12$CXPzdzLtDLX/aMelEQ1GqudFWplyR3B1cNvHuY.5jfcAjmS9nGE32'),
+       ('Anthony' ,'Anthony7@gmail.com', 'Anthony', '$2a$12$Wm4Xl2SYbfFHlPrtLWObwuwOyjRJBbVSoSA2nkv8kv.jzVGfiKARi');
 
 INSERT INTO user_ads (user_id, ad_id)
 VALUES  (1,1),
-        (11,2),
-        (11,3),
-        (11,4),
-        (11,5),
-        (11,6),
-        (11,7),
-        (11,8),
-        (11,9),
-        (11,10);
+        (2,2),(2,3),(2,4),
+        (3,5),(3,6),(3,7),
+        (4,8),(4,9),
+        (5,10),(5,11),(5,12),(5,13),
+        (6,14),(6,15),(6,16),
+        (7,17),(7,18),(7,19),(7,20)
+        ;
 
 INSERT INTO dog_traits (dog_id, trait_id)
 VALUES
@@ -198,10 +193,6 @@ VALUES
     (18, 2), (18, 6), (18, 11), (18, 14), (18, 15), (18, 22),
     (19, 1), (19, 4), (19, 10), (19, 16), (19,21),
     (20, 5), (20, 18), (20, 19), (20, 21);
-
-
-
-
 
 
 
