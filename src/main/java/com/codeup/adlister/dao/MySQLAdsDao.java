@@ -35,7 +35,7 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error retrieving from table: " + tableName, e);
         }
     }
-
+//not a change
 
     @Override
     public Ad individual(long adNumber) {
