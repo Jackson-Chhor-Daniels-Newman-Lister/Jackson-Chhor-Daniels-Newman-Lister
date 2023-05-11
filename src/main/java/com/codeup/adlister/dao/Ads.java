@@ -14,4 +14,5 @@ public interface Ads {
 
     Object individual(long adId);
 
+    //testgit
 }
