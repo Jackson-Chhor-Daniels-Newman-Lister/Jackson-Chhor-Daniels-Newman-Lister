@@ -1,6 +1,7 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.Dog;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface Ads {
     Object individual(long adId);
 
     List<Object> adsByUserId(long userId);
+    void submitEdits(Ad ad, Dog dog);
 }
