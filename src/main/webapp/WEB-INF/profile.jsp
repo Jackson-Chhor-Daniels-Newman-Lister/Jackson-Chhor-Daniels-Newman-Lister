@@ -28,6 +28,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <p>${userAd.price}</p>
+                        <a href="edit-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">Edit</a>
                         <a href="more-info?adId=${userAd.id}" class="btn btn-primary">More info</a>
                     </div>
                 </article>

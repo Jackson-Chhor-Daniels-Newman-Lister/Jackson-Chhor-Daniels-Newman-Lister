@@ -2,15 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <style>
-        .card-title{
-            font-family: 'Merriweather', serif;
-        }
-        body{
-            background-color: black;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Oswald&display=swap" rel="stylesheet">
     <jsp:include page="/WEB-INF/partials/head.jsp">
         <jsp:param name="title" value="Viewing All The Ads" />
     </jsp:include>
@@ -20,13 +11,17 @@
 
 <section class="container text-center bg-info-subtle font-monospace">
     <h1 class="mt-5 mb-3" style="color:darkgoldenrod; font-style: italic;">Here Are All The Ads!</h1>
+    <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+        <span class="glyphicon glyphicon-search"></span>Search
+    </button>
+
     <div class="row gap-3 d-flex justify-content-between">
         <div class="col">
-            <div class="row gap-4 d-flex justify-content-start">
+            <div class="row gap-4 d-flex justify-content-start mb-5">
                 <c:forEach var="ad" items="${ads}">
                     <article class="card col-3 border-6 p-0" style="border-color: darkgoldenrod; border-width: 4px">
                         <div class="card-header p-0 d-flex justify-content-center">
-                             <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="img-fluid rounded-top">
+                             <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class=" rounded-top ratio ratio-1x1">
                                 <%--                    <img src="../../../data/images/image_missing.webp" alt="alt">--%>
                         </div>
                         <div class="card-body">
@@ -35,115 +30,61 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center gap-2">
                             <span>$${ad.price}</span>
-                            <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More Info</a>
+
+                            <a href="edit-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">Edit</a>
+                            <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More info</a>
+
                         </div>
+
                     </article>
                 </c:forEach>
             </div>
         </div>
-        <div class="col-3 bg-info pt-5">
-            <h2 class="text-light"style="font-style: italic" >Find Your Pup!</h2>
-            <div class="d-flex flex-column justify-content-start align-items-start row-gap-3 p-3">
 
-                <form action="/ads?" method="post">
-                    <div class="form-floating form-group d-flex flex-column justify-content-start align-items-start">
-                        <input id="search-input" class="form-control" name="search-input" placeholder="search">
-                        <label for="search-input"style="color:darkgoldenrod;font-style: italic">Search</label>
+        <div class="offcanvas offcanvas-start bg-info" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <h2 class="text-light">Find Your Pup!</h2>
+                <div class="d-flex flex-column justify-content-start align-items-start row-gap-3 p-3">
 
-                    </div>
+                    <form action="/ads?" method="post">
+                        <div class="form-floating form-group d-flex flex-column justify-content-start align-items-start">
+                            <input id="search-input" class="form-control" name="search-input" placeholder="search">
+                            <label for="search-input">Search</label>
+                        </div>
 
-                    <div class="form-group d-flex flex-column justify-content-start align-items-start">
-                        <label for="select-breed" class="text-light"style="color:darkgoldenrod">Breeds</label>
-                        <select id="select-breed" class="form-select" name="select-breed">
-                            <option selected value="0"style="color:darkgoldenrod">Select Your Breed</option>
-                            <c:forEach var="breed" items="${breeds}">
-                                <option>${breed.name}</option>
+                        <p class="mt-5">Breeds</p>
+                        <hr>
+                        <div class="form-group d-flex flex-column justify-content-start align-items-start mt-3">
+                            <label for="select-breed" class="text-light"></label>
+                            <select id="select-breed" class="form-select" name="select-breed">
+                                <option selected value="0">SELECT BREED</option>
+                                <c:forEach var="breed" items="${breeds}">
+                                    <option>${breed.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <p class="mt-5">Traits</p>
+                        <hr>
+                        <div class=" d-flex flex-column justify-content-start align-items-start">
+                            <c:forEach var="trait" items="${traits}">
+                                <div class="form-group">
+                                    <input type="checkbox" id="${trait.name}" value="${trait.name}" name="traits" onchange="">
+                                    <label for="${trait.name}" class="text-light">${trait.name}</label>
+                                </div>
                             </c:forEach>
-                        </select>
-                    </div>
-
-                    <div class=" d-flex flex-column justify-content-start align-items-start"style="font-style: italic">
-                        <c:forEach var="trait" items="${traits}">
-                            <div class="form-group">
-                                <input type="checkbox" id="${trait.name}" value="${trait.name}" name="traits">
-                                <label for="${trait.name}" class="text-light">${trait.name}</label>
-                            </div>
-                        </c:forEach>
-                    </div>
-
-                    <button class="btn btn-light mt-2"style="color:darkgoldenrod">Submit</button>
-                </form>
-
-
-                <div class="form-group" >
-                    <label class="text-light"style="font-style: italic" >Playfulness</label>
-                    <div class="d-flex justify-content-between" >
-                        <label for="check-playfulness-1" class="text-light">1</label>
-                        <input type="radio" id="check-playfulness-1" value="playfulness-1" name="playfulness" class="form-check">
-                        <label for="check-playfulness-2" class="text-light">2</label>
-                        <input type="radio" id="check-playfulness-2" value="playfulness-2" name="playfulness" class="form-check">
-                        <label for="check-playfulness-3" class="text-light">3</label>
-                        <input type="radio" id="check-playfulness-3" value="playfulness-3" name="playfulness" class="form-check">
-                        <label for="check-playfulness-4" class="text-light">4</label>
-                        <input type="radio" id="check-playfulness-4" value="playfulness-4" name="playfulness" class="form-check">
-                        <label for="check-playfulness-5" class="text-light">5</label>
-                        <input type="radio" id="check-playfulness-5" value="playfulness-5" name="playfulness" class="form-check">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="text-light"style="font-style: italic">Socialization</label>
-                    <div class="d-flex justify-content-between">
-                        <label for="check-socialization-1" class="text-light">1</label>
-                        <input type="radio" id="check-socialization-1" value="socialization-1" name="socialization" class="form-check">
-                        <label for="check-socialization-2" class="text-light">2</label>
-                        <input type="radio" id="check-socialization-2" value="socialization-2" name="socialization" class="form-check">
-                        <label for="check-socialization-3" class="text-light">3</label>
-                        <input type="radio" id="check-socialization-3" value="socialization-3" name="socialization" class="form-check">
-                        <label for="check-socialization-4" class="text-light">4</label>
-                        <input type="radio" id="check-socialization-4" value="socialization-4" name="socialization" class="form-check">
-                        <label for="check-socialization-5" class="text-light">5</label>
-                        <input type="radio" id="check-socialization-5" value="socialization-5" name="socialization" class="form-check">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="text-light"style="font-style: italic">Affection</label>
-                    <div class="d-flex justify-content-between">
-                        <label for="check-affection-1" class="text-light">1</label>
-                        <input type="radio" id="check-affection-1" value="affection-1" name="affection" class="form-check">
-                        <label for="check-affection-2" class="text-light">2</label>
-                        <input type="radio" id="check-affection-2" value="affection-2" name="affection" class="form-check">
-                        <label for="check-affection-3" class="text-light">3</label>
-                        <input type="radio" id="check-affection-3" value="affection-3" name="affection" class="form-check">
-                        <label for="check-affection-4" class="text-light">4</label>
-                        <input type="radio" id="check-affection-4" value="affection-4" name="affection" class="form-check">
-                        <label for="check-affection-5" class="text-light">5</label>
-                        <input type="radio" id="check-affection-5" value="affection-5" name="affection" class="form-check">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="text-light"style="font-style: italic">Training</label>
-                    <div class="d-flex justify-content-between">
-                        <label for="check-training-1" class="text-light">1</label>
-                        <input type="radio" id="check-training-1" value="training-1" name="training" class="form-check">
-                        <label for="check-training-2" class="text-light">2</label>
-                        <input type="radio" id="check-training-2" value="training-2" name="training" class="form-check">
-                        <label for="check-training-3" class="text-light">3</label>
-                        <input type="radio" id="check-training-3" value="training-3" name="training" class="form-check">
-                        <label for="check-training-4" class="text-light">4</label>
-                        <input type="radio" id="check-training-4" value="training-4" name="training" class="form-check">
-                        <label for="check-training-5" class="text-light">5</label>
-                        <input type="radio" id="check-training-5" value="training-5" name="training" class="form-check">
-                    </div>
+                        </div>
+                        <hr>
+                        <button class="btn btn-light mt-5 p-3">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
 </section>
 </body>
 </html>
-
-<%--http://localhost:8080/Jackson-Chhor-Daniels-Newman-Lister/src/main/resources/images/frozen_fortress.png--%>
