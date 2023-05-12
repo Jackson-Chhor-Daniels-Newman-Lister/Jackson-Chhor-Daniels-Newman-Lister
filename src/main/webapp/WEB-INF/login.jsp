@@ -17,12 +17,12 @@
             </div>
             <div class="form-group">
                 <label for="password" style="color:darkgoldenrod;">Password</label>
-                <input id="password" name="password" class="form-control" type="password">
+                <input id="password" name="password" class="form-control mb-3" type="password">
             </div>
             <div class="form-group position-relative">
                 <img class="bg-img img-fluid" src='${pageContext.request.contextPath}/data/images/background3.jpg'>
             </div>
-            <button type="submit" class="btn btn-primary btn-block mt-3">Log In</button>
+            <button type="submit" class="btn btn-info btn-block mt-3">Log In</button>
         </form>
     </div>
 </section>

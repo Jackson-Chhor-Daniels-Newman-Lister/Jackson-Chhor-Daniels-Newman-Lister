@@ -3,6 +3,8 @@ package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.Dog;
+import com.codeup.adlister.models.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,41 +17,47 @@ import java.io.IOException;
 public class EditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long adId = Long.valueOf(request.getParameter("adId"));
-        request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
 
-        request.getRequestDispatcher("/WEB-INF/ads/edit-info.jsp").forward(request, response);
+        if (request.getSession().getAttribute("user") == null) {
+            response.sendRedirect("/login");
+            return;
+        }
+
+        User user = (User) request.getSession().getAttribute("user");
+        long userId = user.getId();
+        long adId = Long.valueOf(request.getParameter("adId"));
+
+        boolean validUserToAd = DaoFactory.getUsersDao().userOwnsAd(adId,userId);
+        if (validUserToAd){
+            request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
+            request.getRequestDispatcher("/WEB-INF/ads/edit-info.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("/profile");
+        }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long adId = Long.valueOf(request.getParameter("adId"));
+        long adId = Long.valueOf(request.getParameter("ad_id"));
         String title = request.getParameter("title");
+        String shortDescription = request.getParameter("description");
         String description = request.getParameter("description");
-        double price = Double.parseDouble(request.getParameter("price"));
-        String breeds = request.getParameter("breeds");
-        String traits = request.getParameter("traits");
-        String name = request.getParameter("name");
-        int age = Integer.parseInt(request.getParameter("age"));
-        int playfulness = Integer.parseInt(request.getParameter("playfulness"));
-        int socialization = Integer.parseInt(request.getParameter("socialization"));
-        int affection = Integer.parseInt(request.getParameter("affection"));
-        int training = Integer.parseInt(request.getParameter("training"));
+        int price = Integer.parseInt(request.getParameter("price"));
 
-        Ad ad = (Ad) DaoFactory.getAdsDao().individual(adId);
-        ad.setTitle(title);
-        ad.setDescription(description);
-        ad.setPrice((int) price);
-//        ad.setBreeds(breeds);
-//        ad.setTraits(traits);
-        ad.setName(name);
-        ad.setAge(age);
-        ad.setPlayfulness(playfulness);
-        ad.setSocialization(socialization);
-        ad.setAffection(affection);
-        ad.setTraining(training);
+        //long dogId = Long.valueOf(request.getParameter("dog_id"));
+        String dogName = request.getParameter("name");
+        int dogAge = Integer.parseInt(request.getParameter("age"));
+        String playfulness = request.getParameter("playfulness");
+        String socialization = request.getParameter("socialization");
+        String affection = request.getParameter("affection");
+        String training = request.getParameter("training");
 
-//        DaoFactory.getAdsDao().update(ad);
+        Ad ad = new Ad(adId,title,"short",description, price, "notchanging", (int) adId);
+        Dog dog = new Dog(adId, dogName, dogAge, playfulness, socialization, affection, training);
+
+        DaoFactory.getAdsDao().submitEdits(ad, dog);
+
 
         response.sendRedirect("/ads");
     }
