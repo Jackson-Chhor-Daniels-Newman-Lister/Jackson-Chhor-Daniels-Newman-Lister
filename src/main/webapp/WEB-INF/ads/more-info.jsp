@@ -14,24 +14,88 @@
         <jsp:param name="title" value="More Info" />
     </jsp:include>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Oswald&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Merriweather', serif;
+            text-align: center;
+            font-style: italic;
+            font-weight: bold;
+        }
+        h1 {
+            font-weight: bold;
+            color:darkgoldenrod
+        }
+        h5 {
+            font-weight: bold;
+            color:darkgoldenrod
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            height: 185vh;
+        }
+        .ad-details {
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 2px 2px 5px #ccc;
+        }
+        p {
+            font-weight: bold;
+            color: darkgoldenrod;
+        }
+        #column1{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 200px;
+            margin-top: 400px;
+            max-height: 50%;
+        }
+        #column3{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 200px;
+            margin-top: 500px;
+            max-height: 40%;
+        }
+    </style>
 </head>
 <body>
-<h1>More Info</h1>
-<c:set var="ad" scope="session" value="${ad}"/>
-<img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class=" rounded-top ratio ratio-1x1">
-<p>AD id: ${ad.id}</p>
-<p>Ad short description: ${ad.short_description}</p>
-<p>Ad descrpition: ${ad.description}</p>
-<p>Ad Title: ${ad.title}</p>
-<p>Dog Price: ${ad.price}</p>
-<p>Dog Breed(s): ${ad.breeds}</p>
-<p>Dog Trait(s): ${ad.traits}</p>
-<p>Dog Name: ${ad.name}</p>
-<p>Dog Age: ${ad.age}</p>
-<p>Playfulness: ${ad.playfulness}</p>
-<p>Socialization: ${ad.socialization}</p>
-<p>Affection: ${ad.affection}</p>
-<p>Training: ${ad.training}</p>
-
+    <div class="container">
+        <div class="col-4" id="column1">
+            <img src="${pageContext.request.contextPath}/data/images/paws.png" alt="alt" class="rounded-top ratio ratio-1x1">
+        </div>
+        <div class="col-4">
+            <h1>More Info</h1>
+            <div class="ad-details">
+                <c:set var="ad" scope="session" value="${ad}"/>
+                <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="rounded-top ratio ratio-1x1">
+                <p><h5>AD id:</h5> ${ad.id}</p>
+                <p><h5>Ad short description:</h5> ${ad.short_description}</p>
+                <p><h5>Ad description:</h5> ${ad.description}</p>
+                <p><h5>Ad Title:</h5> ${ad.title}</p>
+                <p><h5>Dog Price:</h5> ${ad.price}</p>
+                <p><h5>Dog Breed(s):</h5> ${ad.breeds}</p>
+                <p><h5>Dog Trait(s):</h5> ${ad.traits}</p>
+                <p><h5>Dog Name:</h5> ${ad.name}</p>
+                <p><h5>Dog Age:</h5> ${ad.age}</p>
+                <p><h5>Playfulness:</h5> ${ad.playfulness}</p>
+                <p><h5>Socialization:</h5> ${ad.socialization}</p>
+                <p><h5>Affection:</h5> ${ad.affection}</p>
+                <p><h5>Training:</h5> ${ad.training}</p>
+            </div>
+        </div>
+        <div class="col-4" id="column3">
+            <img src="${pageContext.request.contextPath}/data/images/info.gif" alt="alt" class="rounded-top ratio ratio-1x1">
+        </div>
+    </div>
+    </div>
+</div>
+</div>
 </body>
 </html>
+
+
