@@ -135,8 +135,19 @@ public class MySQLAdsDao implements Ads {
     public Object individual(long adNumber) {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads WHERE id = ?");
-            stmt.setLong(1, adNumber);
+            stmt = connection.prepareStatement(
+                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
+                            "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
+                            "FROM ads " +
+                            "JOIN dogs ON ads.dog_id = dogs.id " +
+                            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+                            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+                            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+                            "JOIN traits ON dog_traits.trait_id = traits.id " +
+                            "WHERE ads.id = " + adNumber +
+                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training "
+            );
             ResultSet rs = stmt.executeQuery();
             rs.next();
             return extractObject(rs);
