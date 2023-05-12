@@ -15,9 +15,9 @@ import java.io.IOException;
 public class EditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long adId = Long.parseLong(request.getParameter("adId"));
-        Ad ad = (Ad) DaoFactory.getAdsDao().individual(adId);
-        request.setAttribute("ad", ad);
+        long adId = Long.valueOf(request.getParameter("adId"));
+        request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
+
         request.getRequestDispatcher("/WEB-INF/ads/edit-info.jsp").forward(request, response);
     }
 

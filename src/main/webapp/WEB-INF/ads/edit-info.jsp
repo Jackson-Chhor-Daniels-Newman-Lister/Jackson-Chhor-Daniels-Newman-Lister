@@ -30,5 +30,18 @@
 
     <button type="submit">Save Changes</button>
 </form>
+
+<p>Ad short description: ${ad.short_description}</p>
+<p>Ad descrpition: ${ad.description}</p>
+<p>Ad Title: ${ad.title}</p>
+<p>Dog Price: ${ad.price}</p>
+<p>Dog Breed(s): ${ad.breeds}</p>
+<p>Dog Trait(s): ${ad.traits}</p>
+<p>Dog Name: ${ad.name}</p>
+<p>Dog Age: ${ad.age}</p>
+<p>Playfulness: ${ad.playfulness}</p>
+<p>Socialization: ${ad.socialization}</p>
+<p>Affection: ${ad.affection}</p>
+<p>Training: ${ad.training}</p>
 </body>
 </html>

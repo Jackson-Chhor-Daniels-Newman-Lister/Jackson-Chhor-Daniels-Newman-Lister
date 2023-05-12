@@ -145,8 +145,8 @@ public class MySQLAdsDao implements Ads {
                             "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
                             "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
                             "JOIN traits ON dog_traits.trait_id = traits.id " +
-                            "WHERE ads.id = " + adNumber +
-                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training "
+                            "WHERE ads.id = " + adNumber + " " +
+                            "GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training "
             );
             ResultSet rs = stmt.executeQuery();
             rs.next();
