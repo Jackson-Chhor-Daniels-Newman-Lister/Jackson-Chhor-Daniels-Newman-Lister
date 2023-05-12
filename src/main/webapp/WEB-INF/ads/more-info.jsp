@@ -64,6 +64,8 @@
     </style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/partials/navbar.jsp" />
+
     <div class="container">
         <div class="col-4" id="column1">
             <img src="${pageContext.request.contextPath}/data/images/paws.png" alt="alt" class="rounded-top ratio ratio-1x1">
@@ -74,7 +76,6 @@
                 <c:set var="ad" scope="session" value="${ad}"/>
                 <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="rounded-top ratio ratio-1x1">
                 <p><h5>AD id:</h5> ${ad.id}</p>
-                <p><h5>Ad short description:</h5> ${ad.short_description}</p>
                 <p><h5>Ad description:</h5> ${ad.description}</p>
                 <p><h5>Ad Title:</h5> ${ad.title}</p>
                 <p><h5>Dog Price:</h5> ${ad.price}</p>
