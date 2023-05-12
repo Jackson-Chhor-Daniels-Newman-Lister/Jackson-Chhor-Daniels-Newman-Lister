@@ -19,12 +19,12 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
 <section class="container text-center bg-info-subtle font-monospace">
-    <h1 class="mt-5 mb-3 color:darkgoldenrod">Here Are all the ads!</h1>
+    <h1 class="mt-5 mb-3" style="color:darkgoldenrod; font-style: italic;">Here Are All The Ads!</h1>
     <div class="row gap-3 d-flex justify-content-between">
         <div class="col">
             <div class="row gap-4 d-flex justify-content-start">
                 <c:forEach var="ad" items="${ads}">
-                    <article class="card col-3 border border-1 p-0">
+                    <article class="card col-3 border-6 p-0" style="border-color: darkgoldenrod; border-width: 4px">
                         <div class="card-header p-0 d-flex justify-content-center">
                              <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="img-fluid rounded-top">
                                 <%--                    <img src="../../../data/images/image_missing.webp" alt="alt">--%>
@@ -35,34 +35,34 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center gap-2">
                             <span>$${ad.price}</span>
-                            <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More info</a>
+                            <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More Info</a>
                         </div>
                     </article>
                 </c:forEach>
             </div>
         </div>
         <div class="col-3 bg-info pt-5">
-            <h2 class="text-light">Find Your Pup!</h2>
+            <h2 class="text-light"style="font-style: italic" >Find Your Pup!</h2>
             <div class="d-flex flex-column justify-content-start align-items-start row-gap-3 p-3">
 
                 <form action="/ads?" method="post">
                     <div class="form-floating form-group d-flex flex-column justify-content-start align-items-start">
                         <input id="search-input" class="form-control" name="search-input" placeholder="search">
-                        <label for="search-input">Search</label>
+                        <label for="search-input"style="color:darkgoldenrod;font-style: italic">Search</label>
 
                     </div>
 
                     <div class="form-group d-flex flex-column justify-content-start align-items-start">
-                        <label for="select-breed" class="text-light">Breeds</label>
+                        <label for="select-breed" class="text-light"style="color:darkgoldenrod">Breeds</label>
                         <select id="select-breed" class="form-select" name="select-breed">
-                            <option selected value="0">SELECT BREED</option>
+                            <option selected value="0"style="color:darkgoldenrod">Select Your Breed</option>
                             <c:forEach var="breed" items="${breeds}">
                                 <option>${breed.name}</option>
                             </c:forEach>
                         </select>
                     </div>
 
-                    <div class=" d-flex flex-column justify-content-start align-items-start">
+                    <div class=" d-flex flex-column justify-content-start align-items-start"style="font-style: italic">
                         <c:forEach var="trait" items="${traits}">
                             <div class="form-group">
                                 <input type="checkbox" id="${trait.name}" value="${trait.name}" name="traits">
@@ -71,13 +71,13 @@
                         </c:forEach>
                     </div>
 
-                    <button class="btn btn-light mt-2">Submit</button>
+                    <button class="btn btn-light mt-2"style="color:darkgoldenrod">Submit</button>
                 </form>
 
 
-                <div class="form-group">
-                    <label class="text-light">Playfulness</label>
-                    <div class="d-flex justify-content-between">
+                <div class="form-group" >
+                    <label class="text-light"style="font-style: italic" >Playfulness</label>
+                    <div class="d-flex justify-content-between" >
                         <label for="check-playfulness-1" class="text-light">1</label>
                         <input type="radio" id="check-playfulness-1" value="playfulness-1" name="playfulness" class="form-check">
                         <label for="check-playfulness-2" class="text-light">2</label>
@@ -92,7 +92,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="text-light">Socialization</label>
+                    <label class="text-light"style="font-style: italic">Socialization</label>
                     <div class="d-flex justify-content-between">
                         <label for="check-socialization-1" class="text-light">1</label>
                         <input type="radio" id="check-socialization-1" value="socialization-1" name="socialization" class="form-check">
@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="text-light">Affection</label>
+                    <label class="text-light"style="font-style: italic">Affection</label>
                     <div class="d-flex justify-content-between">
                         <label for="check-affection-1" class="text-light">1</label>
                         <input type="radio" id="check-affection-1" value="affection-1" name="affection" class="form-check">
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="text-light">Training</label>
+                    <label class="text-light"style="font-style: italic">Training</label>
                     <div class="d-flex justify-content-between">
                         <label for="check-training-1" class="text-light">1</label>
                         <input type="radio" id="check-training-1" value="training-1" name="training" class="form-check">
