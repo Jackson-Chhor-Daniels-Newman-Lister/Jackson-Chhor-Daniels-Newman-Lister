@@ -1,6 +1,7 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.Dog;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
@@ -44,7 +45,7 @@ public class MySQLAdsDao implements Ads {
         String searchTerm = "'%" + searchString + "%'";
         try {
             stmt = connection.prepareStatement(
-                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
+                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image,  ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
                             "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
                             "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
                             "FROM ads " +
@@ -56,7 +57,7 @@ public class MySQLAdsDao implements Ads {
                             "WHERE ads.title LIKE " + searchTerm +
                             " OR traits.name LIKE " + searchTerm +
                             " OR breeds.name LIKE " + searchTerm +
-                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training"
+                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training"
             );
 
             System.out.println("some stmt = " + stmt);
@@ -73,7 +74,7 @@ public class MySQLAdsDao implements Ads {
         String searchTerm = "'" + searchedBreed + "'";
         try {
             stmt = connection.prepareStatement(
-                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
+                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image,  ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
                             "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
                             "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
                             "FROM ads " +
@@ -83,7 +84,7 @@ public class MySQLAdsDao implements Ads {
                             "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
                             "JOIN traits ON dog_traits.trait_id = traits.id " +
                             "WHERE breeds.name = " + searchTerm +
-                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training"
+                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image,  ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training"
             );
 
             System.out.println("some stmt = " + stmt);
@@ -109,7 +110,7 @@ public class MySQLAdsDao implements Ads {
         searchTerm.append(")");
         try {
             stmt = connection.prepareStatement(
-                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
+                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image,  ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
                             "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
                             "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
                             "FROM ads " +
@@ -119,7 +120,7 @@ public class MySQLAdsDao implements Ads {
                             "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
                             "JOIN traits ON dog_traits.trait_id = traits.id " +
                             "WHERE traits.name IN " + searchTerm +
-                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training " +
+                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image,  ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training " +
                             "HAVING COUNT(DISTINCT traits.name) = " + searchStringArray.length
             );
 
@@ -136,7 +137,7 @@ public class MySQLAdsDao implements Ads {
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(
-                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
+                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image,  ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
                             "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
                             "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
                             "FROM ads " +
@@ -146,13 +147,60 @@ public class MySQLAdsDao implements Ads {
                             "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
                             "JOIN traits ON dog_traits.trait_id = traits.id " +
                             "WHERE ads.id = " + adNumber + " " +
-                            "GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training "
+                            "GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training "
             );
             ResultSet rs = stmt.executeQuery();
             rs.next();
             return extractObject(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving more info on ads.", e);
+        }
+    }
+
+    @Override
+    public void submitEdits(Ad ad, Dog dog) {
+        editAd(ad);
+        editDog(dog);
+    }
+
+    public void editAd(Ad ad) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(
+                    "UPDATE ads " +
+                            "SET title = ?, short_description = ?, description = ?, price = ? " +
+                            "WHERE id = ? "
+            );
+            stmt.setString(1, ad.getTitle());
+            stmt.setString(2, ad.getShortDescription());
+            stmt.setString(3, ad.getDescription());
+            stmt.setLong(4, ad.getPrice());
+            stmt.setLong(5, ad.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error editing ad id: " + ad.getId(), e);
+        }
+    }
+    public void editDog(Dog dog) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(
+                    "UPDATE dogs " +
+                            "SET name = ?, age = ?, playfulness = ?, socialization = ?, affection = ?, training = ? " +
+                            "WHERE id = ?;"
+            );
+            stmt.setString(1, dog.getName());
+            stmt.setInt(2, dog.getAge());
+            stmt.setString(3, dog.getPlayfulness());
+            stmt.setString(4, dog.getSocialization());
+            stmt.setString(5, dog.getAffection());
+            stmt.setString(6, dog.getTraining());
+            stmt.setLong(7, dog.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error editing dog id: " + dog.getId(), e);
         }
     }
 
@@ -192,7 +240,10 @@ public class MySQLAdsDao implements Ads {
     }
 
     private HashMap<String, Object> extractObject(ResultSet rs) throws SQLException {
+        System.out.println("-----------------------------------------------");
+        System.out.println("here with: " + rs);
         HashMap<String, Object> myObject = new HashMap<>();
+        System.out.println("still here with: " + rs);
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnCount = rsmd.getColumnCount();
 
@@ -210,6 +261,8 @@ public class MySQLAdsDao implements Ads {
                     break;
             }
         }
+        System.out.println(myObject);
+        System.out.println("-----------------------------------------------");
         return myObject;
     }
 
