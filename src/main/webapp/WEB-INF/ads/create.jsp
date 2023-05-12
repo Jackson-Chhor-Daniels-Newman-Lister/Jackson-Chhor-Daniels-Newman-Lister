@@ -25,19 +25,6 @@
             <label for="price">Price</label>
             <input id="price" name="price" class="form-control" type="number">
         </div>
-        <div class="form-group">
-            <label for="image">Image URL</label>
-            <input id="image" name="image" class="form-control" type="text">
-        </div>
-        <div class="form-group">
-            <label for="select-breed" class="text-light">Breeds</label>
-            <select id="select-breed" class="form-select" name="select-breed">
-                <option selected value="0">SELECT BREED</option>
-                <c:forEach var="breed" items="${breeds}">
-                    <option>${breed.name}</option>
-                </c:forEach>
-            </select>
-        </div>
         <input id="id" name="id" type="hidden" value="">
         <input type="submit" class="btn btn-block btn-primary">
     </form>
