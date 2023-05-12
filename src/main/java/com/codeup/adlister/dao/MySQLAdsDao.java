@@ -39,7 +39,7 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public List<Object> some(String tableName, String searchString) {
+    public List<Object> searchByString(String tableName, String searchString) {
         PreparedStatement stmt = null;
         String searchTerm = "'%" + searchString + "%'";
         try {
@@ -57,6 +57,70 @@ public class MySQLAdsDao implements Ads {
                             " OR traits.name LIKE " + searchTerm +
                             " OR breeds.name LIKE " + searchTerm +
                             " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training"
+            );
+
+            System.out.println("some stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            return createListFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving from table: " + tableName, e);
+        }
+    }
+
+    @Override
+    public List<Object> searchByBreed(String tableName, String searchedBreed) {
+        PreparedStatement stmt = null;
+        String searchTerm = "'" + searchedBreed + "'";
+        try {
+            stmt = connection.prepareStatement(
+                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
+                            "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
+                            "FROM ads " +
+                            "JOIN dogs ON ads.dog_id = dogs.id " +
+                            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+                            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+                            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+                            "JOIN traits ON dog_traits.trait_id = traits.id " +
+                            "WHERE breeds.name = " + searchTerm +
+                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training"
+            );
+
+            System.out.println("some stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            return createListFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving from table: " + tableName, e);
+        }
+    }
+
+    @Override
+    public List<Object> searchByTraits(String tableName, String[] searchStringArray) {
+        PreparedStatement stmt = null;
+        StringBuilder searchTerm = new StringBuilder();
+        searchTerm.append("(");
+        for(int i = 0; i < searchStringArray.length; i++){
+            if(i == searchStringArray.length - 1){
+                searchTerm.append("'").append(searchStringArray[i]).append("'");
+            } else {
+                searchTerm.append("'").append(searchStringArray[i]).append("', ");
+            }
+        }
+        searchTerm.append(")");
+        try {
+            stmt = connection.prepareStatement(
+                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
+                            "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
+                            "FROM ads " +
+                            "JOIN dogs ON ads.dog_id = dogs.id " +
+                            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+                            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+                            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+                            "JOIN traits ON dog_traits.trait_id = traits.id " +
+                            "WHERE traits.name IN " + searchTerm +
+                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training " +
+                            "HAVING COUNT(DISTINCT traits.name) = " + searchStringArray.length
             );
 
             System.out.println("some stmt = " + stmt);
