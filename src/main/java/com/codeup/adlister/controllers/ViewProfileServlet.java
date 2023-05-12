@@ -22,7 +22,7 @@ public class ViewProfileServlet extends HttpServlet {
         }
         User user = (User) request.getSession().getAttribute("user");
         long userId = user.getId();
-        request.setAttribute("userAd", DaoFactory.getAdsDao().adsByUserId(userId));
+        request.setAttribute("ads", DaoFactory.getAdsDao().adsByUserId(userId));
 
 
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);

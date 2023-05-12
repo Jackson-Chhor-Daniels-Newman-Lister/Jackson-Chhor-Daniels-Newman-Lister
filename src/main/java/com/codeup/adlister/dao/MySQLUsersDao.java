@@ -35,6 +35,22 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    public boolean userOwnsAd(long adId, long userId){
+        String query = "SELECT * FROM user_ads WHERE ad_id = ? AND user_id = ? LIMIT 1";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setLong(1, adId);
+            stmt.setLong(2, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error verifying user owns ad", e);
+        }
+    }
+
     @Override
     public User findById(Long id) {
         String query = "SELECT * FROM users WHERE id = ? LIMIT 1";
