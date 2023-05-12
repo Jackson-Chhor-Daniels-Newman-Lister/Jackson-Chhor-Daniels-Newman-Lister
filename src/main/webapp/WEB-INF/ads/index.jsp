@@ -10,7 +10,7 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
 <section class="container text-center bg-info-subtle font-monospace">
-    <h1 class="mt-5 mb-3 color:darkgoldenrod">Here Are all the ads!</h1>
+    <h1 class="mt-5 mb-3" style="color:darkgoldenrod; font-style: italic;">Here Are All The Ads!</h1>
     <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
         <span class="glyphicon glyphicon-search"></span>Search
     </button>
@@ -19,7 +19,7 @@
         <div class="col">
             <div class="row gap-4 d-flex justify-content-start mb-5">
                 <c:forEach var="ad" items="${ads}">
-                    <article class="card col-3 border border-1 p-0">
+                    <article class="card col-3 border-6 p-0" style="border-color: darkgoldenrod; border-width: 4px">
                         <div class="card-header p-0 d-flex justify-content-center">
                              <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class=" rounded-top ratio ratio-1x1">
                                 <%--                    <img src="../../../data/images/image_missing.webp" alt="alt">--%>
@@ -30,6 +30,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center gap-2">
                             <span>$${ad.price}</span>
+
                             <a href="edit-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">Edit</a>
                             <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More info</a>
 
@@ -83,10 +84,7 @@
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 </body>
 </html>
-
-<%--http://localhost:8080/Jackson-Chhor-Daniels-Newman-Lister/src/main/resources/images/frozen_fortress.png--%>
