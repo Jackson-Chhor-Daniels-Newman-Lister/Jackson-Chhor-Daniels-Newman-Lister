@@ -5,73 +5,86 @@
   Time: 11:24 AM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
+    <jsp:include page="/WEB-INF/partials/head.jsp">
+        <jsp:param name="title" value="Edit Info" />
+    </jsp:include>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Edit Ad Information</title>
 </head>
-<body>
-<h1>Edit Ad Information</h1>
-<form action="edit-info" method="post">
+<body class="bg-info-subtle">
+
+<div class="container">
+    <h1>Edit Ad Information</h1>
     <c:set var="ad" scope="session" value="${ad}"/>
-    <input type="hidden" name="adId" value="${ad.id}"/>
-    <div>
-        <%--@declare id="title"--%><label for="title">Title:</label>
-        <input type="text" name="title" value="${ad.title}"/>
-    </div>
-    <div>
-        <%--@declare id="description"--%><label for="description">Description:</label>
-        <textarea name="description">${ad.description}</textarea>
-    </div>
-    <div>
-        <%--@declare id="price"--%><label for="price">Price:</label>
-        <input type="number" name="price" value="${ad.price}"/>
-    </div>
-    <div>
-        <%--@declare id="breeds"--%><label for="breeds">Breed(s):</label>
-        <input type="text" name="breeds" value="${ad.breeds}"/>
-    </div>
-    <div>
-        <%--@declare id="traits"--%><label for="traits">Trait(s):</label>
-        <input type="text" name="traits" value="${ad.traits}"/>
-    </div>
-    <div>
-        <%--@declare id="name"--%><label for="name">Dog Name:</label>
-        <input type="text" name="name" value="${ad.name}"/>
-    </div>
-    <div>
-        <%--@declare id="age"--%><label for="age">Dog Age:</label>
-        <input type="number" name="age" value="${ad.age}"/>
-    </div>
-    <div>
-        <%--@declare id="playfulness"--%><label for="playfulness">Playfulness:</label>
-        <input type="number" name="playfulness" value="${ad.playfulness}"/>
-    </div>
-    <div>
-        <%--@declare id="socialization"--%><label for="socialization">Socialization:</label>
-        <input type="number" name="socialization" value="${ad.socialization}"/>
-    </div>
-    <div>
-        <%--@declare id="affection"--%><label for="affection">Affection:</label>
-        <input type="number" name="affection" value="${ad.affection}"/>
-    </div>
-    <div>
-        <%--@declare id="training"--%><label for="training">Training:</label>
-        <input type="number" name="training" value="${ad.training}"/>
-    </div>
+    <form action="edit-info" method="post">
+        <input type="hidden" name="adId" value="${ad.id}"/>
+        <div class="mb-3">
+            <%--@declare id="title"--%><label for="title" class="form-label">Title:</label>
+            <input type="text" class="form-control" name="title" value="${ad.title}"/>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="description"--%><label for="description" class="form-label">Description:</label>
+            <textarea class="form-control" name="description">${ad.description}</textarea>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="price"--%><label for="price" class="form-label">Price:</label>
+            <input type="number" class="form-control" name="price" value="${ad.price}"/>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="breeds"--%><label for="breeds" class="form-label">Breed(s):</label>
+            <input type="text" class="form-control" name="breeds" value="${ad.breeds}"/>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="traits"--%><label for="traits" class="form-label">Trait(s):</label>
+            <input type="text" class="form-control" name="traits" value="${ad.traits}"/>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="name"--%><label for="name" class="form-label">Dog Name:</label>
+            <input type="text" class="form-control" name="name" value="${ad.name}"/>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="age"--%><label for="age" class="form-label">Dog Age:</label>
+            <input type="number" class="form-control" name="age" value="${ad.age}"/>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="playfulness"--%><label for="playfulness" class="form-label">Playfulness:</label>
+            <input type="number" class="form-control" name="playfulness" value="${ad.playfulness}"/>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="socialization"--%><label for="socialization" class="form-label">Socialization:</label>
+            <input type="number" class="form-control" name="socialization" value="${ad.socialization}"/>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="affection"--%><label for="affection" class="form-label">Affection:</label>
+            <input type="number" class="form-control" name="affection"  value="${ad.affection}"/>
+        </div>
+        <div class="mb-3">
+            <%--@declare id="training"--%><label for="training">Training:</label>
+            <input type="number" class="form-control" name="training" value="${ad.training}"/>
+        </div>
 
-    <button type="submit">Save Changes</button>
-</form>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+<p class="text-left font-monospace mx-2"><strong>Ad short description:</strong> ${ad.short_description}</p>
+<p class="text-left font-monospace mx-2"><strong>Ad description:</strong> ${ad.description}</p>
+<p class="text-left font-monospace mx-2"><strong>Ad Title:</strong> ${ad.title}</p>
+<p class="text-left font-monospace mx-2"><strong>Dog Price:</strong> ${ad.price}</p>
+<p class="text-left font-monospace mx-2"><strong>Dog Breed(s):</strong> ${ad.breeds}</p>
+<p class="text-left font-monospace mx-2"><strong>Dog Trait(s):</strong> ${ad.traits}</p>
+<p class="text-left font-monospace mx-2"><strong>Dog Name:</strong> ${ad.name}</p>
+<p class="text-left font-monospace mx-2"><strong>Dog Age:</strong> ${ad.age}</p>
+<p class="text-left font-monospace mx-2"><strong>Playfulness:</strong> ${ad.playfulness}</p>
+<p class="text-left font-monospace mx-2"><strong>Socialization:</strong> ${ad.socialization}</p>
+<p class="text-left font-monospace mx-2"><strong>Affection:</strong> ${ad.affection}</p>
+<p class="text-left font-monospace mx-2"><strong>Training:</strong> ${ad.training}</p>
 
-<p>Ad short description: ${ad.short_description}</p>
-<p>Ad description: ${ad.description}</p>
-<p>Ad Title: ${ad.title}</p>
-<p>Dog Price: ${ad.price}</p>
-<p>Dog Breed(s): ${ad.breeds}</p>
-<p>Dog Trait(s): ${ad.traits}</p>
-<p>Dog Name: ${ad.name}</p>
-<p>Dog Age: ${ad.age}</p>
-<p>Playfulness: ${ad.playfulness}</p>
-<p>Socialization: ${ad.socialization}</p>
-<p>Affection: ${ad.affection}</p>
-<p>Training: ${ad.training}</p>
+</body>
+</html>

@@ -40,8 +40,8 @@ public class EditServlet extends HttpServlet {
         ad.setTitle(title);
         ad.setDescription(description);
         ad.setPrice((int) price);
-        ad.setBreeds(breeds);
-        ad.setTraits(traits);
+//        ad.setBreeds(breeds);
+//        ad.setTraits(traits);
         ad.setName(name);
         ad.setAge(age);
         ad.setPlayfulness(playfulness);
