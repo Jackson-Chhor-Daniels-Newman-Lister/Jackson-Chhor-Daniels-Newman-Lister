@@ -6,37 +6,37 @@
         <jsp:param name="title" value="Your Profile" />
     </jsp:include>
 </head>
-
 <body class="bg-info-subtle">
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
-<section class="container text-center bg-info-subtle font-monospace">
-    <h1 class="my-5" style="color:darkgoldenrod; font-style: italic;">Welcome, ${sessionScope.user.username}!</h1>
+<div class="container my-5 bg-info-subtle">
+    <h1 class="text-center" style="font-weight: bold; color: darkgoldenrod">Welcome, ${sessionScope.user.username}!</h1>
+</div>
 
-    <h2>Your current listings</h2>
-    <div class="row gap-3 d-flex justify-content-between">
-        <div class="col">
-            <div class="row gap-4 d-flex justify-content-start mb-5">
-                <c:forEach var="ad" items="${ads}">
-                    <article class="card col-3 border-6 p-0" style="border-color: darkgoldenrod; border-width: 4px">
-                        <div class="card-header p-0 d-flex justify-content-center">
-                            <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class=" rounded-top ratio ratio-1x1">
-                                <%--                    <img src="../../../data/images/image_missing.webp" alt="alt">--%>
+<div class="container bg-info-subtle">
+    <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+        <c:forEach var="userAd" items="${userAd}">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="${pageContext.request.contextPath}/data/images/${userAd.image}" class="card-img-top" alt="ad image">
+                    <div class="card-body">
+                        <h5 class="card-title">${userAd.title}</h5>
+                        <p class="card-text">${userAd.shortDescription}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text">$${userAd.price}</p>
+                            <div>
+                                <a href="edit-info?adId=${ad.id}" class="btn btn-sm btn-primary text-light me-2">Edit</a>
+                                <a href="more-info?adId=${userAd.id}" class="btn btn-sm btn-primary">More Info</a>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <p class="card-title">${ad.title}</p>
-                            <p>${ad.shortDescription}</p>
-                        </div>
-                        <div class="card-footer d-flex justify-content-between align-items-center gap-2">
-                            <span>$${ad.price}</span>
-                            <a href="edit-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">Edit</a>
-                            <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More info</a>
-                        </div>
-                    </article>
-                </c:forEach>
+                    </div>
+                </div>
             </div>
-        </div>
+        </c:forEach>
     </div>
-</section>
+</div>
 </body>
+
 </html>
