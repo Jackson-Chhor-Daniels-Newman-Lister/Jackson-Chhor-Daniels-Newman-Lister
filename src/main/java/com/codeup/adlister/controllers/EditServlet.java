@@ -27,13 +27,28 @@ public class EditServlet extends HttpServlet {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         double price = Double.parseDouble(request.getParameter("price"));
+        String breeds = request.getParameter("breeds");
+        String traits = request.getParameter("traits");
+        String name = request.getParameter("name");
+        int age = Integer.parseInt(request.getParameter("age"));
+        int playfulness = Integer.parseInt(request.getParameter("playfulness"));
+        int socialization = Integer.parseInt(request.getParameter("socialization"));
+        int affection = Integer.parseInt(request.getParameter("affection"));
+        int training = Integer.parseInt(request.getParameter("training"));
 
         Ad ad = (Ad) DaoFactory.getAdsDao().individual(adId);
         ad.setTitle(title);
         ad.setDescription(description);
         ad.setPrice((int) price);
+        ad.setBreeds(breeds);
+        ad.setTraits(traits);
+        ad.setName(name);
+        ad.setAge(age);
+        ad.setPlayfulness(playfulness);
+        ad.setSocialization(socialization);
+        ad.setAffection(affection);
+        ad.setTraining(training);
 
-//        I still need to create a method i think???
 //        DaoFactory.getAdsDao().update(ad);
 
         response.sendRedirect("/ads");

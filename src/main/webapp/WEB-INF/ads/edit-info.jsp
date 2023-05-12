@@ -27,12 +27,44 @@
         <%--@declare id="price"--%><label for="price">Price:</label>
         <input type="number" name="price" value="${ad.price}"/>
     </div>
+    <div>
+        <%--@declare id="breeds"--%><label for="breeds">Breed(s):</label>
+        <input type="text" name="breeds" value="${ad.breeds}"/>
+    </div>
+    <div>
+        <%--@declare id="traits"--%><label for="traits">Trait(s):</label>
+        <input type="text" name="traits" value="${ad.traits}"/>
+    </div>
+    <div>
+        <%--@declare id="name"--%><label for="name">Dog Name:</label>
+        <input type="text" name="name" value="${ad.name}"/>
+    </div>
+    <div>
+        <%--@declare id="age"--%><label for="age">Dog Age:</label>
+        <input type="number" name="age" value="${ad.age}"/>
+    </div>
+    <div>
+        <%--@declare id="playfulness"--%><label for="playfulness">Playfulness:</label>
+        <input type="number" name="playfulness" value="${ad.playfulness}"/>
+    </div>
+    <div>
+        <%--@declare id="socialization"--%><label for="socialization">Socialization:</label>
+        <input type="number" name="socialization" value="${ad.socialization}"/>
+    </div>
+    <div>
+        <%--@declare id="affection"--%><label for="affection">Affection:</label>
+        <input type="number" name="affection" value="${ad.affection}"/>
+    </div>
+    <div>
+        <%--@declare id="training"--%><label for="training">Training:</label>
+        <input type="number" name="training" value="${ad.training}"/>
+    </div>
 
     <button type="submit">Save Changes</button>
 </form>
 
 <p>Ad short description: ${ad.short_description}</p>
-<p>Ad descrpition: ${ad.description}</p>
+<p>Ad description: ${ad.description}</p>
 <p>Ad Title: ${ad.title}</p>
 <p>Dog Price: ${ad.price}</p>
 <p>Dog Breed(s): ${ad.breeds}</p>
@@ -43,5 +75,3 @@
 <p>Socialization: ${ad.socialization}</p>
 <p>Affection: ${ad.affection}</p>
 <p>Training: ${ad.training}</p>
-</body>
-</html>
