@@ -30,8 +30,11 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center gap-2">
                             <span>$${ad.price}</span>
-                            <a href="more-info?adId=${ad.id}" class="btn btn-info text-light py-0 px-1">More info</a>
+                            <a href="edit-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">Edit</a>
+                            <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More info</a>
+
                         </div>
+
                     </article>
                 </c:forEach>
             </div>

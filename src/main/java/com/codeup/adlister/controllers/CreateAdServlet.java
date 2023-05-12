@@ -20,6 +20,8 @@ public class CreateAdServlet extends HttpServlet {
             // add a return statement to exit out of the entire method.
             return;
         }
+//        String imagePath = "/data/images/0_image_missing.png";
+//        request.setAttribute("imagePath", imagePath);
 
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
 
@@ -28,15 +30,15 @@ public class CreateAdServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User loggedInUser = (User) request.getSession().getAttribute("user");
         Ad ad = new Ad(
-                Long.parseLong(request.getParameter("id")),
                 request.getParameter("title"),
                 request.getParameter("description"),
                 request.getParameter("short_description"),
                 Integer.parseInt(request.getParameter("price")),
-                request.getParameter("image"),
-                Integer.parseInt(request.getParameter("dog_id"))
+                "0_image_missing.png",
+                (int) loggedInUser.getId()
         );
         DaoFactory.getAdsDao().insert(ad);
         response.sendRedirect("/ads");
     }
+
 }
