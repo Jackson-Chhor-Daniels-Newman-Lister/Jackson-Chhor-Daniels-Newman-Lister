@@ -13,6 +13,7 @@
 <body>
 <h1>Edit Ad Information</h1>
 <form action="edit-info" method="post">
+    <c:set var="ad" scope="session" value="${ad}"/>
     <input type="hidden" name="adId" value="${ad.id}"/>
     <div>
         <%--@declare id="title"--%><label for="title">Title:</label>
