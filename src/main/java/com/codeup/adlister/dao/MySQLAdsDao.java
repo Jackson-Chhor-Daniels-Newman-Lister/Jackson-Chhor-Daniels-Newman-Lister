@@ -240,10 +240,7 @@ public class MySQLAdsDao implements Ads {
     }
 
     private HashMap<String, Object> extractObject(ResultSet rs) throws SQLException {
-        System.out.println("-----------------------------------------------");
-        System.out.println("here with: " + rs);
         HashMap<String, Object> myObject = new HashMap<>();
-        System.out.println("still here with: " + rs);
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnCount = rsmd.getColumnCount();
 
@@ -261,8 +258,6 @@ public class MySQLAdsDao implements Ads {
                     break;
             }
         }
-        System.out.println(myObject);
-        System.out.println("-----------------------------------------------");
         return myObject;
     }
 

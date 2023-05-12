@@ -34,7 +34,6 @@ public class EditServlet extends HttpServlet {
         } else {
             response.sendRedirect("/profile");
         }
-
     }
 
     @Override
@@ -53,11 +52,10 @@ public class EditServlet extends HttpServlet {
         String affection = request.getParameter("affection");
         String training = request.getParameter("training");
 
-        Ad ad = new Ad(adId,title,"short",description, price, "notchanging", (int) adId);
+        Ad ad = new Ad(adId,title,shortDescription,description, price, "notchanging", (int) adId);
         Dog dog = new Dog(adId, dogName, dogAge, playfulness, socialization, affection, training);
 
         DaoFactory.getAdsDao().submitEdits(ad, dog);
-
 
         response.sendRedirect("/ads");
     }

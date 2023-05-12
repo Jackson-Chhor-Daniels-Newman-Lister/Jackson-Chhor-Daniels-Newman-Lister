@@ -30,6 +30,10 @@
                 <input type="text" class="form-control font-monospace" name="title" value="${ad.title}"/>
             </div>
             <div class="mb-3">
+                <%--@declare id="short_description"--%><label for="short_description" class="form-label font-monospace fw-bold">Short Description:</label>
+                <textarea class="form-control font-monospace" name="short_description">${ad.short_description}</textarea>
+            </div>
+            <div class="mb-3">
                 <%--@declare id="description"--%><label for="description" class="form-label font-monospace fw-bold">Description:</label>
                 <textarea class="form-control font-monospace" name="description">${ad.description}</textarea>
             </div>

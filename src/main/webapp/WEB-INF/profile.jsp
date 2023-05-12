@@ -27,7 +27,7 @@
                         <div class="d-flex justify-content-between">
                             <p class="card-text">$${userAd.price}</p>
                             <div>
-                                <a href="edit-info?adId=${ad.id}" class="btn btn-sm btn-primary text-light me-2">Edit</a>
+                                <a href="edit-info?adId=${userAd.id}" class="btn btn-sm btn-primary text-light me-2">Edit</a>
                                 <a href="more-info?adId=${userAd.id}" class="btn btn-sm btn-primary">More Info</a>
                             </div>
                         </div>
