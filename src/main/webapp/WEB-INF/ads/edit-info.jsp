@@ -7,6 +7,8 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <jsp:include page="/WEB-INF/partials/head.jsp">
@@ -70,42 +72,8 @@
 
             <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
-    </div>
-
-    <p class="text-left font-monospace mx-2"><strong>Ad short description:</strong> ${ad.short_description}</p>
-    <p class="text-left font-monospace mx-2"><strong>Ad description:</strong> ${ad.description}</p>
-    <p class="text-left font-monospace mx-2"><strong>Ad Title:</strong> ${ad.title}</p>
-    <p class="text-left font-monospace mx-2"><strong>Dog Price:</strong> ${ad.price}</p>
-    <p class="text-left font-monospace mx-2"><strong>Dog Breed(s):</strong> ${ad.breeds}</p>
-    <p class="text-left font-monospace mx-2"><strong>Dog Trait(s):</strong> ${ad.traits}</p>
-    <p class="text-left font-monospace mx-2"><strong>Dog Name:</strong> ${ad.name}</p>
-    <p class="text-left font-monospace mx-2"><strong>Dog Age:</strong> ${ad.age}</p>
-    <p class="text-left font-monospace mx-2"><strong>Playfulness:</strong> ${ad.playfulness}</p>
-    <p class="text-left font-monospace mx-2"><strong>Socialization:</strong> ${ad.socialization}</p>
-    <p class="text-left font-monospace mx-2"><strong>Affection:</strong> ${ad.affection}</p>
-    <p class="text-left font-monospace mx-2"><strong>Training:</strong> ${ad.training}</p>
+  </div>
 
 </body>
-
-
-
-
-
-
-
-
-
-
-
-Message Anthony Chhor
-
-
-
-
-
-
-
-
-
 
 </html>

@@ -19,5 +19,6 @@ public interface Ads {
     Object individual(long adId);
 
     List<Object> adsByUserId(long userId);
+
     void submitEdits(Ad ad, Dog dog);
 }

@@ -58,14 +58,6 @@ public class EditServlet extends HttpServlet {
 
         DaoFactory.getAdsDao().submitEdits(ad, dog);
 
-//    public Dog(long id, String name, int age, String playfulness, String socialization, String affection, String training) {
-//        Ad ad = (Ad) DaoFactory.getAdsDao().individual(adId);
-//        ad.setTitle(title);
-//        ad.setDescription(description);
-//        ad.setPrice((int) price);
-
-//        I still need to create a method i think???
-//        DaoFactory.getAdsDao().update(ad);
 
         response.sendRedirect("/ads");
     }

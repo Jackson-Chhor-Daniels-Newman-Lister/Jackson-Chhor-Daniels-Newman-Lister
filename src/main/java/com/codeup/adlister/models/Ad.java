@@ -8,6 +8,14 @@ public class Ad {
     private int price;
     private String image;
     private int dogId;
+    private String breeds;
+    private String traits;
+    private String name;
+    private int age;
+    private int playfulness;
+    private int socialization;
+    private int affection;
+    private int training;
 
 
     public Ad(String title, String shortDescription, String description, int price, String image, int dogId) {
@@ -84,6 +92,38 @@ public class Ad {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setBreeds(String breeds) {
+        this.breeds = breeds;
+    }
+
+    public void setTraits(String traits) {
+        this.traits = traits;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setPlayfulness(int playfulness) {
+        this.playfulness = playfulness;
+    }
+
+    public void setSocialization(int socialization) {
+        this.socialization = socialization;
+    }
+
+    public void setAffection(int affection) {
+        this.affection = affection;
+    }
+
+    public void setTraining(int training) {
+        this.training = training;
     }
 }
 
