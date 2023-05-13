@@ -16,12 +16,12 @@
             </c:when>
             <c:otherwise>
                 <div class="navbar-header d-flex align-items-center justify-content-between">
-                    <a class="text-light display-5 ff text-decoration-none" href="/ads"><strong>Doglister</strong></a>
-                    <img class="bg-img img-fluid" src='${pageContext.request.contextPath}/data/images/Dog Walk Cycle.gif' style="max-width: 10%; display: block;">
+                    <a class="text-light display-5 ff text-decoration-none" href="/ads"style="font-weight: bolder"><strong>Doglister</strong></a>
+                    <img class="bg-img img-fluid" src='${pageContext.request.contextPath}/data/images/Dog Walk Cycle.gif' style="max-width: 10%;">
                     <ul class="nav d-flex align-items-center justify-content-between gap-3" style="font-style: italic; color: chocolate">
-                        <li><a href="/ads" class="text-decoration-none text-light">Dogs</a></li>
-                        <li><a href="/register" class="text-decoration-none text-light">Register</a></li>
-                        <li><a href="/login" class="text-decoration-none text-light">Login</a></li>
+                        <li><a href="/ads" class="text-decoration-none text-light" style="font-weight: bold">Dogs</a></li>
+                        <li><a href="/register" class="text-decoration-none text-light" style="font-weight: bold">Register</a></li>
+                        <li><a href="/login" class="text-decoration-none text-light" style="font-weight: bold">Login</a></li>
                     </ul>
                 </div>
             </c:otherwise>

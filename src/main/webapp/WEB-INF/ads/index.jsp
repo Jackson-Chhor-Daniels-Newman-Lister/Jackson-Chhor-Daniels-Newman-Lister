@@ -10,12 +10,13 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
 <section class="container text-center bg-info-subtle font-monospace">
-    <h1 class="mt-5 mb-3" style="color:darkgoldenrod; font-style: italic;">Here Are All The Ads!</h1>
+    <h1 class="mt-5 mb-3" style="color:darkgoldenrod; font-style: italic; font-weight: bolder">Here Are The Ads!</h1>
     <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
         <span class="glyphicon glyphicon-search"></span>Search
     </button>
-
-    <div class="row gap-3 d-flex justify-content-between">
+    <br>
+    <br>
+    <div class="row gap-3 d-flex justify-content-between" style="margin-left: 175px">
         <div class="col">
             <div class="row gap-4 d-flex justify-content-start mb-5">
                 <c:forEach var="ad" items="${ads}">
@@ -43,7 +44,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <h2 class="text-light">Find Your Pup!</h2>
+                <h2 class="text-light" style="font-weight: bold;">Find Your Pup!</h2>
                 <div class="d-flex flex-column justify-content-start align-items-start row-gap-3 p-3">
 
                     <form action="/ads?" method="post">
@@ -66,7 +67,7 @@
 
                         <p class="mt-5">Traits</p>
                         <hr>
-                        <div class=" d-flex flex-column justify-content-start align-items-start">
+                        <div class=" d-flex flex-column justify-content-start align-items-start" style="font-style: italic">
                             <c:forEach var="trait" items="${traits}">
                                 <div class="form-group">
                                     <input type="checkbox" id="${trait.name}" value="${trait.name}" name="traits" onchange="">

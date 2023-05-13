@@ -14,7 +14,7 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 <section class="bg-info-subtle">
     <div class="container text-center py-5 ">
-        <h1 class="display-4 font-weight-bold mb-4" style="font-family: 'Montserrat', sans-serif;color:darkgoldenrod">Welcome to the Adlister!</h1>
+        <h1 class="display-4 font-weight-bold mb-4" style="font-family: 'Montserrat', sans-serif; font-weight: bolder; font-style: italic; color:darkgoldenrod">Welcome to the Adlister!</h1>
         <img class="img-fluid" style="max-width: 500px;" src="${pageContext.request.contextPath}/data/images/background1.jpg">
     </div>
 </section>
