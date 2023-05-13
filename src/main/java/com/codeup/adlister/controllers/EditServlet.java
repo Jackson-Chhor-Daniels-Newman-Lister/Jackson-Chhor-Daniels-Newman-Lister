@@ -30,6 +30,7 @@ public class EditServlet extends HttpServlet {
         boolean validUserToAd = DaoFactory.getUsersDao().userOwnsAd(adId,userId);
         if (validUserToAd){
             request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
+            request.setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
             request.getRequestDispatcher("/WEB-INF/ads/edit-info.jsp").forward(request, response);
         } else {
             response.sendRedirect("/profile");
@@ -40,7 +41,7 @@ public class EditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         long adId = Long.valueOf(request.getParameter("ad_id"));
         String title = request.getParameter("title");
-        String shortDescription = request.getParameter("description");
+        String shortDescription = request.getParameter("short_description");
         String description = request.getParameter("description");
         int price = Integer.parseInt(request.getParameter("price"));
 

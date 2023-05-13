@@ -25,53 +25,92 @@
         <form action="edit-info" method="post">
             <input type="hidden" name="ad_id" value="${ad.id}"/>
             <input type="hidden" name="dog_id" value="${ad.dogs_id}"/>
-            <div class="mb-3">
-                <%--@declare id="title"--%><label for="title" class="form-label font-monospace fw-bold">Title:</label>
-                <input type="text" class="form-control font-monospace" name="title" value="${ad.title}"/>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="short_description"--%><label for="short_description" class="form-label font-monospace fw-bold">Short Description:</label>
-                <textarea class="form-control font-monospace" name="short_description">${ad.short_description}</textarea>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="description"--%><label for="description" class="form-label font-monospace fw-bold">Description:</label>
-                <textarea class="form-control font-monospace" name="description">${ad.description}</textarea>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="price"--%><label for="price" class="form-label font-monospace fw-bold">Price:</label>
-                <input type="number" class="form-control font-monospace" name="price" value="${ad.price}"/>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="breeds"--%><label for="breeds" class="form-label font-monospace fw-bold">Breed(s):</label>
-                <input type="text" class="form-control font-monospace" name="breeds" value="${ad.breeds}"/>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="traits"--%><label for="traits" class="form-label font-monospace fw-bold">Trait(s):</label>
-                <input type="text" class="form-control font-monospace" name="traits" value="${ad.traits}"/>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="name"--%><label for="name" class="form-label font-monospace fw-bold">Dog Name:</label>
-                <input type="text" class="form-control font-monospace" name="name" value="${ad.name}"/>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="age"--%><label for="age" class="form-label font-monospace fw-bold">Dog Age:</label>
-                <input type="number" class="form-control font-monospace" name="age" value="${ad.age}"/>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="playfulness"--%><label for="playfulness" class="form-label font-monospace fw-bold">Playfulness:</label>
-                <input type="number" class="form-control font-monospace" name="playfulness" value="${ad.playfulness}"/>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="socialization"--%><label for="socialization" class="form-label font-monospace fw-bold">Socialization:</label>
-                <input type="number" class="form-control font-monospace" name="socialization" value="${ad.socialization}"/>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="affection"--%><label for="affection" class="form-label font-monospace fw-bold">Affection:</label>
-                <input type="number" class="form-control font-monospace" name="affection"  value="${ad.affection}"/>
-            </div>
-            <div class="mb-3">
-                <%--@declare id="training"--%><label for="training" class="form-label font-monospace">Training:</label>
-                <input type="number" class="form-control font-monospace" name="training" value="${ad.training}"/>
+            <div class="row gap-3">
+                <div class="col">
+
+                    <label for="name"></label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Name</span>
+                        <input id="name" type="text" class="form-control font-monospace" name="name" value="${ad.name}" required/>
+                    </div>
+
+                    <label for="age"></label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Age</span>
+                        <input id="age" type="number" class="form-control font-monospace" name="age" min="1" max="25" value="${ad.age}" required/>
+                    </div>
+
+
+                    <div class="input-group mb-3">
+                        <label for="breeds" class="input-group-text">Breed</label>
+                        <select id="breeds" class="form-select" name="breeds"  required>
+                            <option value="0">SELECT BREED</option>
+                            <c:forEach var="breed" items="${breeds}">
+                                <option value="${breed.name}">${breed.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <%--@declare id="traits"--%><label for="traits" class="form-label font-monospace fw-bold">Traits:</label>
+                        <input type="text" class="form-control font-monospace" name="traits" value="${ad.traits}"/>
+                    </div>
+
+                    <div class="row gap-1">
+                        <div class="col">
+                            <label for="playfulness"></label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Playfulness</span>
+                                <input id="playfulness" type="number" class="form-control font-monospace" name="playfulness" min="1" max="5" value="${ad.playfulness}" required/>
+                            </div>
+
+                            <label for="socialization"></label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Socialization</span>
+                                <input id="socialization" type="number" class="form-control font-monospace" name="socialization" min="1" max="5" value="${ad.socialization}" required/>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <label for="affection"></label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Affection</span>
+                                <input id="affection" type="number" class="form-control font-monospace" name="affection" min="1" max="5" value="${ad.affection}" required/>
+                            </div>
+
+                            <label for="training"></label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Training</span>
+                                <input id="training" type="number" class="form-control font-monospace" name="training" min="1" max="5" value="${ad.training}" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+
+                    <label for="title"></label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Title</span>
+                        <input  id="title" type="text" class="form-control font-monospace" name="title" value="${ad.title}" required/>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control font-monospace" name="short_description" maxlength="225" rows="3" style="height: 100px; resize: none">${ad.short_description}</textarea>
+                        <%--@declare id="short_description"--%><label for="short_description">Short Description</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control font-monospace" name="description" rows="6" style="height: 200px; resize: none" required>${ad.description}</textarea>
+                        <%--@declare id="description"--%><label for="description">Description</label>
+                    </div>
+
+                    <label for="price"></label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Price</span>
+                        <input id="price" type="number" class="form-control font-monospace" name="price" value="${ad.price}" required/>
+                    </div>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">Save Changes</button>

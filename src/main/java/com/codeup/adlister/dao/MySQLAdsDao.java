@@ -208,8 +208,22 @@ public class MySQLAdsDao implements Ads {
     public List<Object> adsByUserId(long userId) {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads JOIN user_ads ON ads.id = user_ads.ad_id WHERE user_id = ?");
-            stmt.setLong(1, userId);
+            //stmt = connection.prepareStatement("SELECT * FROM ads JOIN user_ads ON ads.id = user_ads.ad_id WHERE user_id = ?");
+            stmt = connection.prepareStatement(
+                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image,  ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
+                            "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
+                            "FROM ads " +
+                            "JOIN dogs ON ads.dog_id = dogs.id " +
+                            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+                            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+                            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+                            "JOIN traits ON dog_traits.trait_id = traits.id " +
+                            "JOIN user_ads ON ads.id = user_ads.ad_id " +
+                            "WHERE user_id = " + userId + " " +
+                            "GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training "
+            );
+            //stmt.setLong(1, userId);
             ResultSet rs = stmt.executeQuery();
             return createListFromResults(rs);
         } catch (SQLException e) {

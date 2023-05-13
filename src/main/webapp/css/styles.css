@@ -1,10 +1,16 @@
-.card-header > img {
+.card-header > img,
+dog-image {
+    aspect-ratio: 1;
+    height: 100%;
+}
+
+doggz {
     aspect-ratio: 1;
     height: 100%;
 }
 
 
 
-/** {*/
-/*    outline: lime solid 1px;*/
-/*}*/
+* {
+    outline: lime solid 1px;
+}

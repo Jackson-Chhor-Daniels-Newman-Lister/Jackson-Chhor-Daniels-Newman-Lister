@@ -75,14 +75,14 @@
             <div class="ad-details">
                 <c:set var="ad" scope="session" value="${ad}"/>
                 <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="rounded-top ratio ratio-1x1">
-                <p><h5>AD id:</h5> ${ad.id}</p>
-                <p><h5>Ad description:</h5> ${ad.description}</p>
-                <p><h5>Ad Title:</h5> ${ad.title}</p>
-                <p><h5>Dog Price:</h5> ${ad.price}</p>
-                <p><h5>Dog Breed(s):</h5> ${ad.breeds}</p>
-                <p><h5>Dog Trait(s):</h5> ${ad.traits}</p>
-                <p><h5>Dog Name:</h5> ${ad.name}</p>
-                <p><h5>Dog Age:</h5> ${ad.age}</p>
+                <p><h5>Name:</h5> ${ad.name}</p>
+                <p><h5>Age:</h5> ${ad.age}</p>
+                <p><h5>Breed(s):</h5> ${ad.breeds}</p>
+                <p><h5>About ${ad.name}:</h5> ${ad.description}</p>
+                <p><h5>Price:</h5> ${ad.price}</p>
+                <p><h5>Personality:</h5> ${ad.traits}</p>
+
+
                 <p><h5>Playfulness:</h5> ${ad.playfulness}</p>
                 <p><h5>Socialization:</h5> ${ad.socialization}</p>
                 <p><h5>Affection:</h5> ${ad.affection}</p>
@@ -93,9 +93,6 @@
             <img src="${pageContext.request.contextPath}/data/images/info.gif" alt="alt" class="rounded-top ratio ratio-1x1">
         </div>
     </div>
-    </div>
-</div>
-</div>
 </body>
 </html>
 
