@@ -1,15 +1,26 @@
-.card-header > img,
-dog-image {
+.card-header > img {
     aspect-ratio: 1;
     height: 100%;
 }
 
-doggz {
-    aspect-ratio: 1;
-    height: 100%;
+h1 {
+    font-family: 'Merriweather', serif;
+    text-align: center;
+    font-weight: bold;
+    color:darkgoldenrod
 }
 
+h5 {
+    font-family: 'Merriweather', serif;
+    font-style: italic;
+    font-weight: bold;
+    color:darkgoldenrod
+}
 
+p > span {
+    font-style: italic;
+    font-weight: bold;
+}
 
 * {
     outline: lime solid 1px;

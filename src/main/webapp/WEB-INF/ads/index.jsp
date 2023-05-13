@@ -12,12 +12,12 @@
     <section class="container bg-info-subtle">
         <div class="row d-flex justify-content-start">
             <h1 class="mt-5 mb-3 col-12" style="color:darkgoldenrod; font-style: italic;">Here Are All The Ads!</h1>
-            <button class="btn btn-info my-3 col-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions">
+            <button class="btn btn-info my-3 col-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions">
                 <span class="glyphicon glyphicon-search"></span>Search
             </button>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+        <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center mb-5">
             <c:forEach var="ad" items="${ads}">
                 <div class="col">
                     <article class="card h-100" style="border-color: darkgoldenrod; border-width: 4px">

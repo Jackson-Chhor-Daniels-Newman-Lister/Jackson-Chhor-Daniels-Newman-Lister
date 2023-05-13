@@ -9,10 +9,10 @@
 <body class="bg-info-subtle">
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
-<section class="container bg-info-subtle">
-    <h1 class="text-center" style="font-weight: bold; color: darkgoldenrod">Welcome, ${sessionScope.user.username}!</h1>
+<section class="container">
+    <h1 class="mt-5 mb-3">Welcome, ${sessionScope.user.username}!</h1>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
         <c:forEach var="userAd" items="${userAd}">
             <article class="col">
                 <div class="card h-100" style="border-color: darkgoldenrod; border-width: 4px">
@@ -21,10 +21,9 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Your dog, ${userAd.name}</h5>
-<%--                        <p class="card-text">${userAd.short_description}</p>--%>
                     </div>
                     <div class="card-footer">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between gap-1">
                             <a href="edit-info?adId=${userAd.id}" class="btn btn-sm btn-info text-light">Edit Ad</a>
                             <a href="more-info?adId=${userAd.id}" class="btn btn-sm btn-info text-light">View Ad</a>
                             <a href="edit-info?adId=${userAd.id}" class="btn btn-sm btn-danger text-light">Delete Ad</a>

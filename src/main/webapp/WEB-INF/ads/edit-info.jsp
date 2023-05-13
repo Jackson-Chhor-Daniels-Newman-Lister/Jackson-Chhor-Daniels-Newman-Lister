@@ -20,7 +20,7 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
     <div class="container">
-        <h1>Edit Ad Information</h1>
+        <h1 class="mt-5 mb-3">Edit ${ad.name}'s Information</h1>
         <c:set var="ad" scope="session" value="${ad}"/>
         <form action="edit-info" method="post">
             <input type="hidden" name="ad_id" value="${ad.id}"/>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="row gap-1">
-                        <div class="col">
+                        <div class="col-12 col-lg">
                             <label for="playfulness"></label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Playfulness</span>
@@ -71,7 +71,7 @@
                             </div>
                         </div>
 
-                        <div class="col">
+                        <div class="col-12 col-lg">
                             <label for="affection"></label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Affection</span>
