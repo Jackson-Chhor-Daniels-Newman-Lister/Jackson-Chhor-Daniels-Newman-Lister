@@ -17,7 +17,6 @@ public class DaoFactory {
     private static Ad adId;
 
     public static long getAdId() {
-
         return adId.getId();
     }
 

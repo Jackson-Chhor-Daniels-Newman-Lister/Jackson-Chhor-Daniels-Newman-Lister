@@ -4,9 +4,19 @@ import com.codeup.adlister.models.User;
 import java.util.List;
 
 public interface Users {
-    User findByUsername(String username);
+    //CREATE
     Long insert(User user);
-    boolean userOwnsAd(long adId, long userId);
 
-     User findById(Long id);
+    //READ
+    User findByUsername(String username);
+    boolean userOwnsAd(long adId, long userId);
+    User findById(Long id);
+
+    //UPDATE
+    public void edit(User user);
+
+    //DELETE
+    public void delete(int userId);
+
+
 }
