@@ -14,6 +14,23 @@ import java.util.List;
 public class MySQLAdsDao implements Ads {
     private Connection connection = null;
 
+    private final String getAllThingsStatementTop =
+            "SELECT ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, " +
+                    "dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id, " +
+                    "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds," +
+                    "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
+                    "FROM ads " +
+                    "JOIN dogs ON ads.dog_id = dogs.id " +
+                    "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+                    "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+                    "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+                    "JOIN traits ON dog_traits.trait_id = traits.id " +
+                    "JOIN user_ads ON ads.id = user_ads.ad_id ";
+    private final String getAllThingsStatementBottom =
+            "GROUP BY ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image,  ads.dog_id, " +
+                    "dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id";
+
+
     public MySQLAdsDao(Config config) {
         try {
             DriverManager.registerDriver(new Driver());
@@ -45,23 +62,16 @@ public class MySQLAdsDao implements Ads {
         String searchTerm = "'%" + searchString + "%'";
         try {
             stmt = connection.prepareStatement(
-                    "SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image,  ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training," +
-                            "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds, " +
-                            "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
-                            "FROM ads " +
-                            "JOIN dogs ON ads.dog_id = dogs.id " +
-                            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
-                            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
-                            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
-                            "JOIN traits ON dog_traits.trait_id = traits.id " +
+                    getAllThingsStatementTop +
                             "WHERE ads.title LIKE " + searchTerm +
                             " OR traits.name LIKE " + searchTerm +
                             " OR breeds.name LIKE " + searchTerm +
-                            " GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training"
-            );
+                       getAllThingsStatementBottom
+                    );
 
             System.out.println("some stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
+            System.out.println("rs = " + rs);
             return createListFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving from table: " + tableName, e);
