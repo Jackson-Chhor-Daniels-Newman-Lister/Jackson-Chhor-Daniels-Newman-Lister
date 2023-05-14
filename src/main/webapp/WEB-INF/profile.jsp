@@ -12,7 +12,7 @@
 <section class="container">
     <h1 class="mt-5 mb-3">Welcome, ${sessionScope.user.username}!</h1>
 
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
         <c:forEach var="userAd" items="${userAd}">
             <article class="col">
                 <div class="card h-100" style="border-color: darkgoldenrod; border-width: 4px">
@@ -24,9 +24,9 @@
                     </div>
                     <div class="card-footer">
                         <div class="d-flex justify-content-between gap-1">
-                            <a href="edit-info?adId=${userAd.id}" class="btn btn-sm btn-info text-light">Edit Ad</a>
-                            <a href="more-info?adId=${userAd.id}" class="btn btn-sm btn-info text-light">View Ad</a>
-                            <a href="edit-info?adId=${userAd.id}" class="btn btn-sm btn-danger text-light">Delete Ad</a>
+                            <a href="edit-info?adId=${userAd.id}" class="btn btn-sm btn-info text-light">Edit</a>
+                            <a href="more-info?adId=${userAd.id}" class="btn btn-sm btn-info text-light">View</a>
+                            <a href="edit-info?adId=${userAd.id}" class="btn btn-sm btn-danger text-light">Delete</a>
                         </div>
                     </div>
                 </div>

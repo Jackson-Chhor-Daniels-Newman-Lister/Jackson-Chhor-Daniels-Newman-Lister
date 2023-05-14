@@ -10,6 +10,7 @@
                     <ul class="nav d-flex align-items-center justify-content-between gap-3" style="font-style: italic; color: chocolate">
                         <li><a href="/ads" class="text-decoration-none text-light">Dogs</a></li>
                         <li><a href="/profile" class="text-decoration-none text-light">Profile</a></li>
+                        <li><a href="/ads/create" class="text-decoration-none text-light">Add Dog</a></li>
                         <li><a href="/logout" class="text-decoration-none text-light">Logout</a></li>
                     </ul>
                 </div>

@@ -5,29 +5,106 @@
         <jsp:param name="title" value="Create a new Ad" />
     </jsp:include>
 </head>
-<body>
+<body class="bg-info-subtle">
+<jsp:include page="/WEB-INF/partials/navbar.jsp" />
+
 <div class="container">
-    <h1>Create a new Ad</h1>
-    <form action="/ads/create" method="post">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input id="title" name="title" class="form-control" type="text">
+    <h1 class="mt-5 mb-3">Add a new dog!!</h1>
+    <c:set var="ad" scope="session" value="${ad}"/>
+    <form action="edit-info" method="post">
+        <input type="hidden" name="ad_id" value="${ad.id}"/>
+        <input type="hidden" name="dog_id" value="${ad.dogs_id}"/>
+        <div class="row gap-3">
+            <div class="col">
+
+                <label for="name"></label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Name</span>
+                    <input id="name" type="text" class="form-control font-monospace" name="name" value="${ad.name}" required/>
+                </div>
+
+                <label for="age"></label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Age</span>
+                    <input id="age" type="number" class="form-control font-monospace" name="age" min="1" max="25" value="${ad.age}" required/>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <label for="breeds" class="input-group-text">Breed</label>
+                    <select id="breeds" class="form-select" name="breeds"  required>
+                        <option value="0">SELECT BREED</option>
+                        <c:forEach var="breed" items="${breeds}">
+                            <option value="${breed.id}">${breed.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <%--@declare id="traits"--%><label for="traits" class="form-label font-monospace fw-bold">Traits:</label>
+                    <input type="text" class="form-control font-monospace" name="traits" value="${ad.traits}"/>
+                </div>
+
+                <div class="row gap-1">
+                    <div class="col-12 col-lg">
+                        <label for="playfulness"></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Playfulness</span>
+                            <input id="playfulness" type="number" class="form-control font-monospace" name="playfulness" min="1" max="5" value="${ad.playfulness}" required/>
+                        </div>
+
+                        <label for="socialization"></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Socialization</span>
+                            <input id="socialization" type="number" class="form-control font-monospace" name="socialization" min="1" max="5" value="${ad.socialization}" required/>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg">
+                        <label for="affection"></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Affection</span>
+                            <input id="affection" type="number" class="form-control font-monospace" name="affection" min="1" max="5" value="${ad.affection}" required/>
+                        </div>
+
+                        <label for="training"></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Training</span>
+                            <input id="training" type="number" class="form-control font-monospace" name="training" min="1" max="5" value="${ad.training}" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+
+                <label for="title"></label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Title</span>
+                    <input  id="title" type="text" class="form-control font-monospace" name="title" value="${ad.title}" required/>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control font-monospace" name="short_description" maxlength="225" rows="3" style="height: 100px; resize: none" placeholder="Short Description">${ad.short_description}</textarea>
+                    <%--@declare id="short_description"--%><label for="short_description">Short Description</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control font-monospace" name="description" rows="6" style="height: 200px; resize: none" required placeholder="Description">${ad.description}</textarea>
+                    <%--@declare id="description"--%><label for="description">Description</label>
+                </div>
+
+                <label for="price"></label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Price</span>
+                    <input id="price" type="number" class="form-control font-monospace" name="price" value="${ad.price}" required/>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" class="form-control" type="text"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="short_description">Short Description</label>
-            <input id="short_description" name="short_description" class="form-control" type="text">
-        </div>
-        <div class="form-group">
-            <label for="price">Price</label>
-            <input id="price" name="price" class="form-control" type="number">
-        </div>
-        <input id="id" name="id" type="hidden" value="">
-        <input type="submit" class="btn btn-block btn-primary">
+
+        <button type="submit" class="btn btn-info text-light">Save Changes</button>
     </form>
 </div>
+
 </body>
 </html>
