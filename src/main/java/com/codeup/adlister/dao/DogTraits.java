@@ -5,14 +5,14 @@ import java.util.List;
 
 public interface DogTraits {
     //CREATE
-    void insert(int dogId, int traitId);
+    void insert(int dogId, int[] traitIds);
 
     //READ
     List<DogTrait> searchAll();
     DogTrait searchOne(int dogId);
 
     //UPDATE
-    void edit(int dogId, int traitId);
+    void edit(int dogId, int traitId[]);
 
     //DELETE
     void delete(int dogId);

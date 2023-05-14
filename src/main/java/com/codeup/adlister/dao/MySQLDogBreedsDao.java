@@ -4,9 +4,7 @@ import com.codeup.adlister.models.DogBreed;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class MySQLDogBreedsDao implements DogBreeds{
@@ -26,7 +24,17 @@ public class MySQLDogBreedsDao implements DogBreeds{
 
     @Override
     public void insert(int dogId, int breedId) {
+        try {
+            String insertQuery = "INSERT INTO dog_breeds(dog_id, breed_id) VALUES (?, ?)";
 
+            PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, dogId);
+            stmt.setInt(2, breedId);
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting into dog_breeds table. DogID: " + dogId + "BreedId: " + breedId, e);
+        }
     }
 
     @Override
@@ -41,11 +49,28 @@ public class MySQLDogBreedsDao implements DogBreeds{
 
     @Override
     public void edit(int dogId, int breedId) {
-
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("UPDATE dog_breeds SET breed_id = ? WHERE dog_id = ?;");
+            stmt.setInt(1, breedId);
+            stmt.setInt(2, dogId);
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error editing breed id: " + breedId + "for dog id: " + dogId, e);
+        }
     }
 
     @Override
     public void delete(int dogId) {
-
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("DELETE FROM dog_breeds WHERE dog_id = ?;");
+            stmt.setInt(1, dogId);
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting dog's breed, id: " + dogId, e);
+        }
     }
 }

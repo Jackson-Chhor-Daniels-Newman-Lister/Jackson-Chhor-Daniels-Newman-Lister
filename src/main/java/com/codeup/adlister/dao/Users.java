@@ -1,15 +1,14 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.User;
-import java.util.List;
 
 public interface Users {
     //CREATE
     Long insert(User user);
 
     //READ
-    User findByUsername(String username);
-    User findById(Long id);
+    User searchByUsername(String username);
+    User searchByUserId(Long userId);
 
     //UPDATE
     public void edit(User user);

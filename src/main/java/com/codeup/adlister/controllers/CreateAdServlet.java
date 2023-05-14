@@ -55,7 +55,12 @@ public class CreateAdServlet extends HttpServlet {
         int breedId = Integer.parseInt(request.getParameter("breeds"));
         int userId = (int)loggedInUser.getId();
 
-        DaoFactory.getAdsDao().insert(ad, dog, breedId, userId, traitIds);
+        int dogId = DaoFactory.getDogsDao().insert(dog);
+        int adId = DaoFactory.getAdsDao().insert(ad,dogId);
+        DaoFactory.getDogBreedsDao().insert(dogId, breedId);
+        DaoFactory.getDogTraitsDao().insert(dogId, traitIds);
+        DaoFactory.getUserAdsDao().insert(userId, adId);
+
         response.sendRedirect("/ads");
     }
 

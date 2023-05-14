@@ -24,8 +24,19 @@ public class MySQLUserAdsDao implements UserAds{
     }
 
     @Override
-    public void insert(int userId, int AdId) {
+    public void insert(int userId, int adId) {
+        try {
+            String insertQuery = "INSERT INTO user_ads(user_id, ad_id) VALUES (?, ?)";
 
+            PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, userId);
+            stmt.setInt(2, adId);
+
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting into user_ad table. UserID: " + userId + "AdID: " + adId, e);
+        }
     }
 
     @Override
@@ -51,12 +62,20 @@ public class MySQLUserAdsDao implements UserAds{
     }
 
     @Override
-    public void edit(int userId, int AdId) {
+    public void edit(int userId, int adId) {
 
     }
 
     @Override
-    public void delete(int AdId) {
-
+    public void delete(int adId) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("DELETE FROM user_ads WHERE ad_id = ?;");
+            stmt.setInt(1, adId);
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting ad id: " + adId, e);
+        }
     }
 }

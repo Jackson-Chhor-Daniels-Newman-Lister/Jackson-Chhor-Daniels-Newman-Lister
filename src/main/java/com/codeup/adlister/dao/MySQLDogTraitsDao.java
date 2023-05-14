@@ -4,9 +4,7 @@ import com.codeup.adlister.models.DogTrait;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class MySQLDogTraitsDao implements DogTraits{
@@ -25,8 +23,21 @@ public class MySQLDogTraitsDao implements DogTraits{
     }
 
     @Override
-    public void insert(int dogId, int traitId) {
+    public void insert(int dogId, int[] traitIds) {
+        PreparedStatement stmt = null;
+        try {
+            for (int dogTrait : traitIds) {
+                String insertQuery = "INSERT INTO dog_traits(dog_id, trait_id) VALUES (?, ?)";
 
+                stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+                stmt.setInt(1, dogId);
+                stmt.setInt(2, dogTrait);
+                System.out.println("stmt = " + stmt);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting into dog_traits table. DogID: " + dogId, e);
+        }
     }
 
     @Override
@@ -40,12 +51,32 @@ public class MySQLDogTraitsDao implements DogTraits{
     }
 
     @Override
-    public void edit(int dogId, int traitId) {
-
+    public void edit(int dogId, int traitIds[]) {
+        delete(dogId);
+        PreparedStatement stmt = null;
+        try {
+            for (int dogTraitId : traitIds) {
+                stmt = connection.prepareStatement("INSERT INTO dog_traits (dog_id, trait_id) VALUES (?,?)");
+                stmt.setInt(1, dogId);
+                stmt.setInt(2, dogTraitId);
+                System.out.println("stmt = " + stmt);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error editing traits for dog id: " + dogId, e);
+        }
     }
 
     @Override
     public void delete(int dogId) {
-
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("DELETE FROM dog_traits WHERE dog_id = ?");
+            stmt.setInt(1, dogId);
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error editing traits for dog id: " + dogId, e);
+        }
     }
 }

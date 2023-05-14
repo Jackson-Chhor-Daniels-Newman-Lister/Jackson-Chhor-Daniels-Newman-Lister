@@ -44,6 +44,12 @@ public class DeleteServlet  extends HttpServlet {
         int adId = Integer.parseInt(request.getParameter("ad_id"));
         int userId = (int)loggedInUser.getId();
 
+        DaoFactory.getDogBreedsDao().delete(adId);
+        DaoFactory.getDogTraitsDao().delete(adId);
+        DaoFactory.getUserAdsDao().delete(adId);
+        DaoFactory.getAdsDao().delete(adId);
+        DaoFactory.getDogsDao().delete(adId);
+
         DaoFactory.getAdsDao().delete(adId);
         response.sendRedirect("/profile");
     }

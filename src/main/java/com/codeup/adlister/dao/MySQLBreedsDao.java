@@ -4,9 +4,7 @@ import com.codeup.adlister.models.Breed;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class MySQLBreedsDao implements Breeds{

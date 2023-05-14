@@ -65,6 +65,11 @@ public class EditServlet extends HttpServlet {
         Ad ad = new Ad(adId,title,shortDescription,description, price, "notchanging", adId);
         Dog dog = new Dog(adId, dogName, dogAge, playfulness, socialization, affection, training);
 
+        DaoFactory.getAdsDao().edit(ad);
+        DaoFactory.getDogsDao().edit(dog);
+        DaoFactory.getDogBreedsDao().edit((int) dog.getId(), breedId);
+        DaoFactory.getDogTraitsDao().edit((int) dog.getId(), traitIds);
+
         DaoFactory.getAdsDao().submitEdits(ad, dog, breedId, traitIds);
 
         response.sendRedirect("/ads");
