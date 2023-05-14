@@ -14,22 +14,37 @@ import java.util.List;
 public class MySQLAdsDao implements Ads {
     private Connection connection = null;
 
-    private String getAllThingsStatementTop =
-            "SELECT ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, " +
-                    "dogs.id dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id " +
-            "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds," +
-            "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
-            "FROM ads " +
-            "JOIN dogs ON ads.dog_id = dogs.id " +
-            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
-            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
-            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
-            "JOIN traits ON dog_traits.trait_id = traits.id " +
-            "JOIN user_ads ON ads.id = user_ads.ad_id ";
-    private String getAllThingsStatementBottom =
-            "GROUP BY ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image,  ads.dog_id, " +
-                    "dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id";
+//    private String getAllThingsStatementTop =
+//            "SELECT ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, " +
+//                    "dogs.id dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id, " +
+//            "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds," +
+//            "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
+//            "FROM ads " +
+//            "JOIN dogs ON ads.dog_id = dogs.id " +
+//            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+//            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+//            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+//            "JOIN traits ON dog_traits.trait_id = traits.id " +
+//            "JOIN user_ads ON ads.id = user_ads.ad_id ";
+//    private String getAllThingsStatementBottom =
+//            "GROUP BY ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image,  ads.dog_id, " +
+//                    "dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id";
 
+    private final String getAllThingsStatementTop =
+            "SELECT ads.id AS ads_id, ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, " +
+                    "dogs.id AS dogs_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id AS breeds_id, " +
+                    "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds," +
+                    "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
+                    "FROM ads " +
+                    "JOIN dogs ON ads.dog_id = dogs.id " +
+                    "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+                    "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+                    "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+                    "JOIN traits ON dog_traits.trait_id = traits.id " +
+                    "JOIN user_ads ON ads.id = user_ads.ad_id ";
+    private final String getAllThingsStatementBottom =
+            "GROUP BY ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image,  ads.dog_id, " +
+                    "dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id ";
     public MySQLAdsDao(Config config) {
         try {
             DriverManager.registerDriver(new Driver());
@@ -111,7 +126,7 @@ public class MySQLAdsDao implements Ads {
         try {
             stmt = connection.prepareStatement(
                     getAllThingsStatementTop +
-                            "WHERE traits.name IN " + searchTerm +
+                            "WHERE traits.name IN " + searchTerm + " " +
                             getAllThingsStatementBottom +
                             "HAVING COUNT(DISTINCT traits.name) = " + searchStringArray.length
             );
@@ -161,6 +176,7 @@ public class MySQLAdsDao implements Ads {
             stmt.setLong(4, ad.getPrice());
             stmt.setLong(5, ad.getId());
 
+            System.out.println("stmt = " + stmt);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error editing ad id: " + ad.getId(), e);
@@ -182,6 +198,7 @@ public class MySQLAdsDao implements Ads {
             stmt.setString(6, dog.getTraining());
             stmt.setLong(7, dog.getId());
 
+            System.out.println("stmt = " + stmt);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error editing dog id: " + dog.getId(), e);

@@ -12,7 +12,7 @@ FROM ads
 WHERE user_id = 6
 GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id;
 
-SELECT ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id,
+SELECT ads.id AS ads_id, ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, dogs.id AS dogs_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id AS breed_id,
        GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds,
        GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits
 FROM ads

@@ -30,6 +30,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <span>$${ad.price}</span>
+<%--                            <p>${ad.id}</p>--%>
                             <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More info</a>
                         </div>
                     </article>
@@ -69,7 +70,7 @@
                         <div class=" d-flex flex-column justify-content-start align-items-start">
                             <c:forEach var="trait" items="${traits}">
                                 <div class="form-group">
-                                    <input type="checkbox" id="${trait.name}" value="${trait.name}" name="traits" onchange="">
+                                    <input type="checkbox" id="${trait.name}" value="${trait.name}" name="traits">
                                     <label for="${trait.name}" class="text-light">${trait.name}</label>
                                 </div>
                             </c:forEach>
