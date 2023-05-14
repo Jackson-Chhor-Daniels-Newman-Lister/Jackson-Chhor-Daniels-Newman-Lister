@@ -22,7 +22,7 @@ FROM ads
          JOIN dog_traits ON dogs.id = dog_traits.dog_id
          JOIN traits ON dog_traits.trait_id = traits.id
          JOIN user_ads ON ads.id = user_ads.ad_id
-WHERE user_id = 6
+WHERE ads.id = 21
 GROUP BY ads.id, ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id;
 
 USE dog_lister_db;
@@ -51,3 +51,4 @@ HAVING COUNT(DISTINCT traits.name) = 2;
 #     playfulness = '?', socialization = '?',
 #     affection = '?', training = '?'
 # WHERE id = 4;
+insert into dog_traits(dog_id, trait_id) VALUES (21,1);

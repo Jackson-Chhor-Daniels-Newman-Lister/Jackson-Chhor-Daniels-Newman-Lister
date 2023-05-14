@@ -148,11 +148,12 @@ public class MySQLAdsDao implements Ads {
                             "WHERE ads.id = " + adNumber + " " +
                             getAllThingsStatementBottom
                     );
+            System.out.println("stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             rs.next();
             return extractObject(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving more info on ads.", e);
+            throw new RuntimeException("Error retrieving more info on ads id: " + adNumber, e);
         }
     }
 
@@ -223,10 +224,11 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public void insert(Ad ad, Dog dog, int breed) {
+    public void insert(Ad ad, Dog dog, int breedId, int userId) {
         int newDogId = insertDog(dog);
         insertAd(ad, newDogId);
-        insertBreed(breed, newDogId);
+        insertBreed(breedId, newDogId);
+        insertUser(userId, newDogId);
     }
 
     private void insertAd(Ad ad, int newDogId){
@@ -270,6 +272,8 @@ public class MySQLAdsDao implements Ads {
     }
 
     private void insertBreed(int newDogBreedId, int newDogId){
+        System.out.println("newDogBreedId = " + newDogBreedId);
+        System.out.println("newDogId = " + newDogId);
         try {
             String insertQuery = "INSERT INTO dog_breeds(dog_id, breed_id) " +
                     "VALUES (?, ?)";
@@ -277,6 +281,25 @@ public class MySQLAdsDao implements Ads {
             PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, newDogId);
             stmt.setInt(2, newDogBreedId);
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating a new breed.", e);
+        }
+    }
+
+    private void insertUser(int newDogUserId, int newDogId){
+        System.out.println("newDogBreedId = " + newDogUserId);
+        System.out.println("newDogId = " + newDogId);
+        try {
+            String insertQuery = "INSERT INTO user_ads(user_id, ad_id) " +
+                    "VALUES (?, ?)";
+
+            PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, newDogUserId);
+            stmt.setInt(2, newDogId);
+            System.out.println("stmt = " + stmt);
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
         } catch (SQLException e) {

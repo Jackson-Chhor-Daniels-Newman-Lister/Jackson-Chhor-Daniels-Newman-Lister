@@ -9,7 +9,7 @@
 <jsp:include page="partials/navbar.jsp" />
 <div class="container">
     <h1 class="text-center mt-5 mb-3">Please Fill Out Your Information Below</h1>
-    <form class="mx-auto" style="max-width: 500px;">
+    <form action="register" method="post" class="mx-auto" style="max-width: 500px;">
         <div class="form-floating form-group mb-3">
             <input id="username" name="username" class="form-control" type="text" placeholder="Username">
             <label for="username">Username</label>

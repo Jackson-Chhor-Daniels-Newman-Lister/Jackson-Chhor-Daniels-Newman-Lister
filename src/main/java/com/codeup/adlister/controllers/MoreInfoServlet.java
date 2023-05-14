@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MoreInfoServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long adId = Long.valueOf(request.getParameter("adId"));
+        long adId = Long.parseLong(request.getParameter("adId"));
         request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
 
         request.getRequestDispatcher("/WEB-INF/ads/more-info.jsp").forward(request, response);

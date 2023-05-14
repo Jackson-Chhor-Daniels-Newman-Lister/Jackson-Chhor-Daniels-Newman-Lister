@@ -23,8 +23,8 @@
         <h1 class="mt-5 mb-3">Edit ${ad.name}'s Information</h1>
         <c:set var="ad" scope="session" value="${ad}"/>
         <form action="edit-info" method="post">
-            <input type="hidden" name="ad_id" value="${ad.id}"/>
-            <input type="hidden" name="dog_id" value="${ad.dogs_id}"/>
+            <input type="hidden" name="ad_id" value="${ad.dog_id}"/>
+            <input type="hidden" name="dog_id" value="${ad.dog_id}"/>
             <div class="row gap-3">
                 <div class="col">
 

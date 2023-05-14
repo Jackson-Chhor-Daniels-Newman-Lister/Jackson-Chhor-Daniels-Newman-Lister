@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <jsp:include page="/WEB-INF/partials/head.jsp">
@@ -11,7 +13,7 @@
 <div class="container">
     <h1 class="mt-5 mb-3">Add a new dog!!</h1>
     <c:set var="ad" scope="session" value="${ad}"/>
-    <form action="edit-info" method="post">
+    <form action="create" method="post">
         <input type="hidden" name="ad_id" value="${ad.id}"/>
         <input type="hidden" name="dog_id" value="${ad.dogs_id}"/>
         <div class="row gap-3">
@@ -28,7 +30,6 @@
                     <span class="input-group-text">Age</span>
                     <input id="age" type="number" class="form-control font-monospace" name="age" min="1" max="25" value="${ad.age}" required/>
                 </div>
-
 
                 <div class="input-group mb-3">
                     <label for="breeds" class="input-group-text">Breed</label>

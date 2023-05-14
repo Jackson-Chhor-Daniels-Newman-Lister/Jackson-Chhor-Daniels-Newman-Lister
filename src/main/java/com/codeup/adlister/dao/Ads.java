@@ -14,7 +14,7 @@ public interface Ads {
 
     List<Object> searchByTraits(String tableName, String[] searchTermArray);
 
-    void insert(Ad ad, Dog dog, int breed);
+    void insert(Ad ad, Dog dog, int breedId, int userId);
 
     Object individual(long adId);
 
