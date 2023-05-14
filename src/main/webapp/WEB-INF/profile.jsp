@@ -26,7 +26,7 @@
                         <div class="d-flex justify-content-between gap-1">
                             <a href="edit-info?adId=${userAd.dog_id}" class="btn btn-sm btn-info text-light">Edit</a>
                             <a href="more-info?adId=${userAd.dog_id}" class="btn btn-sm btn-info text-light">View</a>
-                            <a href="edit-info?adId=${userAd.dog_id}" class="btn btn-sm btn-danger text-light">Delete</a>
+                            <a href="delete-ad?adId=${userAd.dog_id}" class="btn btn-sm btn-danger text-light">Delete</a>
                         </div>
                     </div>
                 </div>

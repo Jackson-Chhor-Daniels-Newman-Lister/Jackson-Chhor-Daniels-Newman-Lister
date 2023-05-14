@@ -21,11 +21,19 @@ public class CreateAdServlet extends HttpServlet {
             return;
         }
         request.setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
+        request.setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User loggedInUser = (User) request.getSession().getAttribute("user");
+
+        String[] selectedTraits = request.getParameterValues("traits");
+        int[] traitIds = new int[selectedTraits.length];
+        for (int i = 0; i < selectedTraits.length; i++) {
+            traitIds[i] = Integer.parseInt(selectedTraits[i]);
+        }
+
         Ad ad = new Ad(
                 request.getParameter("title"),
                 request.getParameter("short_description"),
@@ -47,7 +55,7 @@ public class CreateAdServlet extends HttpServlet {
         int breedId = Integer.parseInt(request.getParameter("breeds"));
         int userId = (int)loggedInUser.getId();
 
-        DaoFactory.getAdsDao().insert(ad, dog, breedId, userId);
+        DaoFactory.getAdsDao().insert(ad, dog, breedId, userId, traitIds);
         response.sendRedirect("/ads");
     }
 

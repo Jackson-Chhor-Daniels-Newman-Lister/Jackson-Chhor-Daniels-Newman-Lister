@@ -51,4 +51,8 @@ HAVING COUNT(DISTINCT traits.name) = 2;
 #     playfulness = '?', socialization = '?',
 #     affection = '?', training = '?'
 # WHERE id = 4;
-insert into dog_traits(dog_id, trait_id) VALUES (21,1);
+# insert into dog_traits(dog_id, trait_id) VALUES (21,1);
+
+UPDATE dog_breeds
+SET breed_id = 2
+WHERE dog_id = 1;

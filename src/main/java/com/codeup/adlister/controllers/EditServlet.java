@@ -31,6 +31,7 @@ public class EditServlet extends HttpServlet {
         if (validUserToAd){
             request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
             request.setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
+            request.setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
             request.getRequestDispatcher("/WEB-INF/ads/edit-info.jsp").forward(request, response);
         } else {
             response.sendRedirect("/profile");
@@ -39,7 +40,7 @@ public class EditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long adId = Long.valueOf(request.getParameter("ad_id"));
+        int adId = Integer.parseInt(request.getParameter("ad_id"));
         String title = request.getParameter("title");
         String shortDescription = request.getParameter("short_description");
         String description = request.getParameter("description");
@@ -53,10 +54,18 @@ public class EditServlet extends HttpServlet {
         String affection = request.getParameter("affection");
         String training = request.getParameter("training");
 
-        Ad ad = new Ad(adId,title,shortDescription,description, price, "notchanging", (int) adId);
+        String[] selectedTraits = request.getParameterValues("traits");
+        int[] traitIds = new int[selectedTraits.length];
+        for (int i = 0; i < selectedTraits.length; i++) {
+            traitIds[i] = Integer.parseInt(selectedTraits[i]);
+        }
+
+        int breedId = Integer.parseInt(request.getParameter("breeds"));
+
+        Ad ad = new Ad(adId,title,shortDescription,description, price, "notchanging", adId);
         Dog dog = new Dog(adId, dogName, dogAge, playfulness, socialization, affection, training);
 
-        DaoFactory.getAdsDao().submitEdits(ad, dog);
+        DaoFactory.getAdsDao().submitEdits(ad, dog, breedId, traitIds);
 
         response.sendRedirect("/ads");
     }

@@ -14,22 +14,6 @@ import java.util.List;
 public class MySQLAdsDao implements Ads {
     private Connection connection = null;
 
-//    private String getAllThingsStatementTop =
-//            "SELECT ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, " +
-//                    "dogs.id dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id, " +
-//            "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds," +
-//            "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
-//            "FROM ads " +
-//            "JOIN dogs ON ads.dog_id = dogs.id " +
-//            "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
-//            "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
-//            "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
-//            "JOIN traits ON dog_traits.trait_id = traits.id " +
-//            "JOIN user_ads ON ads.id = user_ads.ad_id ";
-//    private String getAllThingsStatementBottom =
-//            "GROUP BY ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image,  ads.dog_id, " +
-//                    "dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id";
-
     private final String getAllThingsStatementTop =
             "SELECT ads.id AS ads_id, ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, " +
                     "dogs.id AS dogs_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id AS breeds_id, " +
@@ -125,10 +109,10 @@ public class MySQLAdsDao implements Ads {
         searchTerm.append(")");
         try {
             stmt = connection.prepareStatement(
-                    getAllThingsStatementTop +
-                            "WHERE traits.name IN " + searchTerm + " " +
-                            getAllThingsStatementBottom +
-                            "HAVING COUNT(DISTINCT traits.name) = " + searchStringArray.length
+                getAllThingsStatementTop +
+                    "WHERE traits.name IN " + searchTerm + " " +
+                    getAllThingsStatementBottom +
+                    "HAVING COUNT(DISTINCT traits.name) = " + searchStringArray.length
             );
 
             System.out.println("some stmt = " + stmt);
@@ -158,18 +142,20 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public void submitEdits(Ad ad, Dog dog) {
+    public void submitEdits(Ad ad, Dog dog, int breedID, int[] traitIds) {
         editAd(ad);
         editDog(dog);
+        editBreed(breedID, (int) dog.getId());
+        editTraits(traitIds, (int) dog.getId());
     }
 
     public void editAd(Ad ad) {
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(
-                    "UPDATE ads " +
-                            "SET title = ?, short_description = ?, description = ?, price = ? " +
-                            "WHERE id = ? "
+                "UPDATE ads " +
+                    "SET title = ?, short_description = ?, description = ?, price = ? " +
+                    "WHERE id = ? "
             );
             stmt.setString(1, ad.getTitle());
             stmt.setString(2, ad.getShortDescription());
@@ -206,15 +192,138 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    public void editBreed(int breedId, int dogId) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(
+                    "UPDATE dog_breeds " +
+                            "SET breed_id = ? " +
+                            "WHERE dog_id = ?;"
+            );
+            stmt.setInt(1, breedId);
+            stmt.setInt(2, dogId);
+
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error editing breed id: " + breedId, e);
+        }
+    }
+
+    public void editTraits(int[] traitIds, int dogId) {
+        PreparedStatement stmt1 = null;
+        PreparedStatement stmt2 = null;
+        try {
+            stmt1 = connection.prepareStatement(
+                    "DELETE FROM dog_traits " +
+                            "WHERE dog_id = ?;"
+            );
+            stmt1.setInt(1, dogId);
+            System.out.println("stmt = " + stmt1);
+            stmt1.executeUpdate();
+
+            for (int dogTraitId : traitIds) {
+                stmt2 = connection.prepareStatement(
+                        "INSERT INTO dog_traits (dog_id, trait_id)  " +
+                                "VALUES (?,?)"
+                );
+                stmt2.setInt(1, dogId);
+                stmt2.setInt(2, dogTraitId);
+
+                System.out.println("stmt = " + stmt2);
+                stmt2.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error editing traits for dog id: " + dogId, e);
+        }
+    }
+
+    @Override
+    public void delete(int adId) {
+        deleteBreed(adId);
+        deleteTraits(adId);
+        deleteAd(adId);
+        deleteDog(adId);
+    }
+
+    private void deleteAd(int adId){
+        PreparedStatement stmt1 = null;
+        PreparedStatement stmt2 = null;
+        try {
+            stmt2 = connection.prepareStatement(
+            "DELETE FROM user_ads " +
+                "WHERE ad_id = ?;"
+            );
+            stmt2.setInt(1, adId);
+            System.out.println("stmt = " + stmt2);
+            stmt2.executeUpdate();
+
+            stmt1 = connection.prepareStatement(
+                    "DELETE FROM ads " +
+                            "WHERE ads.id = ?;"
+            );
+            stmt1.setInt(1, adId);
+            System.out.println("stmt = " + stmt1);
+            stmt1.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting ad id: " + adId, e);
+        }
+    }
+    private void deleteDog(int dogId){
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(
+            "DELETE FROM dogs " +
+                "WHERE dogs.id = ?;"
+            );
+            stmt.setInt(1, dogId);
+
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting dog id: " + dogId, e);
+        }
+    }
+    private void deleteBreed(int dogId){
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(
+            "DELETE FROM dog_breeds " +
+                "WHERE dog_id = ?;"
+            );
+            stmt.setInt(1, dogId);
+
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting dog's breed, id: " + dogId, e);
+        }
+    }
+    private void deleteTraits(int dogId){
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(
+            "DELETE FROM dog_traits " +
+                "WHERE dog_id = ?;"
+            );
+            stmt.setInt(1, dogId);
+            System.out.println("stmt = " + stmt);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error editing traits for dog id: " + dogId, e);
+        }
+    }
+
     @Override
     public List<Object> adsByUserId(long userId) {
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(
-                    getAllThingsStatementTop +
-                            "WHERE user_id = " + userId + " " +
-                     getAllThingsStatementBottom
-                    );
+            getAllThingsStatementTop +
+                "WHERE user_id = " + userId + " " +
+                 getAllThingsStatementBottom
+            );
             System.out.println("stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             return createListFromResults(rs);
@@ -224,11 +333,12 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public void insert(Ad ad, Dog dog, int breedId, int userId) {
+    public void insert(Ad ad, Dog dog, int breedId, int userId, int[] traitIds) {
         int newDogId = insertDog(dog);
         insertAd(ad, newDogId);
         insertBreed(breedId, newDogId);
         insertUser(userId, newDogId);
+        insertTraits(traitIds, newDogId);
     }
 
     private void insertAd(Ad ad, int newDogId){
@@ -283,9 +393,27 @@ public class MySQLAdsDao implements Ads {
             stmt.setInt(2, newDogBreedId);
             System.out.println("stmt = " + stmt);
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
         } catch (SQLException e) {
             throw new RuntimeException("Error creating a new breed.", e);
+        }
+    }
+
+    private void insertTraits(int[] newDogTraitIds, int newDogId) {
+        PreparedStatement stmt = null;
+
+        try {
+            for (int newDogTrait : newDogTraitIds) {
+                String insertQuery = "INSERT INTO dog_traits(dog_id, trait_id) " +
+                        "VALUES (?, ?)";
+
+                stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+                stmt.setInt(1, newDogId);
+                stmt.setInt(2, newDogTrait);
+                System.out.println("stmt = " + stmt);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting traits into table. For new dog id: " + newDogId, e);
         }
     }
 
@@ -301,7 +429,6 @@ public class MySQLAdsDao implements Ads {
             stmt.setInt(2, newDogId);
             System.out.println("stmt = " + stmt);
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
         } catch (SQLException e) {
             throw new RuntimeException("Error creating a new breed.", e);
         }

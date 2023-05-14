@@ -14,11 +14,13 @@ public interface Ads {
 
     List<Object> searchByTraits(String tableName, String[] searchTermArray);
 
-    void insert(Ad ad, Dog dog, int breedId, int userId);
+    void insert(Ad ad, Dog dog, int breedId, int userId, int[] traitIds);
 
     Object individual(long adId);
 
     List<Object> adsByUserId(long userId);
 
-    void submitEdits(Ad ad, Dog dog);
+    void submitEdits(Ad ad, Dog dog, int breedId, int[] traitIds);
+
+    void delete(int adId);
 }

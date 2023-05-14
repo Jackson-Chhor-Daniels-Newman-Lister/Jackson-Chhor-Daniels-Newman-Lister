@@ -41,9 +41,13 @@
                     </select>
                 </div>
 
-                <div class="mb-3">
-                    <%--@declare id="traits"--%><label for="traits" class="form-label font-monospace fw-bold">Traits:</label>
-                    <input type="text" class="form-control font-monospace" name="traits" value="${ad.traits}"/>
+                <div class=" d-flex flex-column justify-content-start align-items-start mb-3">
+                    <c:forEach var="trait" items="${traits}">
+                        <div class="form-group">
+                            <input type="checkbox" id="${trait.name}" value="${trait.id}" name="traits">
+                            <label for="${trait.name}" style="color: darkgoldenrod;">${trait.name}</label>
+                        </div>
+                    </c:forEach>
                 </div>
 
                 <div class="row gap-1">
