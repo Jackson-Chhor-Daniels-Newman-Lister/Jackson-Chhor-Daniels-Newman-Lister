@@ -5,15 +5,15 @@ import java.util.List;
 
 public interface UserAds {
     //CREATE
-    void insert(int userId, int AdId);
+    void insert(int userId, int adId);
 
     //READ
     List<UserAd> searchAll();
-    UserAd searchOne(int AdId);
+    boolean searchOne(int adId, int userId);
 
     //UPDATE
-    void edit(int userId, int AdId);
+    void edit(int userId, int adId);
 
     //DELETE
-    void delete(int AdId);
+    void delete(int adId);
 }

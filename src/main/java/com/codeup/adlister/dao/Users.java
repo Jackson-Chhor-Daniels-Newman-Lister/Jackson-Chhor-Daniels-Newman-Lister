@@ -9,7 +9,6 @@ public interface Users {
 
     //READ
     User findByUsername(String username);
-    boolean userOwnsAd(long adId, long userId);
     User findById(Long id);
 
     //UPDATE

@@ -5,9 +5,7 @@ import com.codeup.adlister.models.UserAd;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class MySQLUserAdsDao implements UserAds{
@@ -25,7 +23,6 @@ public class MySQLUserAdsDao implements UserAds{
         }
     }
 
-
     @Override
     public void insert(int userId, int AdId) {
 
@@ -37,8 +34,20 @@ public class MySQLUserAdsDao implements UserAds{
     }
 
     @Override
-    public UserAd searchOne(int AdId) {
-        return null;
+    public boolean searchOne(int adId, int userId) {
+        String query = "SELECT * FROM user_ads WHERE ad_id = ? AND user_id = ? LIMIT 1";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setLong(1, adId);
+            stmt.setLong(2, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error verifying user: " + userId + " owns ad: " + adId, e);
+        }
     }
 
     @Override

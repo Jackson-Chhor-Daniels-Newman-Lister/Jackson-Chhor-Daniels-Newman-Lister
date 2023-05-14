@@ -26,7 +26,7 @@ public class DeleteServlet  extends HttpServlet {
         long userId = user.getId();
         long adId = Long.valueOf(request.getParameter("adId"));
 
-        boolean validUserToAd = DaoFactory.getUsersDao().userOwnsAd(adId,userId);
+        boolean validUserToAd = DaoFactory.getUserAdsDao().searchOne((int)adId,(int)userId);
         if (validUserToAd){
             request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
             request.setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
