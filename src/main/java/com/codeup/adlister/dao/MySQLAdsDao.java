@@ -1,35 +1,15 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
-import com.codeup.adlister.models.Dog;
-import com.codeup.adlister.models.User;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class MySQLAdsDao implements Ads {
     private Connection connection = null;
-
-    private final String getAllThingsStatementTop =
-            "SELECT ads.id AS ads_id, ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, " +
-                    "dogs.id AS dogs_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id AS breeds_id, " +
-                    "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds," +
-                    "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
-                    "FROM ads " +
-                    "JOIN dogs ON ads.dog_id = dogs.id " +
-                    "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
-                    "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
-                    "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
-                    "JOIN traits ON dog_traits.trait_id = traits.id " +
-                    "JOIN user_ads ON ads.id = user_ads.ad_id ";
-    private final String getAllThingsStatementBottom =
-            "GROUP BY ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image,  ads.dog_id, " +
-                    "dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id ";
     public MySQLAdsDao(Config config) {
         try {
             DriverManager.registerDriver(new Driver());
@@ -40,6 +20,33 @@ public class MySQLAdsDao implements Ads {
             );
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database!", e);
+        }
+    }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    CREATE
+    /////////////////////////////////////////////////////////////////////
+     */
+    @Override
+    public int insert(Ad ad, int dogId){
+        try {
+            String insertQuery = "INSERT INTO ads(title, description, short_description, price, image, dog_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, ad.getTitle());
+            stmt.setString(2, ad.getShortDescription());
+            stmt.setString(3, ad.getDescription());
+            stmt.setLong(4, ad.getPrice());
+            stmt.setString(5, ad.getImage());
+            stmt.setLong(6, dogId);
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating a new ad.", e);
         }
     }
 
@@ -103,7 +110,7 @@ public class MySQLAdsDao implements Ads {
             System.out.println("stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return extractAd(rs);
+            return extractInfo(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving more info on ads id: " + adNumber, e);
         }
@@ -112,12 +119,12 @@ public class MySQLAdsDao implements Ads {
     private List<Ad>createListFromResults(ResultSet rs) throws SQLException {
         List<Ad> list = new ArrayList<>();
         while (rs.next()){
-            list.add(extractAd(rs));
+            list.add(extractInfo(rs));
         }
         return list;
     }
 
-    private Ad extractAd(ResultSet rs) throws SQLException {
+    private Ad extractInfo(ResultSet rs) throws SQLException {
         if (! rs.next()) {
             return null;
         }
@@ -132,27 +139,6 @@ public class MySQLAdsDao implements Ads {
         );
     }
 
-    @Override
-    public int insert(Ad ad, int dogId){
-        try {
-            String insertQuery = "INSERT INTO ads(title, description, short_description, price, image, dog_id) VALUES (?, ?, ?, ?, ?, ?)";
-
-            PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, ad.getTitle());
-            stmt.setString(2, ad.getShortDescription());
-            stmt.setString(3, ad.getDescription());
-            stmt.setLong(4, ad.getPrice());
-            stmt.setString(5, ad.getImage());
-            stmt.setLong(6, dogId);
-            stmt.executeUpdate();
-
-            ResultSet rs = stmt.getGeneratedKeys();
-            rs.next();
-            return rs.getInt(1);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error creating a new ad.", e);
-        }
-    }
     @Override
     public void edit(Ad ad) {
         PreparedStatement stmt = null;

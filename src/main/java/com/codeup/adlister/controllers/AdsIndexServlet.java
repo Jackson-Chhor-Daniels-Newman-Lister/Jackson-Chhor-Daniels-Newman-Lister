@@ -13,9 +13,9 @@ import java.io.IOException;
 public class AdsIndexServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("ads", DaoFactory.getAdsDao().searchAll("ads"));
-        request.setAttribute("breeds", DaoFactory.getAdsDao().searchAll("breeds"));
-        request.setAttribute("traits", DaoFactory.getAdsDao().searchAll("traits"));
+        request.setAttribute("ads", DaoFactory.getAdsDao().searchAll());
+        request.setAttribute("breeds", DaoFactory.getBreedsDao().searchAll());
+        request.setAttribute("traits", DaoFactory.getTraitsDao().searchAll());
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }
 
@@ -32,8 +32,8 @@ public class AdsIndexServlet extends HttpServlet {
             request.getSession().setAttribute("ads", DaoFactory.getTraitsDao().searchByStrings(selectedTraits));
         }
 
-        request.getSession().setAttribute("breeds", DaoFactory.getAdsDao().searchAll("breeds"));
-        request.getSession().setAttribute("traits", DaoFactory.getAdsDao().searchAll("traits"));
+        request.getSession().setAttribute("breeds", DaoFactory.getBreedsDao().searchAll());
+        request.getSession().setAttribute("traits", DaoFactory.getTraitsDao().searchAll());
         //response.sendRedirect(redirectString);
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }

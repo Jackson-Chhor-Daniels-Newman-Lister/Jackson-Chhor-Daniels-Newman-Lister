@@ -1,6 +1,5 @@
 package com.codeup.adlister.dao;
 
-import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.Dog;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
@@ -66,7 +65,7 @@ public class MySQLDogsDao implements Dogs{
             stmt.setInt(1, dogId);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return extractAd(rs);
+            return extractInfo(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving from table: Dogs", e);
         }
@@ -75,12 +74,12 @@ public class MySQLDogsDao implements Dogs{
     private List<Dog>createListFromResults(ResultSet rs) throws SQLException {
         List<Dog> list = new ArrayList<>();
         while (rs.next()){
-            list.add(extractAd(rs));
+            list.add(extractInfo(rs));
         }
         return list;
     }
 
-    private Dog extractAd(ResultSet rs) throws SQLException {
+    private Dog extractInfo(ResultSet rs) throws SQLException {
         if (! rs.next()) {
             return null;
         }

@@ -24,11 +24,11 @@ public class DeleteServlet  extends HttpServlet {
         int userId = user.getId();
         int adId = Integer.parseInt(request.getParameter("adId"));
 
-        boolean validUserToAd = DaoFactory.getUserAdsDao().searchOne((int)adId,(int)userId);
+        boolean validUserToAd = DaoFactory.getUserAdsDao().searchOne(userId, adId);
         if (validUserToAd){
             request.setAttribute("ad", DaoFactory.getAdsDao().searchOne(adId));
-            request.setAttribute("breeds", DaoFactory.getAdsDao().searchAll("breeds"));
-            request.setAttribute("traits", DaoFactory.getAdsDao().searchAll("traits"));
+            request.setAttribute("breeds", DaoFactory.getBreedsDao().searchAll());
+            request.setAttribute("traits", DaoFactory.getTraitsDao().searchAll());
             request.getRequestDispatcher("/WEB-INF/ads/delete-ad.jsp").forward(request, response);
         } else {
             response.sendRedirect("/profile");

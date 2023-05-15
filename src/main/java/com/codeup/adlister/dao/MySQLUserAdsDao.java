@@ -1,7 +1,5 @@
 package com.codeup.adlister.dao;
 
-import com.codeup.adlister.models.Ad;
-import com.codeup.adlister.models.Trait;
 import com.codeup.adlister.models.UserAd;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
@@ -56,26 +54,8 @@ public class MySQLUserAdsDao implements UserAds{
         }
     }
 
-    private List<UserAd> createListFromResults(ResultSet rs) throws SQLException {
-        List<UserAd> list = new ArrayList<>();
-        while (rs.next()){
-            list.add(extractUserAd(rs));
-        }
-        return list;
-    }
-
-    private UserAd extractUserAd(ResultSet rs) throws SQLException {
-        if (! rs.next()) {
-            return null;
-        }
-        return new UserAd(
-                rs.getInt("user_id"),
-                rs.getInt("ad_id")
-        );
-    }
-
     @Override
-    public boolean searchOne(int adId, int userId) {
+    public boolean searchOne(int userId, int adId) {
         String query = "SELECT * FROM user_ads WHERE ad_id = ? AND user_id = ? LIMIT 1";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
@@ -89,6 +69,24 @@ public class MySQLUserAdsDao implements UserAds{
         } catch (SQLException e) {
             throw new RuntimeException("Error verifying user: " + userId + " owns ad: " + adId, e);
         }
+    }
+
+    private List<UserAd> createListFromResults(ResultSet rs) throws SQLException {
+        List<UserAd> list = new ArrayList<>();
+        while (rs.next()){
+            list.add(extractInfo(rs));
+        }
+        return list;
+    }
+
+    private UserAd extractInfo(ResultSet rs) throws SQLException {
+        if (! rs.next()) {
+            return null;
+        }
+        return new UserAd(
+                rs.getInt("user_id"),
+                rs.getInt("ad_id")
+        );
     }
 
     @Override

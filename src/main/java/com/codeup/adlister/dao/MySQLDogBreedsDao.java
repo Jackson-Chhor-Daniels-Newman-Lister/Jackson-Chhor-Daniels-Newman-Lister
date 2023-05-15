@@ -5,6 +5,7 @@ import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLDogBreedsDao implements DogBreeds{
@@ -39,12 +40,47 @@ public class MySQLDogBreedsDao implements DogBreeds{
 
     @Override
     public List<DogBreed> searchAll() {
-        return null;
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM dog_breeds");
+            ResultSet rs = stmt.executeQuery();
+            return createListFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving from table: Dog_breeds", e);
+        }
     }
 
     @Override
     public DogBreed searchOne(int dogId) {
-        return null;
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM dog_breeds WHERE id = ?");
+            stmt.setInt(1,dogId);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractInfo(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving from table: Ads", e);
+        }
+    }
+
+    private List<DogBreed> createListFromResults(ResultSet rs) throws SQLException {
+        List<DogBreed> list = new ArrayList<>();
+        while (rs.next()){
+            list.add(extractInfo(rs));
+        }
+        return list;
+    }
+
+    private DogBreed extractInfo(ResultSet rs) throws SQLException {
+        if (! rs.next()) {
+            return null;
+        }
+        return new DogBreed(
+                rs.getInt("id"),
+                rs.getInt("dog_id"),
+                rs.getInt("breed_id")
+        );
     }
 
     @Override

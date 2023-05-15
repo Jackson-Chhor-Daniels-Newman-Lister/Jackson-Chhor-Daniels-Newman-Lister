@@ -1,7 +1,6 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Breed;
-import com.codeup.adlister.models.Trait;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
@@ -49,7 +48,7 @@ public class MySQLBreedsDao implements Breeds{
             stmt.setInt(1,breedId);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return extractUserAd(rs);
+            return extractInfo(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving from table: Ads", e);
         }
@@ -83,12 +82,12 @@ public class MySQLBreedsDao implements Breeds{
     private List<Breed> createListFromResults(ResultSet rs) throws SQLException {
         List<Breed> list = new ArrayList<>();
         while (rs.next()){
-            list.add(extractUserAd(rs));
+            list.add(extractInfo(rs));
         }
         return list;
     }
 
-    private Breed extractUserAd(ResultSet rs) throws SQLException {
+    private Breed extractInfo(ResultSet rs) throws SQLException {
         if (! rs.next()) {
             return null;
         }

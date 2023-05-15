@@ -1,7 +1,6 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Trait;
-import com.codeup.adlister.models.UserAd;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
@@ -31,12 +30,28 @@ public class MySQLTraitsDao implements Traits{
 
     @Override
     public List<Trait> searchAll() {
-        return null;
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM traits");
+            ResultSet rs = stmt.executeQuery();
+            return createListFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving from table: Dog_breeds", e);
+        }
     }
 
     @Override
     public Trait searchOne(int traitId) {
-        return null;
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM traits WHERE id = ?");
+            stmt.setInt(1, traitId);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractInfo(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving from table: Ads", e);
+        }
     }
 
     @Override
@@ -77,12 +92,12 @@ public class MySQLTraitsDao implements Traits{
     private List<Trait> createListFromResults(ResultSet rs) throws SQLException {
         List<Trait> list = new ArrayList<>();
         while (rs.next()){
-            list.add(extractUserAd(rs));
+            list.add(extractInfo(rs));
         }
         return list;
     }
 
-    private Trait extractUserAd(ResultSet rs) throws SQLException {
+    private Trait extractInfo(ResultSet rs) throws SQLException {
         if (! rs.next()) {
             return null;
         }
