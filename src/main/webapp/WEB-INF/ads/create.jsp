@@ -54,7 +54,7 @@
                         <label for="playfulness"></label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Playfulness</span>
-                            <input id="playfulness" type="number" class="form-control font-monospace" name="playfulness" min="1" max="5"" required/>
+                            <input id="playfulness" type="number" class="form-control font-monospace" name="playfulness" min="1" max="5" required/>
                         </div>
 
                         <label for="socialization"></label>
