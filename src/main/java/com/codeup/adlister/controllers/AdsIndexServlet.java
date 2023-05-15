@@ -13,9 +13,9 @@ import java.io.IOException;
 public class AdsIndexServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("ads", DaoFactory.getAdsDao().all("ads"));
-        request.setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
-        request.setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
+        request.setAttribute("ads", DaoFactory.getAdsDao().searchAll("ads"));
+        request.setAttribute("breeds", DaoFactory.getAdsDao().searchAll("breeds"));
+        request.setAttribute("traits", DaoFactory.getAdsDao().searchAll("traits"));
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }
 
@@ -25,15 +25,15 @@ public class AdsIndexServlet extends HttpServlet {
         String[] selectedTraits = request.getParameterValues("traits");
 
         if (searchInput != null && !searchInput.isEmpty() && !searchInput.equals("Search")){
-            request.getSession().setAttribute("ads", DaoFactory.getAdsDao().searchByString("ads", searchInput));
+            request.getSession().setAttribute("ads", DaoFactory.getAdsDao().searchByString(searchInput));
         } else if (selectedBreed != null && !selectedBreed.equals("0")) {
-            request.getSession().setAttribute("ads", DaoFactory.getAdsDao().searchByBreed("ads", selectedBreed));
+            request.getSession().setAttribute("ads", DaoFactory.getBreedsDao().searchByString(selectedBreed));
         } else if (selectedTraits != null) {
-            request.getSession().setAttribute("ads", DaoFactory.getAdsDao().searchByTraits("ads", selectedTraits));
+            request.getSession().setAttribute("ads", DaoFactory.getTraitsDao().searchByStrings(selectedTraits));
         }
 
-        request.getSession().setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
-        request.getSession().setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
+        request.getSession().setAttribute("breeds", DaoFactory.getAdsDao().searchAll("breeds"));
+        request.getSession().setAttribute("traits", DaoFactory.getAdsDao().searchAll("traits"));
         //response.sendRedirect(redirectString);
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }

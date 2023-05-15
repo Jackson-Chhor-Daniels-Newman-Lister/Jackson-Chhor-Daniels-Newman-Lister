@@ -56,3 +56,26 @@ HAVING COUNT(DISTINCT traits.name) = 2;
 UPDATE dog_breeds
 SET breed_id = 2
 WHERE dog_id = 1;
+
+SELECT * FROM ads JOIN dogs d on d.id = ads.dog_id JOIN dog_traits dt on d.id = dt.dog_id JOIN traits t on t.id = dt.trait_id
+         WHERE t.name IN ('Sociable')  GROUP BY t.name HAVING COUNT(DISTINCT t.name) = 1;
+
+SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.id, t.name
+FROM ads
+         JOIN dogs d ON d.id = ads.dog_id
+         JOIN dog_traits dt ON d.id = dt.dog_id
+         JOIN traits t ON t.id = dt.trait_id
+WHERE t.name IN ('Sociable')
+GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.id, t.name
+HAVING COUNT(DISTINCT t.name) = 1;
+
+SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, b.id, b.name
+FROM ads
+         JOIN dogs d ON d.id = ads.dog_id
+         JOIN dog_breeds db on d.id = db.dog_id
+        JOIN breeds b on b.id = db.breed_id
+WHERE b.name = 'Akita'
+GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, b.id, b.name
+HAVING COUNT(DISTINCT b.name) = 1;
+
+SELECT * FROM ads JOIN user_ads ua ON ads.id = ua.ad_id JOIN dogs d ON d.id = ads.dog_id WHERE user_id = 2;

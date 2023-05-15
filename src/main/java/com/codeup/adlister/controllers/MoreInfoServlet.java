@@ -1,8 +1,6 @@
 package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
-import com.codeup.adlister.dao.MySQLAdsDao;
-import com.codeup.adlister.models.Ad;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -16,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 public class MoreInfoServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long adId = Long.parseLong(request.getParameter("adId"));
-        request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
+        int adId = Integer.parseInt(request.getParameter("adId"));
+        request.setAttribute("ad", DaoFactory.getAdsDao().searchOne(adId));
 
         request.getRequestDispatcher("/WEB-INF/ads/more-info.jsp").forward(request, response);
     }

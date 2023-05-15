@@ -1,22 +1,13 @@
 package com.codeup.adlister.models;
 
 public class Ad {
-    private long id;
+    private int id;
     private String title;
     private String description;
     private String shortDescription;
     private int price;
     private String image;
     private int dogId;
-    private String breeds;
-    private String traits;
-    private String name;
-    private int age;
-    private int playfulness;
-    private int socialization;
-    private int affection;
-    private int training;
-
 
     public Ad(String title, String shortDescription, String description, int price, String image, int dogId) {
         this.title = title;
@@ -28,7 +19,7 @@ public class Ad {
     }
 
 
-    public Ad(long id, String title, String shortDescription, String description, int price, String image, int dogId) {
+    public Ad(int id, String title, String shortDescription, String description, int price, String image, int dogId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -38,7 +29,7 @@ public class Ad {
         this.dogId = dogId;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -62,7 +53,7 @@ public class Ad {
         return dogId;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -94,36 +85,5 @@ public class Ad {
         this.image = image;
     }
 
-    public void setBreeds(String breeds) {
-        this.breeds = breeds;
-    }
-
-    public void setTraits(String traits) {
-        this.traits = traits;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setPlayfulness(int playfulness) {
-        this.playfulness = playfulness;
-    }
-
-    public void setSocialization(int socialization) {
-        this.socialization = socialization;
-    }
-
-    public void setAffection(int affection) {
-        this.affection = affection;
-    }
-
-    public void setTraining(int training) {
-        this.training = training;
-    }
 }
 

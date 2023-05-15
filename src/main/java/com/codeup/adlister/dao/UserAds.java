@@ -8,7 +8,7 @@ public interface UserAds {
     void insert(int userId, int adId);
 
     //READ
-    List<UserAd> searchAll();
+    List<UserAd> searchAll(int userId);
     boolean searchOne(int adId, int userId);
 
     //UPDATE

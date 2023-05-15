@@ -1,8 +1,6 @@
 package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
-import com.codeup.adlister.models.Ad;
-import com.codeup.adlister.models.Dog;
 import com.codeup.adlister.models.User;
 
 import javax.servlet.ServletException;
@@ -23,14 +21,14 @@ public class DeleteServlet  extends HttpServlet {
         }
 
         User user = (User) request.getSession().getAttribute("user");
-        long userId = user.getId();
-        long adId = Long.valueOf(request.getParameter("adId"));
+        int userId = user.getId();
+        int adId = Integer.parseInt(request.getParameter("adId"));
 
         boolean validUserToAd = DaoFactory.getUserAdsDao().searchOne((int)adId,(int)userId);
         if (validUserToAd){
-            request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
-            request.setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
-            request.setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
+            request.setAttribute("ad", DaoFactory.getAdsDao().searchOne(adId));
+            request.setAttribute("breeds", DaoFactory.getAdsDao().searchAll("breeds"));
+            request.setAttribute("traits", DaoFactory.getAdsDao().searchAll("traits"));
             request.getRequestDispatcher("/WEB-INF/ads/delete-ad.jsp").forward(request, response);
         } else {
             response.sendRedirect("/profile");

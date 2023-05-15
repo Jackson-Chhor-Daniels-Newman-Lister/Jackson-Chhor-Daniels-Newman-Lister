@@ -24,14 +24,14 @@ public class EditServlet extends HttpServlet {
         }
 
         User user = (User) request.getSession().getAttribute("user");
-        long userId = user.getId();
-        long adId = Long.valueOf(request.getParameter("adId"));
+        int userId = user.getId();
+        int adId = Integer.parseInt(request.getParameter("adId"));
 
         boolean validUserToAd = DaoFactory.getUserAdsDao().searchOne((int)adId,(int)userId);
         if (validUserToAd){
-            request.setAttribute("ad", DaoFactory.getAdsDao().individual(adId));
-            request.setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
-            request.setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
+            request.setAttribute("ad", DaoFactory.getAdsDao().searchOne(adId));
+            request.setAttribute("breeds", DaoFactory.getAdsDao().searchAll("breeds"));
+            request.setAttribute("traits", DaoFactory.getAdsDao().searchAll("traits"));
             request.getRequestDispatcher("/WEB-INF/ads/edit-info.jsp").forward(request, response);
         } else {
             response.sendRedirect("/profile");
@@ -69,8 +69,6 @@ public class EditServlet extends HttpServlet {
         DaoFactory.getDogsDao().edit(dog);
         DaoFactory.getDogBreedsDao().edit((int) dog.getId(), breedId);
         DaoFactory.getDogTraitsDao().edit((int) dog.getId(), traitIds);
-
-        DaoFactory.getAdsDao().submitEdits(ad, dog, breedId, traitIds);
 
         response.sendRedirect("/ads");
     }

@@ -2,6 +2,7 @@ package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.Dog;
+import com.codeup.adlister.models.User;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
@@ -43,104 +44,115 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public List<Object> all(String tableName) {
+    public List<Ad> searchAll() {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM " + tableName);
+            stmt = connection.prepareStatement("SELECT * FROM ads");
             ResultSet rs = stmt.executeQuery();
             return createListFromResults(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving from table: " + tableName, e);
+            throw new RuntimeException("Error retrieving from table: Ads", e);
         }
     }
 
     @Override
-    public List<Object> searchByString(String tableName, String searchString) {
+    public List<Ad> searchByString(String searchString) {
         PreparedStatement stmt = null;
         String searchTerm = "'%" + searchString + "%'";
         try {
             stmt = connection.prepareStatement(
-                    getAllThingsStatementTop +
-                            "WHERE ads.title LIKE " + searchTerm +
-                            " OR traits.name LIKE " + searchTerm +
-                            " OR breeds.name LIKE " + searchTerm +
-                            getAllThingsStatementBottom
-                            );
-
-            System.out.println("some stmt = " + stmt);
-            ResultSet rs = stmt.executeQuery();
-            return createListFromResults(rs);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving from table: " + tableName + " string : " + searchString, e);
-        }
-    }
-
-    @Override
-    public List<Object> searchByBreed(String tableName, String searchedBreed) {
-        PreparedStatement stmt = null;
-        String searchTerm = "'" + searchedBreed + "'";
-        try {
-            stmt = connection.prepareStatement(
-                getAllThingsStatementTop +
-                    "WHERE breeds.name = " + searchTerm +
-                    getAllThingsStatementBottom
-                    );
-
-            System.out.println("some stmt = " + stmt);
-            ResultSet rs = stmt.executeQuery();
-            return createListFromResults(rs);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving from table: " + tableName + " breed : " + searchedBreed, e);
-        }
-    }
-
-    @Override
-    public List<Object> searchByTraits(String tableName, String[] searchStringArray) {
-        PreparedStatement stmt = null;
-        StringBuilder searchTerm = new StringBuilder();
-        searchTerm.append("(");
-        for(int i = 0; i < searchStringArray.length; i++){
-            if(i == searchStringArray.length - 1){
-                searchTerm.append("'").append(searchStringArray[i]).append("'");
-            } else {
-                searchTerm.append("'").append(searchStringArray[i]).append("', ");
-            }
-        }
-        searchTerm.append(")");
-        try {
-            stmt = connection.prepareStatement(
-                getAllThingsStatementTop +
-                    "WHERE traits.name IN " + searchTerm + " " +
-                    getAllThingsStatementBottom +
-                    "HAVING COUNT(DISTINCT traits.name) = " + searchStringArray.length
+                    "SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                            "FROM ads " +
+                            "JOIN dogs d ON d.id = ads.dog_id " +
+                            "JOIN dog_breeds db ON d.id = db.dog_id " +
+                            "JOIN breeds b ON b.id = db.breed_id " +
+                            "JOIN dog_traits dt ON d.id = dt.dog_id " +
+                            "JOIN traits t ON t.id = dt.trait_id " +
+                            "WHERE b.name LIKE ? " +
+                            "OR t.name LIKE ? " +
+                            "OR ads.description LIKE ? " +
+                            "GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                            "HAVING COUNT(DISTINCT b.name) = ? "
             );
-
+            stmt.setString(1, searchTerm);
             System.out.println("some stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             return createListFromResults(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving from table: " + tableName, e);
+            throw new RuntimeException("Error retrieving info from string : " + searchString, e);
         }
     }
 
     @Override
-    public Object individual(long adNumber) {
+    public Ad searchOne(int adNumber) {
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(
-                    getAllThingsStatementTop +
-                            "WHERE ads.id = " + adNumber + " " +
-                            getAllThingsStatementBottom
-                    );
+                    "SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                            "FROM ads " +
+                            "JOIN dogs d ON d.id = ads.dog_id " +
+                            "JOIN dog_breeds db ON d.id = db.dog_id " +
+                            "JOIN breeds b ON b.id = db.breed_id " +
+                            "JOIN dog_traits dt ON d.id = dt.dog_id " +
+                            "JOIN traits t ON t.id = dt.trait_id " +
+                            "WHERE ads.id = ? " +
+                            "GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                            "HAVING COUNT(DISTINCT b.name) = ? "
+            );
+            stmt.setInt(1, adNumber);
             System.out.println("stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return extractObject(rs);
+            return extractAd(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving more info on ads id: " + adNumber, e);
         }
     }
 
+    private List<Ad>createListFromResults(ResultSet rs) throws SQLException {
+        List<Ad> list = new ArrayList<>();
+        while (rs.next()){
+            list.add(extractAd(rs));
+        }
+        return list;
+    }
+
+    private Ad extractAd(ResultSet rs) throws SQLException {
+        if (! rs.next()) {
+            return null;
+        }
+        return new Ad(
+                rs.getInt("id"),
+                rs.getString("title"),
+                rs.getString("short_description"),
+                rs.getString("description"),
+                rs.getInt("price"),
+                rs.getString("image"),
+                rs.getInt("dog_id")
+        );
+    }
+
+    @Override
+    public int insert(Ad ad, int dogId){
+        try {
+            String insertQuery = "INSERT INTO ads(title, description, short_description, price, image, dog_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, ad.getTitle());
+            stmt.setString(2, ad.getShortDescription());
+            stmt.setString(3, ad.getDescription());
+            stmt.setLong(4, ad.getPrice());
+            stmt.setString(5, ad.getImage());
+            stmt.setLong(6, dogId);
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating a new ad.", e);
+        }
+    }
     @Override
     public void edit(Ad ad) {
         PreparedStatement stmt = null;
@@ -172,73 +184,27 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error deleting ad id: " + adId, e);
         }
     }
-
-    @Override
-    public List<Object> adsByUserId(long userId) {
-        PreparedStatement stmt = null;
-        try {
-            stmt = connection.prepareStatement(
-            getAllThingsStatementTop +
-                "WHERE user_id = " + userId + " " +
-                 getAllThingsStatementBottom
-            );
-            System.out.println("stmt = " + stmt);
-            ResultSet rs = stmt.executeQuery();
-            return createListFromResults(rs);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving ad count for user ID: " + userId, e);
-        }
-    }
-
-    @Override
-    public int insert(Ad ad, int dogId){
-        try {
-            String insertQuery = "INSERT INTO ads(title, description, short_description, price, image, dog_id) VALUES (?, ?, ?, ?, ?, ?)";
-
-            PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, ad.getTitle());
-            stmt.setString(2, ad.getShortDescription());
-            stmt.setString(3, ad.getDescription());
-            stmt.setLong(4, ad.getPrice());
-            stmt.setString(5, ad.getImage());
-            stmt.setLong(6, dogId);
-            stmt.executeUpdate();
-
-            ResultSet rs = stmt.getGeneratedKeys();
-            rs.next();
-            return rs.getInt(1);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error creating a new ad.", e);
-        }
-    }
-
-    private HashMap<String, Object> extractObject(ResultSet rs) throws SQLException {
-        HashMap<String, Object> myObject = new HashMap<>();
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int columnCount = rsmd.getColumnCount();
-
-        for (int i = 1; i <= columnCount; i++){
-            int columnType = rsmd.getColumnType(i);
-
-            switch (columnType) {
-                case Types.INTEGER:
-                    int intValue = rs.getInt(i);
-                    myObject.put(rsmd.getColumnName(i),intValue);
-                    break;
-                default:
-                    String stringValue = rs.getString(i);
-                    myObject.put(rsmd.getColumnName(i),stringValue);
-                    break;
-            }
-        }
-        return myObject;
-    }
-
-    private List<Object>createListFromResults(ResultSet rs) throws SQLException {
-        List<Object> list = new ArrayList<>();
-        while (rs.next()){
-            list.add(extractObject(rs));
-        }
-        return list;
-    }
 }
+
+//although it goes against the system, this is a bit of code i was proud of producing that helped handle every object and spits out something usable
+//    private HashMap<String, Object> extractObject(ResultSet rs) throws SQLException {
+//        HashMap<String, Object> myObject = new HashMap<>();
+//        ResultSetMetaData rsmd = rs.getMetaData();
+//        int columnCount = rsmd.getColumnCount();
+//
+//        for (int i = 1; i <= columnCount; i++){
+//            int columnType = rsmd.getColumnType(i);
+//
+//            switch (columnType) {
+//                case Types.INTEGER:
+//                    int intValue = rs.getInt(i);
+//                    myObject.put(rsmd.getColumnName(i),intValue);
+//                    break;
+//                default:
+//                    String stringValue = rs.getString(i);
+//                    myObject.put(rsmd.getColumnName(i),stringValue);
+//                    break;
+//            }
+//        }
+//        return myObject;
+//    }

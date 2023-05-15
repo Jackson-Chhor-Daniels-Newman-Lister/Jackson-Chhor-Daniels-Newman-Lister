@@ -1,7 +1,7 @@
 package com.codeup.adlister.models;
 
 public class Dog {
-    private long id;
+    private int id;
     private String name;
     private int age;
     private String playfulness;
@@ -18,7 +18,7 @@ public class Dog {
         this.training = training;
     }
 
-    public Dog(long id, String name, int age, String playfulness, String socialization, String affection, String training) {
+    public Dog(int id, String name, int age, String playfulness, String socialization, String affection, String training) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -28,11 +28,11 @@ public class Dog {
         this.training = training;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

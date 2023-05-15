@@ -1,10 +1,12 @@
 package com.codeup.adlister.dao;
 
+import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.Dog;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLDogsDao implements Dogs{
@@ -43,17 +45,57 @@ public class MySQLDogsDao implements Dogs{
         }
     }
 
-
-
     @Override
     public List<Dog> searchAll() {
-        return null;
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM dogs");
+            ResultSet rs = stmt.executeQuery();
+            return createListFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving from table: Ads", e);
+        }
     }
 
     @Override
     public Dog searchOne(int dogId) {
-        return null;
+
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM dogs WHERE id = ?");
+            stmt.setInt(1, dogId);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractAd(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving from table: Dogs", e);
+        }
     }
+
+    private List<Dog>createListFromResults(ResultSet rs) throws SQLException {
+        List<Dog> list = new ArrayList<>();
+        while (rs.next()){
+            list.add(extractAd(rs));
+        }
+        return list;
+    }
+
+    private Dog extractAd(ResultSet rs) throws SQLException {
+        if (! rs.next()) {
+            return null;
+        }
+        //Dog(int id, String name, int age, String playfulness, String socialization, String affection, String training)
+        return new Dog(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getInt("age"),
+                rs.getString("playfulness"),
+                rs.getString("socialization"),
+                rs.getString("affection"),
+                rs.getString("training")
+        );
+    }
+
 
     @Override
     public void edit(Dog dog) {

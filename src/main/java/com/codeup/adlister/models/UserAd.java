@@ -1,41 +1,41 @@
 package com.codeup.adlister.models;
 public class UserAd {
-    private long id;
-    private long userId;
-    private long adId;
+    private int id;
+    private int userId;
+    private int adId;
 
-    public UserAd(long userId, long adId) {
+    public UserAd(int userId, int adId) {
         this.userId = userId;
         this.adId = adId;
     }
 
-    public UserAd(long id, long userId, long adId) {
+    public UserAd(int id, int userId, int adId) {
         this.id = id;
         this.userId = userId;
         this.adId = adId;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public long getAdId() {
+    public int getAdId() {
         return adId;
     }
 
-    public void setAdId(long adId) {
+    public void setAdId(int adId) {
         this.adId = adId;
     }
 }

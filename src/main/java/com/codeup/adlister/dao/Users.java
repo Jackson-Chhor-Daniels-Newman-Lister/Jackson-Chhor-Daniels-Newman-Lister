@@ -4,7 +4,7 @@ import com.codeup.adlister.models.User;
 
 public interface Users {
     //CREATE
-    Long insert(User user);
+    int insert(User user);
 
     //READ
     User searchByUsername(String username);

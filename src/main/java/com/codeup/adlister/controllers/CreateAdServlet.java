@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "controllers.CreateAdServlet", urlPatterns = "/ads/create")
@@ -20,8 +19,8 @@ public class CreateAdServlet extends HttpServlet {
             response.sendRedirect("/login");
             return;
         }
-        request.setAttribute("breeds", DaoFactory.getAdsDao().all("breeds"));
-        request.setAttribute("traits", DaoFactory.getAdsDao().all("traits"));
+        request.setAttribute("breeds", DaoFactory.getAdsDao().searchAll("breeds"));
+        request.setAttribute("traits", DaoFactory.getAdsDao().searchAll("traits"));
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
     }
 

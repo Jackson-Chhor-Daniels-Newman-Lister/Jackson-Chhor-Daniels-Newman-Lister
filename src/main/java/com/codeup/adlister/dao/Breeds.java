@@ -10,6 +10,7 @@ public interface Breeds {
     //READ
     List<Breed> searchAll();
     Breed searchOne(int breedId);
+    List<Breed> searchByString(String searchedBreed);
 
     //UPDATE
     void edit(int breedId);

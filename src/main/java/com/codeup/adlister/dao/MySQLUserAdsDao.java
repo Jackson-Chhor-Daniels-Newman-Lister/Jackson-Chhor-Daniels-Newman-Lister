@@ -1,11 +1,13 @@
 package com.codeup.adlister.dao;
 
+import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.Trait;
 import com.codeup.adlister.models.UserAd;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLUserAdsDao implements UserAds{
@@ -40,8 +42,36 @@ public class MySQLUserAdsDao implements UserAds{
     }
 
     @Override
-    public List<UserAd> searchAll() {
-        return null;
+    public List<UserAd> searchAll(int userId) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(
+                    "SELECT * FROM ads JOIN user_ads ua ON ads.id = ua.ad_id JOIN dogs d ON d.id = ads.dog_id WHERE user_id = ?");
+            stmt.setInt(1, userId);
+            System.out.println("stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            return createListFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ad count for user ID: " + userId, e);
+        }
+    }
+
+    private List<UserAd> createListFromResults(ResultSet rs) throws SQLException {
+        List<UserAd> list = new ArrayList<>();
+        while (rs.next()){
+            list.add(extractUserAd(rs));
+        }
+        return list;
+    }
+
+    private UserAd extractUserAd(ResultSet rs) throws SQLException {
+        if (! rs.next()) {
+            return null;
+        }
+        return new UserAd(
+                rs.getInt("user_id"),
+                rs.getInt("ad_id")
+        );
     }
 
     @Override
