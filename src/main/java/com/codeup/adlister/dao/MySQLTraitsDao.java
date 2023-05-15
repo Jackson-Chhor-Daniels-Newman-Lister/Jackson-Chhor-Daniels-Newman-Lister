@@ -55,13 +55,14 @@ public class MySQLTraitsDao implements Traits{
     public Trait searchOne(int traitId) {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM traits WHERE id = ?");
+            stmt = connection.prepareStatement("SELECT traits.name FROM traits WHERE id = ?");
             stmt.setInt(1, traitId);
             ResultSet rs = stmt.executeQuery();
             rs.next();
+            System.out.println("stmt = " + stmt);
             return extractInfo(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving from table: Ads", e);
+            throw new RuntimeException("Error retrieving traits from table: Trait id: " + traitId, e);
         }
     }
 
@@ -109,11 +110,7 @@ public class MySQLTraitsDao implements Traits{
     }
 
     private Trait extractInfo(ResultSet rs) throws SQLException {
-        if (! rs.next()) {
-            return null;
-        }
         return new Trait(
-                rs.getInt("id"),
                 rs.getString("name")
         );
     }

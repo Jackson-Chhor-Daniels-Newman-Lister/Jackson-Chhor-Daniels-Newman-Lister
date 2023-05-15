@@ -69,7 +69,6 @@ public class MySQLDogsDao implements Dogs{
 
     @Override
     public Dog searchOne(int dogId) {
-
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement("SELECT * FROM dogs WHERE id = ?");
@@ -91,9 +90,6 @@ public class MySQLDogsDao implements Dogs{
     }
 
     private Dog extractInfo(ResultSet rs) throws SQLException {
-        if (! rs.next()) {
-            return null;
-        }
         //Dog(int id, String name, int age, String playfulness, String socialization, String affection, String training)
         return new Dog(
                 rs.getInt("id"),

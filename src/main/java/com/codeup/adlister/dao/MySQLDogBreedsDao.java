@@ -84,9 +84,6 @@ public class MySQLDogBreedsDao implements DogBreeds{
     }
 
     private DogBreed extractInfo(ResultSet rs) throws SQLException {
-        if (! rs.next()) {
-            return null;
-        }
         return new DogBreed(
                 rs.getInt("id"),
                 rs.getInt("dog_id"),

@@ -65,14 +65,13 @@ public class MySQLDogTraitsDao implements DogTraits{
     }
 
     @Override
-    public DogTrait searchOne(int dogId) {
+    public List<DogTrait> searchOne(int dogId) {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM dog_traits WHERE id = ?");
-            stmt.setInt(1,dogId);
+            stmt = connection.prepareStatement("SELECT * FROM dog_traits WHERE dog_id = ?");
+            stmt.setInt(1, dogId);
             ResultSet rs = stmt.executeQuery();
-            rs.next();
-            return extractInfo(rs);
+            return createListFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving from table: Ads", e);
         }
@@ -87,9 +86,6 @@ public class MySQLDogTraitsDao implements DogTraits{
     }
 
     private DogTrait extractInfo(ResultSet rs) throws SQLException {
-        if (! rs.next()) {
-            return null;
-        }
         return new DogTrait(
                 rs.getInt("id"),
                 rs.getInt("dog_id"),

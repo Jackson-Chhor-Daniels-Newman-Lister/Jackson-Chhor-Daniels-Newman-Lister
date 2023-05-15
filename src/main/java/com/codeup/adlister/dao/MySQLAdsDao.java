@@ -70,10 +70,10 @@ public class MySQLAdsDao implements Ads {
                             "JOIN breeds b ON b.id = db.breed_id " +
                             "JOIN dog_traits dt ON d.id = dt.dog_id " +
                             "JOIN traits t ON t.id = dt.trait_id " +
-                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training "
+                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training " +
+                            "ORDER BY ads.dog_id asc "
             );
 
-            System.out.println("stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             return createListFromResults(rs);
         } catch (SQLException e) {
@@ -86,16 +86,18 @@ public class MySQLAdsDao implements Ads {
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(
-                    "SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                    "SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, " +
+                            "GROUP_CONCAT(DISTINCT b.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT t.name SEPARATOR ', ') AS traits " +
                             "FROM ads " +
                             "JOIN dogs d ON d.id = ads.dog_id " +
                             "JOIN dog_breeds db ON d.id = db.dog_id " +
                             "JOIN breeds b ON b.id = db.breed_id " +
                             "JOIN dog_traits dt ON d.id = dt.dog_id " +
                             "JOIN traits t ON t.id = dt.trait_id " +
-                            "WHERE ads.id = ? " +
-                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
-                            "HAVING COUNT(DISTINCT b.name) = ? "
+                            "WHERE d.id = ? " +
+                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training " +
+                            "ORDER BY ads.dog_id asc "
             );
             stmt.setInt(1, adNumber);
             System.out.println("stmt = " + stmt);
@@ -144,9 +146,6 @@ public class MySQLAdsDao implements Ads {
     }
 
     private Ad extractInfo(ResultSet rs) throws SQLException {
-        if (! rs.next()) {
-            return null;
-        }
         return new Ad(
                 rs.getString("title"),
                 rs.getString("short_description"),
@@ -224,3 +223,19 @@ public class MySQLAdsDao implements Ads {
 //        }
 //        return myObject;
 //    }
+
+//private final String getAllThingsStatementTop =
+//            "SELECT ads.id AS ads_id, ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, " +
+//                    "dogs.id AS dogs_id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id AS breeds_id, " +
+//                    "GROUP_CONCAT(DISTINCT breeds.name SEPARATOR ', ') AS breeds," +
+//                    "GROUP_CONCAT(DISTINCT traits.name SEPARATOR ', ') AS traits " +
+//                    "FROM ads " +
+//                    "JOIN dogs ON ads.dog_id = dogs.id " +
+//                    "JOIN dog_breeds ON dogs.id = dog_breeds.dog_id " +
+//                    "JOIN breeds ON dog_breeds.breed_id = breeds.id " +
+//                    "JOIN dog_traits ON dogs.id = dog_traits.dog_id " +
+//                    "JOIN traits ON dog_traits.trait_id = traits.id " +
+//                    "JOIN user_ads ON ads.id = user_ads.ad_id ";
+//    private final String getAllThingsStatementBottom =
+//            "GROUP BY ads.id, ads.title, ads.short_description, ads.description, ads.price, ads.image,  ads.dog_id, " +
+//                    "dogs.id, dogs.name, dogs.age, dogs.playfulness, dogs.socialization, dogs.affection, dogs.training, breeds.id ";

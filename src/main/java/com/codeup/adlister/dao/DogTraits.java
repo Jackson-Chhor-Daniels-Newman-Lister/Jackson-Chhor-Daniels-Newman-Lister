@@ -9,7 +9,7 @@ public interface DogTraits {
 
     //READ
     List<DogTrait> searchAll();
-    DogTrait searchOne(int dogId);
+    List<DogTrait> searchOne(int dogId);
 
     //UPDATE
     void edit(int dogId, int traitId[]);

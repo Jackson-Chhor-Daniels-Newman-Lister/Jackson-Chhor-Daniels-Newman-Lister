@@ -18,25 +18,33 @@
 <body class="bg-info-subtle">
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 <c:set var="ad" scope="session" value="${ad}"/>
+<c:set var="dog" scope="session" value="${dog}"/>
+<c:set var="breed" scope="session" value="${breed}"/>
 
     <div class="container">
         <h1 class="mt-5 mb-3">${ad.title}</h1>
         <div class="row">
             <div class="col">
-                <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="rounded-top img-fluid">
-                <p><h5>Personality:</h5> ${ad.traits}</p>
-                <p><h5>About ${ad.name}:</h5> ${ad.description}</p>
+                <img src="${pageContext.request.contextPath}/data/images/${ad.image}" alt="alt" class="rounded-top img-fluid mb-3">
+                <h5>Personality:</h5>
+                <p>
+                    <c:forEach var="traits" items="${traits}">
+                    <span class="me-2">${traits.name} </span>
+                    </c:forEach>
+                </p>
+
+                <p><span>About ${dog.name}:</span> ${ad.description}</p>
             </div>
             <div class="col">
-                <p><h5>Name:</h5> ${ad.name}</p>
-                <p><h5>Age:</h5> ${ad.age}</p>
-                <p><h5>Breed:</h5> ${ad.breeds}</p>
+                <p><span>Name:</span> ${dog.name}</p>
+                <p><span>Age:</span> ${dog.age}</p>
+                <p><span>Breed:</span> ${breed.name}</p>
 
                 <h5>Traits:</h5>
-                <p><span>Playfulness:</span> ${ad.playfulness} | <span>Affection:</span> ${ad.affection}</p>
-                <p><span>Socialization:</span> ${ad.socialization} | <span>Training:</span> ${ad.training}</p>
+                <p><span>Playfulness:</span> ${dog.playfulness} | <span>Affection:</span> ${dog.affection}</p>
+                <p><span>Socialization:</span> ${dog.socialization} | <span>Training:</span> ${dog.training}</p>
 
-                <p><h5>Price:</h5> ${ad.price}</p>
+                <p><span>Price:</span> ${ad.price}</p>
             </div>
         </div>
     </div>

@@ -91,9 +91,6 @@ public class MySQLUserAdsDao implements UserAds{
     }
 
     private UserAd extractInfo(ResultSet rs) throws SQLException {
-        if (! rs.next()) {
-            return null;
-        }
         return new UserAd(
                 rs.getInt("user_id"),
                 rs.getInt("ad_id")

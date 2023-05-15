@@ -75,9 +75,6 @@ public class MySQLUsersDao implements Users {
     }
 
     private User extractInfo(ResultSet rs) throws SQLException {
-        if (! rs.next()) {
-            return null;
-        }
         return new User(
             rs.getInt("id"),
             rs.getString("name"),

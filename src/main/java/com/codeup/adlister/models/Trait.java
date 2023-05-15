@@ -1,19 +1,23 @@
 package com.codeup.adlister.models;
 
 public class Trait {
-    private long id;
+    private int id;
     private String name;
 
-    public Trait(long id, String name){
+    public Trait(String name){
+        this.name = name;
+    }
+
+    public Trait(int id, String name){
         this.id = id;
         this.name = name;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

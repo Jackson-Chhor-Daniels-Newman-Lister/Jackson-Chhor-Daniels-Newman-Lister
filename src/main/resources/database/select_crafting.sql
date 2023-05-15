@@ -91,3 +91,9 @@ GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image
 ORDER BY dog_id ASC;
 
 SELECT * FROM ads JOIN user_ads ua ON ads.id = ua.ad_id JOIN dogs d ON d.id = ads.dog_id WHERE user_id = 2;
+
+SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, GROUP_CONCAT(DISTINCT b.name SEPARATOR ', ') AS breeds, GROUP_CONCAT(DISTINCT t.name SEPARATOR ', ') AS traits FROM ads JOIN dogs d ON d.id = ads.dog_id JOIN dog_breeds db ON d.id = db.dog_id JOIN breeds b ON b.id = db.breed_id JOIN dog_traits dt ON d.id = dt.dog_id JOIN traits t ON t.id = dt.trait_id GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training ORDER BY ads.dog_id asc
+;
+SELECT * FROM dog_traits WHERE dog_id = 2;
+SELECT traits.name FROM traits WHERE id = 2;
+SELECT traits.name FROM traits WHERE id = 1;

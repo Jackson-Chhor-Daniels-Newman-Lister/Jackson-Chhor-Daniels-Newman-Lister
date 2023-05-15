@@ -99,9 +99,6 @@ public class MySQLBreedsDao implements Breeds{
     }
 
     private Breed extractInfo(ResultSet rs) throws SQLException {
-        if (! rs.next()) {
-            return null;
-        }
         return new Breed(
                 rs.getInt("id"),
                 rs.getString("name")
