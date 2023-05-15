@@ -23,6 +23,11 @@ public class MySQLDogsDao implements Dogs{
         }
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    CREATE
+    /////////////////////////////////////////////////////////////////////
+     */
     @Override
     public int insert(Dog dog) {
         try {
@@ -43,6 +48,12 @@ public class MySQLDogsDao implements Dogs{
             throw new RuntimeException("Error creating a new dog.", e);
         }
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    READ
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public List<Dog> searchAll() {
@@ -95,6 +106,11 @@ public class MySQLDogsDao implements Dogs{
         );
     }
 
+    /*
+        /////////////////////////////////////////////////////////////////////
+        UPDATE
+        /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public void edit(Dog dog) {
@@ -115,6 +131,12 @@ public class MySQLDogsDao implements Dogs{
             throw new RuntimeException("Error editing dog id: " + dog.getId(), e);
         }
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    DELETE
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public void delete(int dogId) {

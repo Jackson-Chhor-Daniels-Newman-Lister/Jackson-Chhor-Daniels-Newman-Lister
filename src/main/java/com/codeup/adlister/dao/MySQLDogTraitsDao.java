@@ -23,6 +23,11 @@ public class MySQLDogTraitsDao implements DogTraits{
         }
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    CREATE
+    /////////////////////////////////////////////////////////////////////
+     */
     @Override
     public void insert(int dogId, int[] traitIds) {
         PreparedStatement stmt = null;
@@ -40,6 +45,12 @@ public class MySQLDogTraitsDao implements DogTraits{
             throw new RuntimeException("Error inserting into dog_traits table. DogID: " + dogId, e);
         }
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    READ
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public List<DogTrait> searchAll() {
@@ -86,6 +97,12 @@ public class MySQLDogTraitsDao implements DogTraits{
         );
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    UPDATE
+    /////////////////////////////////////////////////////////////////////
+     */
+
     @Override
     public void edit(int dogId, int traitIds[]) {
         delete(dogId);
@@ -102,6 +119,12 @@ public class MySQLDogTraitsDao implements DogTraits{
             throw new RuntimeException("Error editing traits for dog id: " + dogId, e);
         }
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    DELETE
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public void delete(int dogId) {

@@ -27,11 +27,11 @@ public class EditServlet extends HttpServlet {
         int userId = user.getId();
         int adId = Integer.parseInt(request.getParameter("adId"));
 
-        boolean validUserToAd = DaoFactory.getUserAdsDao().searchOne((int)adId,(int)userId);
+        boolean validUserToAd = DaoFactory.getUserAdsDao().searchOne(adId, userId);
         if (validUserToAd){
             request.setAttribute("ad", DaoFactory.getAdsDao().searchOne(adId));
-            request.setAttribute("breeds", DaoFactory.getAdsDao().searchAll("breeds"));
-            request.setAttribute("traits", DaoFactory.getAdsDao().searchAll("traits"));
+            request.setAttribute("breeds", DaoFactory.getBreedsDao().searchAll());
+            request.setAttribute("traits", DaoFactory.getTraitsDao().searchAll());
             request.getRequestDispatcher("/WEB-INF/ads/edit-info.jsp").forward(request, response);
         } else {
             response.sendRedirect("/profile");
@@ -46,7 +46,7 @@ public class EditServlet extends HttpServlet {
         String description = request.getParameter("description");
         int price = Integer.parseInt(request.getParameter("price"));
 
-        //long dogId = Long.valueOf(request.getParameter("dog_id"));
+        //int dogId = Long.valueOf(request.getParameter("dog_id"));
         String dogName = request.getParameter("name");
         int dogAge = Integer.parseInt(request.getParameter("age"));
         String playfulness = request.getParameter("playfulness");
@@ -67,8 +67,8 @@ public class EditServlet extends HttpServlet {
 
         DaoFactory.getAdsDao().edit(ad);
         DaoFactory.getDogsDao().edit(dog);
-        DaoFactory.getDogBreedsDao().edit((int) dog.getId(), breedId);
-        DaoFactory.getDogTraitsDao().edit((int) dog.getId(), traitIds);
+        DaoFactory.getDogBreedsDao().edit(dog.getId(), breedId);
+        DaoFactory.getDogTraitsDao().edit(dog.getId(), traitIds);
 
         response.sendRedirect("/ads");
     }

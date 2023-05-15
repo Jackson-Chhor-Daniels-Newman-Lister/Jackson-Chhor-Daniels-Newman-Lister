@@ -50,6 +50,12 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    READ
+    /////////////////////////////////////////////////////////////////////
+     */
+
     @Override
     public List<Ad> searchAll() {
         PreparedStatement stmt = null;
@@ -59,6 +65,32 @@ public class MySQLAdsDao implements Ads {
             return createListFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving from table: Ads", e);
+        }
+    }
+
+    @Override
+    public Ad searchOne(int adNumber) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(
+                    "SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                            "FROM ads " +
+                            "JOIN dogs d ON d.id = ads.dog_id " +
+                            "JOIN dog_breeds db ON d.id = db.dog_id " +
+                            "JOIN breeds b ON b.id = db.breed_id " +
+                            "JOIN dog_traits dt ON d.id = dt.dog_id " +
+                            "JOIN traits t ON t.id = dt.trait_id " +
+                            "WHERE ads.id = ? " +
+                            "GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                            "HAVING COUNT(DISTINCT b.name) = ? "
+            );
+            stmt.setInt(1, adNumber);
+            System.out.println("stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractInfo(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving more info on ads id: " + adNumber, e);
         }
     }
 
@@ -90,32 +122,6 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-    @Override
-    public Ad searchOne(int adNumber) {
-        PreparedStatement stmt = null;
-        try {
-            stmt = connection.prepareStatement(
-                    "SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
-                            "FROM ads " +
-                            "JOIN dogs d ON d.id = ads.dog_id " +
-                            "JOIN dog_breeds db ON d.id = db.dog_id " +
-                            "JOIN breeds b ON b.id = db.breed_id " +
-                            "JOIN dog_traits dt ON d.id = dt.dog_id " +
-                            "JOIN traits t ON t.id = dt.trait_id " +
-                            "WHERE ads.id = ? " +
-                            "GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
-                            "HAVING COUNT(DISTINCT b.name) = ? "
-            );
-            stmt.setInt(1, adNumber);
-            System.out.println("stmt = " + stmt);
-            ResultSet rs = stmt.executeQuery();
-            rs.next();
-            return extractInfo(rs);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving more info on ads id: " + adNumber, e);
-        }
-    }
-
     private List<Ad>createListFromResults(ResultSet rs) throws SQLException {
         List<Ad> list = new ArrayList<>();
         while (rs.next()){
@@ -139,6 +145,12 @@ public class MySQLAdsDao implements Ads {
         );
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    UPDATE
+    /////////////////////////////////////////////////////////////////////
+     */
+
     @Override
     public void edit(Ad ad) {
         PreparedStatement stmt = null;
@@ -157,6 +169,12 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error editing ad id: " + ad.getId(), e);
         }
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    DELETE
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public void delete(int adId){

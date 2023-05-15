@@ -23,6 +23,11 @@ public class MySQLDogBreedsDao implements DogBreeds{
         }
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    CREATE
+    /////////////////////////////////////////////////////////////////////
+     */
     @Override
     public void insert(int dogId, int breedId) {
         try {
@@ -37,6 +42,12 @@ public class MySQLDogBreedsDao implements DogBreeds{
             throw new RuntimeException("Error inserting into dog_breeds table. DogID: " + dogId + "BreedId: " + breedId, e);
         }
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    READ
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public List<DogBreed> searchAll() {
@@ -83,6 +94,12 @@ public class MySQLDogBreedsDao implements DogBreeds{
         );
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    UPDATE
+    /////////////////////////////////////////////////////////////////////
+     */
+
     @Override
     public void edit(int dogId, int breedId) {
         PreparedStatement stmt = null;
@@ -96,6 +113,12 @@ public class MySQLDogBreedsDao implements DogBreeds{
             throw new RuntimeException("Error editing breed id: " + breedId + "for dog id: " + dogId, e);
         }
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    DELETE
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public void delete(int dogId) {

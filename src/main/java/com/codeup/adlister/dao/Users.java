@@ -8,7 +8,7 @@ public interface Users {
 
     //READ
     User searchByUsername(String username);
-    User searchByUserId(Long userId);
+    User searchByUserId(int userId);
 
     //UPDATE
     public void edit(User user);

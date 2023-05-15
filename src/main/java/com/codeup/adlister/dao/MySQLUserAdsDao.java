@@ -23,6 +23,11 @@ public class MySQLUserAdsDao implements UserAds{
         }
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    CREATE
+    /////////////////////////////////////////////////////////////////////
+     */
     @Override
     public void insert(int userId, int adId) {
         try {
@@ -38,6 +43,12 @@ public class MySQLUserAdsDao implements UserAds{
             throw new RuntimeException("Error inserting into user_ad table. UserID: " + userId + "AdID: " + adId, e);
         }
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    READ
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public List<UserAd> searchAll(int userId) {
@@ -89,10 +100,22 @@ public class MySQLUserAdsDao implements UserAds{
         );
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    UPDATE
+    /////////////////////////////////////////////////////////////////////
+     */
+
     @Override
     public void edit(int userId, int adId) {
 
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    DELETE
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public void delete(int adId) {

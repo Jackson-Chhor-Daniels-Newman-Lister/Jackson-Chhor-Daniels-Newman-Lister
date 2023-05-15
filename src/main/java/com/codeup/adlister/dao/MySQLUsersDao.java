@@ -21,6 +21,11 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    CREATE
+    /////////////////////////////////////////////////////////////////////
+     */
     @Override
     public int insert(User user) {
         String query = "INSERT INTO users(name, username, email, password) VALUES (?, ?, ?, ?)";
@@ -39,6 +44,12 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    READ
+    /////////////////////////////////////////////////////////////////////
+     */
+
     @Override
     public User searchByUsername(String username) {
         String query = "SELECT * FROM users WHERE username = ? LIMIT 1";
@@ -52,11 +63,11 @@ public class MySQLUsersDao implements Users {
     }
 
     @Override
-    public User searchByUserId(Long userId) {
+    public User searchByUserId(int userId) {
         String query = "SELECT * FROM users WHERE id = ? LIMIT 1";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1, String.valueOf(userId));
+            stmt.setInt(1, userId);
             return extractInfo(stmt.executeQuery());
         } catch (SQLException e) {
             throw new RuntimeException("Error finding a user by id: " + userId, e);
@@ -76,10 +87,22 @@ public class MySQLUsersDao implements Users {
         );
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////////
+    UPDATE
+    /////////////////////////////////////////////////////////////////////
+     */
+
     @Override
     public void edit(User user) {
 
     }
+
+    /*
+    /////////////////////////////////////////////////////////////////////
+    DELETE
+    /////////////////////////////////////////////////////////////////////
+     */
 
     @Override
     public void delete(int userId) {
