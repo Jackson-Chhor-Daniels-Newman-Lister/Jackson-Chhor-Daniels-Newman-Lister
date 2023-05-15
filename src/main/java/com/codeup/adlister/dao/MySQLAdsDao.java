@@ -31,7 +31,7 @@ public class MySQLAdsDao implements Ads {
     @Override
     public int insert(Ad ad, int dogId){
         try {
-            String insertQuery = "INSERT INTO ads(title, description, short_description, price, image, dog_id) VALUES (?, ?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO ads(title, short_description, description, price, image, dog_id) VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, ad.getTitle());
@@ -60,7 +60,20 @@ public class MySQLAdsDao implements Ads {
     public List<Ad> searchAll() {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads");
+            stmt = connection.prepareStatement(
+                    "SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, " +
+                            "GROUP_CONCAT(DISTINCT b.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT t.name SEPARATOR ', ') AS traits " +
+                            "FROM ads " +
+                            "JOIN dogs d ON d.id = ads.dog_id " +
+                            "JOIN dog_breeds db ON d.id = db.dog_id " +
+                            "JOIN breeds b ON b.id = db.breed_id " +
+                            "JOIN dog_traits dt ON d.id = dt.dog_id " +
+                            "JOIN traits t ON t.id = dt.trait_id " +
+                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training "
+            );
+
+            System.out.println("stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             return createListFromResults(rs);
         } catch (SQLException e) {
@@ -73,7 +86,7 @@ public class MySQLAdsDao implements Ads {
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(
-                    "SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                    "SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
                             "FROM ads " +
                             "JOIN dogs d ON d.id = ads.dog_id " +
                             "JOIN dog_breeds db ON d.id = db.dog_id " +
@@ -81,7 +94,7 @@ public class MySQLAdsDao implements Ads {
                             "JOIN dog_traits dt ON d.id = dt.dog_id " +
                             "JOIN traits t ON t.id = dt.trait_id " +
                             "WHERE ads.id = ? " +
-                            "GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
                             "HAVING COUNT(DISTINCT b.name) = ? "
             );
             stmt.setInt(1, adNumber);
@@ -100,7 +113,7 @@ public class MySQLAdsDao implements Ads {
         String searchTerm = "'%" + searchString + "%'";
         try {
             stmt = connection.prepareStatement(
-                    "SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                    "SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
                             "FROM ads " +
                             "JOIN dogs d ON d.id = ads.dog_id " +
                             "JOIN dog_breeds db ON d.id = db.dog_id " +
@@ -110,7 +123,7 @@ public class MySQLAdsDao implements Ads {
                             "WHERE b.name LIKE ? " +
                             "OR t.name LIKE ? " +
                             "OR ads.description LIKE ? " +
-                            "GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
                             "HAVING COUNT(DISTINCT b.name) = ? "
             );
             stmt.setString(1, searchTerm);
@@ -135,7 +148,6 @@ public class MySQLAdsDao implements Ads {
             return null;
         }
         return new Ad(
-                rs.getInt("id"),
                 rs.getString("title"),
                 rs.getString("short_description"),
                 rs.getString("description"),

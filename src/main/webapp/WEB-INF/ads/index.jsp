@@ -26,12 +26,11 @@
                         </div>
                         <div class="card-body">
                             <p class="card-title">${ad.title}</p>
-                            <p>${ad.short_description}</p>
+<%--                            <p>${ad.short_description}</p>--%>
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <span>$${ad.price}</span>
-                            <p>${ad.id}</p>
-                            <a href="more-info?adId=${ad.id}" class="btn btn-info btn-sm text-light">More info</a>
+<%--                            <a href="more-info?adId=${ad.dog_id}" class="btn btn-info btn-sm text-light">More info</a>--%>
                         </div>
                     </article>
                 </div>

@@ -73,9 +73,21 @@ SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, 
 FROM ads
          JOIN dogs d ON d.id = ads.dog_id
          JOIN dog_breeds db on d.id = db.dog_id
-        JOIN breeds b on b.id = db.breed_id
+         JOIN breeds b on b.id = db.breed_id
 WHERE b.name = 'Akita'
 GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, b.id, b.name
 HAVING COUNT(DISTINCT b.name) = 1;
+
+SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training,
+        GROUP_CONCAT(DISTINCT b.name SEPARATOR ', ') AS breeds,
+        GROUP_CONCAT(DISTINCT t.name SEPARATOR ', ') AS traits
+FROM ads
+         JOIN dogs d ON d.id = ads.dog_id
+         JOIN dog_breeds db on d.id = db.dog_id
+         JOIN breeds b on b.id = db.breed_id
+         JOIN dog_traits dt ON d.id = dt.dog_id
+         JOIN traits t ON t.id = dt.trait_id
+GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training
+ORDER BY dog_id ASC;
 
 SELECT * FROM ads JOIN user_ads ua ON ads.id = ua.ad_id JOIN dogs d ON d.id = ads.dog_id WHERE user_id = 2;
