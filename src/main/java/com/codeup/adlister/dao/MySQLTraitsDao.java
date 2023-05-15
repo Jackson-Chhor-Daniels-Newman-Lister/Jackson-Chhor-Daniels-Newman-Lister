@@ -67,41 +67,6 @@ public class MySQLTraitsDao implements Traits{
         }
     }
 
-    @Override
-    public List<Trait> searchByStrings(String[] searchStringArray) {
-        PreparedStatement stmt = null;
-        StringBuilder searchTerm = new StringBuilder();
-        searchTerm.append("(");
-        for(int i = 0; i < searchStringArray.length; i++){
-            if(i == searchStringArray.length - 1){
-                searchTerm.append("'").append(searchStringArray[i]).append("'");
-            } else {
-                searchTerm.append("'").append(searchStringArray[i]).append("', ");
-            }
-        }
-        searchTerm.append(")");
-        try {
-            stmt = connection.prepareStatement(
-            "SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.id, t.name " +
-            "FROM ads " +
-            "JOIN dogs d ON d.id = ads.dog_id " +
-            "JOIN dog_traits dt ON d.id = dt.dog_id " +
-            "JOIN traits t ON t.id = dt.trait_id " +
-            "WHERE t.name IN ? " +
-            "GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.id, t.name " +
-            "HAVING COUNT(DISTINCT t.name) = ? "
-            );
-            stmt.setString(1, searchTerm.toString());
-            stmt.setInt(2, searchStringArray.length);
-
-            System.out.println("some stmt = " + stmt);
-            ResultSet rs = stmt.executeQuery();
-            return createListFromResults(rs);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving list of traits: ", e);
-        }
-    }
-
     private List<Trait> createListFromResults(ResultSet rs) throws SQLException {
         List<Trait> list = new ArrayList<>();
         while (rs.next()){

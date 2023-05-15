@@ -22,6 +22,6 @@ p > span {
     font-weight: bold;
 }
 
-* {
-    outline: lime solid 1px;
-}
+/** {*/
+/*    outline: lime solid 1px;*/
+/*}*/

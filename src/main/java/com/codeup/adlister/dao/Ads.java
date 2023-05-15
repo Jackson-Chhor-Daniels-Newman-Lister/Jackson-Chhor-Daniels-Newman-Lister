@@ -10,8 +10,10 @@ public interface Ads {
 
     //READ
     List<Ad> searchAll();
-    List<Ad> searchByString(String searchTerm);
     Ad searchOne(int adId);
+    List<Ad> searchByString(String searchTerm);
+    List<Ad> searchByBreed(String searchedBreed);
+    List<Ad> searchByTraits(String[] searchStringArray);
 
     //UPDATE
     void edit(Ad ad);

@@ -65,31 +65,6 @@ public class MySQLBreedsDao implements Breeds{
         }
     }
 
-    @Override
-    public List<Breed> searchByString(String searchedBreed) {
-        PreparedStatement stmt = null;
-        String searchTerm = "'" + searchedBreed + "'";
-        try {
-            stmt = connection.prepareStatement(
-                    "SELECT ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, b.id, b.name " +
-                            "FROM ads " +
-                            "JOIN dogs d ON d.id = ads.dog_id " +
-                            "JOIN dog_breeds db ON d.id = db.dog_id " +
-                            "JOIN breeds b ON b.id = db.breed_id " +
-                            "WHERE b.name = ? " +
-                            "GROUP BY ads.title, ads.description, ads.short_description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, b.id, b.name " +
-                            "HAVING COUNT(DISTINCT b.name) = ? "
-            );
-            stmt.setString(1, searchedBreed);
-
-            System.out.println("some stmt = " + stmt);
-            ResultSet rs = stmt.executeQuery();
-            return createListFromResults(rs);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving breed : " + searchedBreed, e);
-        }
-    }
-
     private List<Breed> createListFromResults(ResultSet rs) throws SQLException {
         List<Breed> list = new ArrayList<>();
         while (rs.next()){

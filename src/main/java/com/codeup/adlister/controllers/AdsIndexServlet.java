@@ -27,9 +27,9 @@ public class AdsIndexServlet extends HttpServlet {
         if (searchInput != null && !searchInput.isEmpty() && !searchInput.equals("Search")){
             request.getSession().setAttribute("ads", DaoFactory.getAdsDao().searchByString(searchInput));
         } else if (selectedBreed != null && !selectedBreed.equals("0")) {
-            request.getSession().setAttribute("ads", DaoFactory.getBreedsDao().searchByString(selectedBreed));
+            request.getSession().setAttribute("ads", DaoFactory.getAdsDao().searchByBreed(selectedBreed));
         } else if (selectedTraits != null) {
-            request.getSession().setAttribute("ads", DaoFactory.getTraitsDao().searchByStrings(selectedTraits));
+            request.getSession().setAttribute("ads", DaoFactory.getAdsDao().searchByTraits(selectedTraits));
         }
 
         request.getSession().setAttribute("breeds", DaoFactory.getBreedsDao().searchAll());

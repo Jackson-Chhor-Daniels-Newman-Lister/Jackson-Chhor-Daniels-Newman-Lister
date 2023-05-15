@@ -1,6 +1,8 @@
 package com.codeup.adlister.dao;
 
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.Breed;
+import com.codeup.adlister.models.Trait;
 import com.codeup.adlister.util.Config;
 import com.mysql.cj.jdbc.Driver;
 
@@ -112,10 +114,12 @@ public class MySQLAdsDao implements Ads {
     @Override
     public List<Ad> searchByString(String searchString) {
         PreparedStatement stmt = null;
-        String searchTerm = "'%" + searchString + "%'";
+        String searchTerm = "%" + searchString + "%";
         try {
             stmt = connection.prepareStatement(
-                    "SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
+                    "SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, " +
+                            "GROUP_CONCAT(DISTINCT b.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT t.name SEPARATOR ', ') AS traits " +
                             "FROM ads " +
                             "JOIN dogs d ON d.id = ads.dog_id " +
                             "JOIN dog_breeds db ON d.id = db.dog_id " +
@@ -125,15 +129,84 @@ public class MySQLAdsDao implements Ads {
                             "WHERE b.name LIKE ? " +
                             "OR t.name LIKE ? " +
                             "OR ads.description LIKE ? " +
-                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, t.name, b.name " +
-                            "HAVING COUNT(DISTINCT b.name) = ? "
+                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training " +
+                            "ORDER BY ads.dog_id asc "
             );
             stmt.setString(1, searchTerm);
+            stmt.setString(2, searchTerm);
+            stmt.setString(3, searchTerm);
             System.out.println("some stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
             return createListFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving info from string : " + searchString, e);
+        }
+    }
+
+    @Override
+    public List<Ad> searchByBreed(String searchedBreed) {
+        PreparedStatement stmt = null;
+        String searchTerm = "'" + searchedBreed + "'";
+        try {
+            stmt = connection.prepareStatement(
+                    "SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, " +
+                            "GROUP_CONCAT(DISTINCT b.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT t.name SEPARATOR ', ') AS traits " +
+                            "FROM ads " +
+                            "JOIN dogs d ON d.id = ads.dog_id " +
+                            "JOIN dog_breeds db ON d.id = db.dog_id " +
+                            "JOIN breeds b ON b.id = db.breed_id " +
+                            "JOIN dog_traits dt ON d.id = dt.dog_id " +
+                            "JOIN traits t ON t.id = dt.trait_id " +
+                            "WHERE b.name = ? " +
+                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training " +
+                            "ORDER BY ads.dog_id asc "
+            );
+            stmt.setString(1, searchedBreed);
+
+            System.out.println("some stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            return createListFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving breed : " + searchedBreed, e);
+        }
+    }
+
+    @Override
+    public List<Ad> searchByTraits(String[] searchStringArray) {
+        PreparedStatement stmt = null;
+        String searchTerm = "(";
+        for(int i = 0; i < searchStringArray.length; i++){
+            if(i == searchStringArray.length - 1){
+                searchTerm = searchTerm + "'" + (searchStringArray[i]) + "'";
+            } else {
+                searchTerm = searchTerm + "'" + (searchStringArray[i]) + "', ";
+            }
+        }
+        searchTerm = searchTerm + ")";
+        try {
+            stmt = connection.prepareStatement(
+                    "SELECT ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training, " +
+                            "GROUP_CONCAT(DISTINCT b.name SEPARATOR ', ') AS breeds, " +
+                            "GROUP_CONCAT(DISTINCT t.name SEPARATOR ', ') AS traits " +
+                            "FROM ads " +
+                            "JOIN dogs d ON d.id = ads.dog_id " +
+                            "JOIN dog_breeds db ON d.id = db.dog_id " +
+                            "JOIN breeds b ON b.id = db.breed_id " +
+                            "JOIN dog_traits dt ON d.id = dt.dog_id " +
+                            "JOIN traits t ON t.id = dt.trait_id " +
+                            "WHERE t.name IN " + searchTerm + " " +
+                            "GROUP BY ads.title, ads.short_description, ads.description, ads.price, ads.image, ads.dog_id, d.name, d.age, d.playfulness, d.socialization, d.affection, d.training " +
+                            "HAVING COUNT(DISTINCT t.name) = ? " +
+                            "ORDER BY ads.dog_id asc "
+            );
+            stmt.setInt(1, searchStringArray.length);
+
+            System.out.println("some stmt = " + stmt);
+            ResultSet rs = stmt.executeQuery();
+            return createListFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving list of traits: ", e);
         }
     }
 
