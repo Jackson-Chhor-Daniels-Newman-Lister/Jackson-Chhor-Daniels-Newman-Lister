@@ -55,7 +55,7 @@ public class MySQLUserAdsDao implements UserAds{
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(
-                    "SELECT * FROM ads JOIN user_ads ua ON ads.id = ua.ad_id JOIN dogs d ON d.id = ads.dog_id WHERE user_id = ?");
+                    "SELECT * FROM user_ads WHERE user_id = ?");
             stmt.setInt(1, userId);
             System.out.println("stmt = " + stmt);
             ResultSet rs = stmt.executeQuery();
