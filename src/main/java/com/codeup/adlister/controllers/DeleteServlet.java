@@ -27,8 +27,7 @@ public class DeleteServlet  extends HttpServlet {
         boolean validUserToAd = DaoFactory.getUserAdsDao().searchOne(userId, adId);
         if (validUserToAd){
             request.setAttribute("ad", DaoFactory.getAdsDao().searchOne(adId));
-            request.setAttribute("breeds", DaoFactory.getBreedsDao().searchAll());
-            request.setAttribute("traits", DaoFactory.getTraitsDao().searchAll());
+            request.setAttribute("dog", DaoFactory.getDogsDao().searchOne(adId));
             request.getRequestDispatcher("/WEB-INF/ads/delete-ad.jsp").forward(request, response);
         } else {
             response.sendRedirect("/profile");
@@ -37,10 +36,7 @@ public class DeleteServlet  extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User loggedInUser = (User) request.getSession().getAttribute("user");
-
         int adId = Integer.parseInt(request.getParameter("ad_id"));
-        int userId = (int)loggedInUser.getId();
 
         DaoFactory.getDogBreedsDao().delete(adId);
         DaoFactory.getDogTraitsDao().delete(adId);

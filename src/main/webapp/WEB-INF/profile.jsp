@@ -21,7 +21,7 @@
                         <img src="${pageContext.request.contextPath}/data/images/${userAd.image}" class="rounded-top img-fluid" alt="ad image">
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Your dog, ${dog[adStatus.index].name}</h5>
+                        <h5 class="text-center">Your dog, ${dog[adStatus.index].name}</h5>
                     </div>
                     <div class="card-footer">
                         <div class="d-flex justify-content-between gap-1">
