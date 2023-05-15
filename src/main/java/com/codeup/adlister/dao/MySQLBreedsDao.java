@@ -56,7 +56,7 @@ public class MySQLBreedsDao implements Breeds{
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement("SELECT * FROM breeds WHERE id = ?");
-            stmt.setInt(1,breedId);
+            stmt.setInt(1, breedId);
             ResultSet rs = stmt.executeQuery();
             rs.next();
             return extractInfo(rs);

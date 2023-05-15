@@ -33,16 +33,17 @@ public class EditServlet extends HttpServlet {
             request.setAttribute("dog", DaoFactory.getDogsDao().searchOne(adId));
 
             //gives me current dog traits
-//            List<DogTrait> dogTraitsObjects = DaoFactory.getDogTraitsDao().searchOne(adId);
-//            List<Trait> dogTraits = new ArrayList<>();
-//            for (DogTrait dogTrait:dogTraitsObjects) {
-//                dogTraits.add(DaoFactory.getTraitsDao().searchOne((int)dogTrait.getTraitId()));
-//            }
-//            request.setAttribute("traits", dogTraits);
+            List<DogTrait> dogTraitsObjects = DaoFactory.getDogTraitsDao().searchOne(adId);
+            List<Trait> dogTraits = new ArrayList<>();
+            for (DogTrait dogTrait:dogTraitsObjects) {
+                dogTraits.add(DaoFactory.getTraitsDao().searchOne((int)dogTrait.getTraitId()));
+            }
+            request.setAttribute("checked", dogTraits);
 
             DogBreed dogBreed = DaoFactory.getDogBreedsDao().searchOne(adId);
-//            request.setAttribute("breed", DaoFactory.getBreedsDao().searchOne((int)dogBreed.getBreedId()));
-            request.setAttribute("breed", DaoFactory.getBreedsDao().searchAll());
+            request.setAttribute("selected", DaoFactory.getBreedsDao().searchOne((int)dogBreed.getBreedId()));
+
+            request.setAttribute("breeds", DaoFactory.getBreedsDao().searchAll());
             request.setAttribute("traits", DaoFactory.getTraitsDao().searchAll());
             request.getRequestDispatcher("/WEB-INF/ads/edit-info.jsp").forward(request, response);
         } else {
@@ -53,6 +54,7 @@ public class EditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int adId = Integer.parseInt(request.getParameter("ad_id"));
+
         String title = request.getParameter("title");
         String shortDescription = request.getParameter("short_description");
         String description = request.getParameter("description");

@@ -20,7 +20,9 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 <c:set var="ad" scope="session" value="${ad}"/>
 <c:set var="dog" scope="session" value="${dog}"/>
-<c:set var="breed" scope="session" value="${breed}"/>
+<c:set var="breed" scope="session" value="${breeds}"/>
+<c:set var="selectedBreed" scope="session" value="${selected}"/>
+
 
     <div class="container">
         <h1 class="mt-5 mb-3">Edit ${dog.name}'s Information</h1>
@@ -46,9 +48,14 @@
                     <div class="input-group mb-3">
                         <label for="breeds" class="input-group-text">Breed</label>
                         <select id="breeds" class="form-select" name="breeds"  required>
-                            <option value="0">SELECT BREED</option>
-                            <c:forEach var="breed" items="${breed}">
-                                <option value="${breed.id}">${breed.name}</option>
+                            <option disabled value="">SELECT BREED</option>
+                            <c:forEach var="breed" items="${breeds}">
+                                <option value="${breed.id}"
+                                    <c:if test="${breed.id == selectedBreed.id}">
+                                        selected
+                                    </c:if>
+                                >${breed.name}
+                                </option>
                             </c:forEach>
                         </select>
                     </div>
@@ -56,7 +63,13 @@
                     <div class=" d-flex flex-column justify-content-start align-items-start mb-3">
                         <c:forEach var="trait" items="${traits}">
                             <div class="form-group">
-                                <input type="checkbox" id="${trait.name}" value="${trait.id}" name="traits">
+                                <input type="checkbox" id="${trait.name}" value="${trait.id}" name="traits"
+                                    <c:forEach var="selectedTrait" items="${checked}">
+                                        <c:if test="${trait.id == selectedTrait.id}">
+                                               checked
+                                        </c:if>
+                                    </c:forEach>
+                                >
                                 <label for="${trait.name}" style="color: darkgoldenrod;">${trait.name}</label>
                             </div>
                         </c:forEach>
@@ -102,7 +115,7 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <textarea class="form-control font-monospace" name="short_description" maxlength="225" rows="3" style="height: 100px; resize: none">${ad.shortDescription}</textarea>
+                        <textarea class="form-control font-monospace" name="short_description" maxlength="225" rows="3" style="height: 100px; resize: none" required>${ad.shortDescription}</textarea>
                         <%--@declare id="short_description"--%><label for="short_description">Short Description</label>
                     </div>
 
