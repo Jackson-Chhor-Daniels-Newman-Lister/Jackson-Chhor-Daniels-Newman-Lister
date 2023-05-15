@@ -10,9 +10,9 @@
         <jsp:param name="title" value="Welcome to my site!" />
     </jsp:include>
 </head>
-<body>
+<body class="bg-info-subtle">
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
-<section class="bg-info-subtle">
+<section>
     <div class="container text-center py-5 ">
         <h1 class="display-4 font-weight-bold mb-4" style="font-family: 'Montserrat', sans-serif;color:darkgoldenrod">Welcome to the Adlister!</h1>
         <img class="img-fluid" style="max-width: 500px;" src="${pageContext.request.contextPath}/data/images/background1.jpg">

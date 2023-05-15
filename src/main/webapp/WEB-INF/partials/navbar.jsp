@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<nav class="navbar navbar-default bg-info font-monospace"style="font-style: italic; color: chocolate">
+<nav class="navbar navbar-default bg-info font-monospace px-3"style="font-style: italic; color: chocolate">
     <div class="container-fluid">
 
         <c:choose>

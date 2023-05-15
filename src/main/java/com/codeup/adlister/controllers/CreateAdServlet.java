@@ -3,6 +3,7 @@ package com.codeup.adlister.controllers;
 import com.codeup.adlister.dao.DaoFactory;
 import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.Dog;
+import com.codeup.adlister.models.DogBreed;
 import com.codeup.adlister.models.User;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,14 @@ public class CreateAdServlet extends HttpServlet {
             response.sendRedirect("/login");
             return;
         }
-        request.setAttribute("breeds", DaoFactory.getBreedsDao().searchAll());
+//        request.setAttribute("breeds", DaoFactory.getBreedsDao().searchAll());
+//        request.setAttribute("traits", DaoFactory.getTraitsDao().searchAll());
+//
+//
+//        request.setAttribute("ad", DaoFactory.getAdsDao().searchOne(adId));
+//        request.setAttribute("dog", DaoFactory.getDogsDao().searchOne(adId));
+//        DogBreed dogBreed = DaoFactory.getDogBreedsDao().searchOne(adId);
+        request.setAttribute("breed", DaoFactory.getBreedsDao().searchAll());
         request.setAttribute("traits", DaoFactory.getTraitsDao().searchAll());
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
     }
