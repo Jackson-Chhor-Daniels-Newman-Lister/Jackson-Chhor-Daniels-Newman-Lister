@@ -33,7 +33,7 @@
                 <div class="input-group mb-3">
                     <label for="breeds" class="input-group-text">Breed</label>
                     <select id="breeds" class="form-select" name="breeds"  required>
-                        <option value="0">SELECT BREED</option>
+                        <option value="" disabled>SELECT BREED</option>
                         <c:forEach var="breed" items="${breed}">
                             <option value="${breed.id}">${breed.name}</option>
                         </c:forEach>
